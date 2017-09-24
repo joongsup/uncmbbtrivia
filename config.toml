@@ -10,7 +10,7 @@ googleAnalytics = ""
 [params]
   # Style options: default (pink), blue, green, pink, red, sea, violet
   # Use custom.css for your custom styling
-  style = "default"
+  style = "blue"
   description = "UNC MBB TRIVIA"
   #copyright = "&copy;2016 Your name or company"
   sidebarAbout = [
@@ -35,9 +35,13 @@ googleAnalytics = ""
   name = "Home"
   url = ""
 
-#  [[params.navlinks]]
-#  name = "About"
-#  url = "about/"
+  [[params.navlinks]]
+  name = "About"
+  url = "about/"
+
+  [[params.navlinks]]
+  name = "Post"
+  url = "post/"
 
 #  [[params.navlinks]]
 #  name = "Get in touch"
