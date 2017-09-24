@@ -3,43 +3,43 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/about/</loc>
     <lastmod>2017-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/hello-world/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/post/hello-world/</loc>
     <lastmod>2017-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/winning-percentage/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/post/winning-percentage/</loc>
     <lastmod>2017-09-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/contact/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/contact/</loc>
     <lastmod>2016-11-06T13:00:25+05:30</lastmod>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/post/</loc>
     <lastmod>2017-09-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://uncmbbtrivia.netlify.com/</loc>
     <lastmod>2017-09-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
