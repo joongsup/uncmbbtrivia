@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 public/ # if using Netlify
+content/post/*.Rmd
