@@ -35,11 +35,11 @@ googleAnalytics = ""
   name = "Home"
   url = ""
 
-  [[params.navlinks]]
+#  [[params.navlinks]]
 #  name = "About"
 #  url = "about/"
 
-  [[params.navlinks]]
+#  [[params.navlinks]]
 #  name = "Get in touch"
 #  url = "contact/"
 
