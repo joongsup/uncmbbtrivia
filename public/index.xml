@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>UNC MBB TRIVIA</title>
-    <link>https://uncmbbtrivia.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on UNC MBB TRIVIA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 24 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://uncmbbtrivia.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hello World!</title>
-      <link>https://uncmbbtrivia.netlify.com/post/hello-world/</link>
+      <link>/post/hello-world/</link>
       <pubDate>Sun, 24 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://uncmbbtrivia.netlify.com/post/hello-world/</guid>
+      <guid>/post/hello-world/</guid>
       <description>Hello World!!! I’m planning to write about UNC Men’s Basketball Trivia!</description>
     </item>
     
     <item>
       <title>Winning percentage</title>
-      <link>https://uncmbbtrivia.netlify.com/post/winning-percentage/</link>
+      <link>/post/winning-percentage/</link>
       <pubDate>Sun, 24 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://uncmbbtrivia.netlify.com/post/winning-percentage/</guid>
+      <guid>/post/winning-percentage/</guid>
       <description>## ## Attaching package: &amp;#39;dplyr&amp;#39; ## The following objects are masked from &amp;#39;package:stats&amp;#39;: ## ## filter, lag ## The following objects are masked from &amp;#39;package:base&amp;#39;: ## ## intersect, setdiff, setequal, union </description>
     </item>
     
