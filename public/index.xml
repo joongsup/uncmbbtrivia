@@ -20,5 +20,14 @@
       <description>Hello World!!! I’m planning to write about UNC Men’s Basketball Trivia!</description>
     </item>
     
+    <item>
+      <title>Winning percentage</title>
+      <link>/post/winning-percentage/</link>
+      <pubDate>Sun, 24 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/winning-percentage/</guid>
+      <description>## ## Attaching package: &amp;#39;dplyr&amp;#39; ## The following objects are masked from &amp;#39;package:stats&amp;#39;: ## ## filter, lag ## The following objects are masked from &amp;#39;package:base&amp;#39;: ## ## intersect, setdiff, setequal, union </description>
+    </item>
+    
   </channel>
 </rss>
