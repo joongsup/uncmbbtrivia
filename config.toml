@@ -1,4 +1,4 @@
-baseurl = "https://example.org/"
+baseurl = "https://uncmbbtrivia.netlify.com/"
 title = "UNC MBB TRIVIA"
 theme = "hugo-creative-portfolio-theme"
 languageCode = "en-us"
