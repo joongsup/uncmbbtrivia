@@ -1,0 +1,33 @@
+---
+title: Season win percentage
+author: uncmbbtrivia
+date: '2017-10-01'
+slug: winning-series
+categories: []
+tags: []
+draft: true
+---
+
+```{r label = winning_pct, echo = FALSE, fig.width = 12, fig.heigth = 8}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+
+df_pct <- unc %>% 
+            count(Season, Result) %>% 
+            group_by(Season) %>% 
+            mutate(pct = n/sum(n)) %>% 
+            filter(Result == "W") %>% 
+            ungroup()
+#head(df_pct)
+
+df_pct %>%
+  mutate(season = substr(Season, 3, 4)) %>%
+  ggplot(aes(x = Season, y = pct)) +
+  geom_point() +
+  geom_line(group = 1) +
+  scale_y_continuous(labels = scales::percent) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+```

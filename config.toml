@@ -1,21 +1,23 @@
-baseURL = "http://example.com/"
+baseURL = "https://uncmbbtrivia.netlify.com/"
 languageCode = "en-us"
-title = "Minimal"
+title = "UNC MBB TRIVIA"
 theme = "minimal"
-disqusShortname = "username" # delete this to disable disqus comments
-googleAnalytics = ""
+#disqusShortname = "" 
+#googleAnalytics = ""
+
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
-    author = "Calin Tataru"
-    description = "Personal blog theme powered by Hugo"
-    githubUsername = "#"
-    accent = "red"
+    author = "UNCMBBTRIVIA"
+    description = "UNC Men's Basketball Trivia"
+    #githubUsername = "#"
+    accent = "#99badd" #caroina blue
     showBorder = true
     backgroundColor = "white"
     font = "Raleway" # should match the name on Google Fonts!
     highlight = true
     highlightStyle = "solarized-dark"
-    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift"]
+    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift", "R"]
 
 [[menu.main]]
     url = "/"
@@ -27,36 +29,41 @@ googleAnalytics = ""
     name = "Posts"
     weight = 2
 
-[[menu.main]]
-    url = "/project/"
-    name = "Projects"
-    weight = 3
+#[[menu.main]]
+#    url = "/project/"
+#    name = "Projects"
+#    weight = 3
+
+#[[menu.main]]
+#    url = "/about/"
+#    name = "About"
+#    weight = 4
 
 # Social icons to be shown on the right-hand side of the navigation bar
 # The "name" field should match the name of the icon to be used
 # The list of available icons can be found at http://fontawesome.io/icons/
 
-[[menu.icon]]
-    url = "mailto:me@example.com"
-    name = "envelope-o"
-    weight = 1
+#[[menu.icon]]
+#    url = "mailto:uncmbbtrivia@gmail.com"
+#    name = "envelope-o"
+#    weight = 1
+
+#[[menu.icon]]
+#    url = "https://github.com/username/"
+#    name = "github"
+#    weight = 2
 
 [[menu.icon]]
-    url = "https://github.com/username/"
-    name = "github"
-    weight = 2
-
-[[menu.icon]]
-    url = "https://twitter.com/username/"
+    url = "https://twitter.com/uncmbbtrivia/"
     name = "twitter"
     weight = 3
 
-[[menu.icon]]
-    url = "https://www.linkedin.com/in/username/"
-    name = "linkedin"
-    weight = 4
+#[[menu.icon]]
+#    url = "https://www.linkedin.com/in/username/"
+#    name = "linkedin"
+#    weight = 4
 
-[[menu.icon]]
-    url = "https://www.stackoverflow.com/username/"
-    name = "stack-overflow"
-    weight = 5
+#[[menu.icon]]
+#    url = "https://www.stackoverflow.com/username/"
+#    name = "stack-overflow"
+#    weight = 5

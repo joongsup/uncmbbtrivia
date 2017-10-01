@@ -1,0 +1,97 @@
+---
+title: Winning Series
+author: uncmbbtrivia
+date: '2017-10-01'
+slug: winning-series
+categories: []
+tags: []
+draft: true
+---
+
+```{r, label = hardest, echo = FALSE}
+#------------------------
+# head-to-head w/ other schools
+# w/ at least 5 matches since 1949-50 season
+#------------------------
+
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(jutilr))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+
+get_series_history <- function(records, min_games){
+
+  opponents <- records %>% count(Opponent_School, sort = TRUE) %>% add_percent(var = n)
+  schools <- opponents %>% filter(n >= min_games)
+
+  results <- records %>%
+              filter(Opponent_School %in% schools$Opponent_School) %>%
+              group_by(Opponent_School) %>%
+              summarize(wins = sum(Result == "W"), loses = sum(Result == "L"),
+                        first_game = min(Game_Date), last_game = max(Game_Date)) %>%
+              mutate(games = wins + loses) %>%
+              mutate(win_perc = round(wins/games, 4)) %>%
+              arrange(desc(win_perc)) %>%
+              select(Opponent_School, first_game, last_game, games, wins, loses, win_perc)
+
+  results
+}
+
+start_yr <- 1950
+min_gms <- 10
+win_pct_threshold <- 0.99
+
+a <- unc %>%
+  filter(Season >= start_yr) %>%
+  get_series_history(min_games = min_gms) %>%
+  filter(win_perc > win_pct_threshold) 
+
+a
+
+b <- duke %>%
+  filter(Season >= start_yr) %>%
+  get_series_history(min_games = min_gms) %>%
+  filter(win_perc > win_pct_threshold) 
+
+
+
+
+
+# %>%
+#   ggplot(aes(x = reorder(Opponent_School, -win_perc), y = win_perc)) + geom_bar(stat = "identity") + 
+#   geom_text(aes(label = paste0(wins, " wins out of ", games)), vjust = -0.25) +
+#   scale_y_continuous(label = scales::percent) +
+#   labs(title = paste0("UNC has winning series records (minimum ", min_gms, " games) \nagainst these schools since ", start_yr, " season."), x = "Opponent", y = "Win %") +
+#   theme_bw()
+# 
+
+get_home_history <- function(records, min_home_games){
+
+  opponents <- records %>% filter(Where == "H") %>% count(Opponent_School, sort = TRUE) %>% add_percent(var = n)
+  schools <- opponents %>% filter(n >= min_home_games)
+
+  results <- records %>%
+              filter(Opponent_School %in% schools$Opponent_School) %>%
+              group_by(Opponent_School) %>%
+              summarize(wins = sum(Result == "W"), loses = sum(Result == "L"),
+                        first_game = min(Game_Date), last_game = max(Game_Date)) %>%
+              mutate(games = wins + loses) %>%
+              mutate(win_perc = round(wins/games, 4)) %>%
+              arrange(desc(win_perc)) %>%
+              select(Opponent_School, first_game, last_game, games, wins, loses, win_perc)
+
+  results
+}
+
+start_yr <- 1950
+min_gms <- 10
+win_pct_threshold <- 0.75
+
+#a <- unc %>%
+#  filter(Season >= start_yr) %>%
+#  get_home_history(min_home_games = min_gms) %>%
+#  filter(win_perc > win_pct_threshold) 
+
+#a
+
+```
