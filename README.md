@@ -1,2 +1,0 @@
-# uncmbbtrivia
-UNC MBB TRIVIA
