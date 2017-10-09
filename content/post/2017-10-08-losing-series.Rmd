@@ -8,13 +8,13 @@ tags: []
 draft: false
 ---
 
-In my first uncmbbtrivia [post](http://uncmbbtrivia.netlify.com/post/winning-series/) last week, I looked at perfect winning series of UNC MBB team, particularly those schools that the team has never lost to since 1949-50 season (minimum of 10 games). Again, say hello to: Citadel, Rutgers, Stanford, and Tulane :)
+In my first uncmbbtrivia [post](http://uncmbbtrivia.netlify.com/post/winning-series/) last week, I looked at perfect winning series of UNC MBB team, particularly looking for those schools that the team has never lost to since 1949-50 season (minimum of 10 games). Again, say hello to: Citadel, Rutgers, Stanford, and Tulane :)
 
 This week, I look at the opposite end of the series history. Are there any schools that the UNC MBB team kept losing to? I know we haven't been playing particularly well against Duke lately, so at least I knew depending on how far back I go that there will be some schools that we have losing series against. 
 
 How about perfect losing series? I was thinking, ok there might be some schools that have winning series aginst us, but there's no way that there's a school that UNC MBB team never won, not even one game, having played at least some number of games. 
 
-So to answer these questions, I ~~crunched some numbers~~ wrote some scripts (and I'll write about this analysis process in near future), and below is what I got:
+So to answer these questions, I ~~crunched some numbers~~ wrote some scripts (and I'll write about this analysis process in near future), and below is what I got. First I look at schools that have winning series against UNC since 1949-50 season, having played UNC at least 10 times. 
 
 ```{r, label = hardest, echo = FALSE}
 #------------------------
@@ -75,7 +75,7 @@ losing %>%
 
 ```
 
-So there they are: Indiana and Texas have winning records against UNC MBB team, having played us at least 10 times since 1949-50 season. We are not playing them this upcoming season, but as we can see in the following table, the two non-ACC teams played us quite recently, so it might take a while to be on top. 
+So there they are: Indiana and Texas have winning records against UNC, having played us at least 10 times since 1949-50 season. We are not playing them this upcoming season, but as we can see in the following table, the two non-ACC teams played us quite recently, so it might take a while to be on top. Also of note is that even though we haven't been playing well against Duke lately, we are still on top going back to 1949-50 season. 
 
 ```{r, label = tx_in_table, echo = FALSE}
 
@@ -115,13 +115,13 @@ losing %>%
 
 And there they are: Kentucky and Duke have been relatively better than us since the beginning of the millenium, although I'd think it's only a matter of time that we'll be on top again in the series with Kentucky. With Duke, I'm not so sure here. Numbers look pretty bad, and it might take a while to re-gain the bragging right (ok screw it. UNC > Duke always Go Heels!). I'll have to see, but I'm pretty sure the 4 seasons from the beginning of 2005 to the end of 2009 season saved us from what could have been a total embarrassment. Much more on this awesome rivalry in the future for sure.
 
-Finally, I was wondering if there is any school that we have never won, not even once since 1949-50 season, having played at least 2 games. There shouldn't be one, right?
+Finally, I was wondering if there is any school that we have never won, not even once since 1949-50 season, having played at least 2 games. It's quite easy to do, because all I had to do was to change the variable "minimum number of games played" in the script that I used earlier. Regardless of amount of efforts involved, there shouldn't be a school that's having a perfect winning series against us, right?
 
 ```{r, label = perfect_losing, echo = FALSE}
 
 start_yr <- 1950
 min_gms <- 2
-perc_threshold <- 0.4
+perc_threshold <- 0.5
 
 losing <- unc %>%
             filter(Season >= start_yr) %>%
@@ -131,9 +131,9 @@ losing <- unc %>%
 losing %>%
   ggplot(aes(x = reorder(Opponent_School, -win_perc), y = win_perc)) + 
   geom_bar(stat = "identity") + 
-  geom_text(aes(label = paste0(wins, " wins out of ", games)), vjust = -0.25) +
+  geom_text(aes(label = paste0(wins, " wins out of ", games)), vjust = -0.25, size = 3) +
   scale_y_continuous(label = scales::percent) +
-  labs(title = paste0("UNC has losing series records (minimum ", min_gms, " games) \nagainst these schools since 1999-2000 season."), x = "Opponent", y = "Win %") +
+  labs(title = paste0("UNC has losing series records (minimum ", min_gms, " games) \nagainst these schools since 1949-50 season."), x = "Opponent", y = "Win %") +
   theme_bw() +
   theme(text = element_text(size = 10))
 
@@ -143,4 +143,6 @@ losing %>%
 
 ```
 
-Well, what do I know. It turns out we have never won against West Virginia team, having played them 5 times total since 1949-50 season! Starting years were different in two cases, but it might take even longer for UNC to get even with this team than with Duke, because there's at least two games to be played against Duke each year, whereas it seems very unlikely that we'll see West Virginia in schedule, considering the last time we played them was on the new years eve in 1965. But what do I know. I'm just another casual fan here, trying to dig up some gems from the UNC match history data. 
+Well, what do I know. First of all, there are Indiana and Texas teams that I touched on in earlier part of this post (it's sort of re-affirming to see them again in this output). Then, there go some other schools that we are having losing series records, albeit having beaten them at least once: New York University (New York University?!), Dayton, Iowa, and Navy. 
+
+Then there is West Virgina. It turns out we have never won against West Virginia team, having played them 5 times total since 1949-50 season! Starting years were different in two cases, but it might take even longer for UNC to get even with this team than with Duke, because there's at least two games to be played against Duke each year, whereas it seems very unlikely that we'll see West Virginia in schedule, considering the last time we played them was on the new years eve in 1965. But what do I know. I'm just another casual fan here, trying to dig up some gems from the UNC match history data. 

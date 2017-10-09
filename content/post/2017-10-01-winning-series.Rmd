@@ -8,7 +8,7 @@ tags: []
 draft: false
 ---
 
-Here it is, the very first trivia! Frankly I was initially curious which schools have winning series against UNC and found out which (and here's the link to that post), but to start off things on a positive note :) I'm posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times. 
+Here it is, the very first trivia! Frankly I was initially curious which schools have winning series against UNC and found out which (and here's the link to that [post](http://uncmbbtrivia.netlify.com/post/losing-series/)), but to start off things on a positive note :) I'm posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times. 
 
 ```{r, label = hardest, echo = FALSE, fig.width = 12, fig.height = 8}
 #------------------------
