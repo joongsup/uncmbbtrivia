@@ -6,10 +6,30 @@
     <description>Recent content on UNC MBB TRIVIA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Losing Series</title>
+      <link>/post/losing-series/</link>
+      <pubDate>Sun, 08 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/losing-series/</guid>
+      <description>In my first uncmbbtrivia post last week, I looked at perfect winning series of UNC MBB team, particularly those schools that the team has never lost to since 1949-50 season (minimum of 10 games). Again, say hello to: Citadel, Rutgers, Stanford, and Tulane :)
+This week, I look at the opposite end of the series history. Are there any schools that the UNC MBB team kept losing to? I know we haven’t been playing particularly well against Duke lately, so at least I knew depending on how far back I go that there will be some schools that we have losing series against.</description>
+    </item>
+    
+    <item>
+      <title>Best 4 Year Span</title>
+      <link>/post/best-4-year-span/</link>
+      <pubDate>Sat, 07 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/best-4-year-span/</guid>
+      <description>In my first uncmbbtrivia post last week, I looked at some winning series of UNC MBB team, particularly those schools that the team has never lost to since 1949-50 season (minimum of 10 games). Say hello to: Citadel, Rutgers, Stanford, and Tulane :)
+Before writing about the other end of the spectrum in series history, I started reading the 2009 champion season book, “One Fantastic Ride: The Inside Story of Carolina Basketball’s 2009 Championship Season” and posted about it on twitter: “Re-reading my fav 4 seasons of all time in @UNC_Basketball (so far) while waiting on the latest by the great @jadamlucas #uncmbbtrivia”.</description>
+    </item>
     
     <item>
       <title>Hello World!</title>
@@ -18,15 +38,6 @@
       
       <guid>/post/hello-world/</guid>
       <description>Welcome to UNC MBB TRIVIA! Just another casual fan here to talk about UNC Men’s Basketball trivia time to time for all Tar Heels fans to enjoy. Stay tuned!</description>
-    </item>
-    
-    <item>
-      <title>Losing Series</title>
-      <link>/post/losing-series/</link>
-      <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/post/losing-series/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -44,7 +55,7 @@
       <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/winning-series/</guid>
-      <description>Here it is, the very first trivia! Frankly I was initially curious which schools have kept winning against UNC and found out which, but to start off things on a positive note :) I’m posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times.
+      <description>Here it is, the very first trivia! Frankly I was initially curious which schools have winning series against UNC and found out which (and here’s the link to that post), but to start off things on a positive note :) I’m posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times.
 There they are: Citadel, Rutgers, Stanford, and Tulane! Two of these teams are on UNC’s schedule for upcoming 2017-2018 season, so it’ll be interesting to see if UNC can keep the winning streak.</description>
     </item>
     

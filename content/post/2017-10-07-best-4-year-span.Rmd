@@ -1,0 +1,71 @@
+---
+title: Best 4 Year Span
+author: uncmbbtrivia
+date: '2017-10-07'
+slug: best-4-year-span
+categories: []
+tags: []
+draft: true
+---
+
+In my first uncmbbtrivia post last week, I looked at some winning series of UNC MBB team, particularly those schools that the team has never lost to since 1949-50 season (minimum of 10 games). Say hello to: Citadel, Rutgers, Stanford, and Tulane :) 
+
+Before writing about the other end of the spectrum in series history, I started reading the 2009 champion season book, "One Fantastic Ride: The Inside Story of Carolina Basketball's 2009 Championship Season" and posted about it on twitter: "Re-reading my fav 4 seasons of all time in @UNC_Basketball (so far) while waiting on the latest by the great @jadamlucas #uncmbbtrivia". 
+
+It is indeed my favorite 4 years of UNC MBB history so far, because to me the 4-year span has everything the college basketball represents: new kids on campus --> massive development --> fall from the highest stage --> redemption and championship. 
+
+I became curious how accomplished the core members of the championship team were and if there's any other teams comparable to the 2005 freshmen group. 
+
+
+
+
+
+```{r, label = best_class, echo = FALSE, fig.width = 16, fig.height = 12}
+
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(jutilr))
+suppressPackageStartupMessages(library(TTR))
+suppressPackageStartupMessages(library(tidyverse))
+
+uncts <- unc %>%
+                group_by(Season) %>%
+                summarize(wins = sum(Result == "W"), loses = sum(Result == "L"))
+# uncts %>% 
+#           ggplot(aes(x = Season, y = wins)) + 
+#           geom_point() + 
+#           geom_line(group = 1) + 
+#           theme_bw()
+
+uncts <- uncts %>%
+                  mutate(Season = as.numeric(Season) - 1) %>% 
+                  mutate(wins4a = 4 * SMA(uncts$wins, 4), loss4a = 4 * SMA(uncts$loses, 4))
+          
+uncts <- uncts %>%
+                  mutate(wins4 = lead(uncts$wins4a, 3), loss4 = lead(uncts$loss4a, 3)) %>% 
+                  select(-wins4a, -loss4a) %>%
+                  filter(!is.na(wins4))
+
+uncts %>% 
+          ggplot(aes(x = Season, y = wins4)) + 
+          geom_point() + 
+          geom_line(group = 1) +
+          scale_x_continuous(breaks = 1949 + 2 * c(0:32)) +
+          theme_bw() + 
+          theme(text = element_text(size = 20), axis.text.x = element_text(angle = 45, hjust = 1)) +
+          labs(y = "Total Wins Over Next 4 Years", title = "2005 freshman class had 124 wins (avg 31 wins/yr)")
+
+```
+
+
+```{r, label = best5, echo = FALSE, fig.width = 16, fig.height = 12}
+
+uncts %>% 
+          arrange(desc(wins4)) %>% 
+          head(5) %>% 
+          ggplot(aes(x = reorder(Season, -wins4), y = wins4)) +
+          geom_bar(stat = "identity") +
+          theme_bw() +
+          theme(text = element_text(size = 20)) +
+          labs(y = "Total Wins Over Next 4 Years", title = "Top 5 Class By Total Wins Over 4 Year Span")
+          
+```

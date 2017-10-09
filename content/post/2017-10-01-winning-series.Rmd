@@ -8,7 +8,7 @@ tags: []
 draft: false
 ---
 
-Here it is, the very first trivia! Frankly I was initially curious which schools have kept winning against UNC and found out which, but to start off things on a positive note :) I'm posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times. 
+Here it is, the very first trivia! Frankly I was initially curious which schools have winning series against UNC and found out which (and here's the link to that post), but to start off things on a positive note :) I'm posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times. 
 
 ```{r, label = hardest, echo = FALSE, fig.width = 12, fig.height = 8}
 #------------------------
@@ -53,19 +53,15 @@ a %>%
   geom_text(aes(label = paste0(wins, " Ws out of ", games, "Gs")), vjust = -0.25) +
   scale_y_continuous(label = scales::percent) +
   labs(title = paste0("UNC has perfect winning series records (minimum ", min_gms, " games) \nagainst these schools since ", start_yr, " season."), x = "Opponent", y = "Win %") +
-  theme_bw()
+  theme_bw() +
+  theme(text = element_text(size = 20))
+          
 
 
 b <- duke %>%
   filter(Season >= start_yr) %>%
   get_series_history(min_games = min_gms) %>%
   filter(win_perc > win_pct_threshold) 
-
-
-
-
-
-
 
 get_home_history <- function(records, min_home_games){
 
