@@ -100,7 +100,6 @@ Interestingly, only (?) half of the top 10 seasons with highest win % ended up w
 
 Also notable is that not all the 6 NCAA championship winning seasons are included in the list of top 10 regular season win %. Turns out the latest crowning season is not part of this elite seasons, having lost 6 games in the regular season, a feat that is not indeed so elite compared to the 5 highly successful yet unforunate seasons from above. 
 
-But between a highly successful regular season without trophy versus a lukewarm (I don't know, is 26-6 a lukewarm season?) regular season with a trophy at the end? I'll take the trophy day in and day out!
 
 ```{r, echo = FALSE}
 a %>%
@@ -108,6 +107,9 @@ a %>%
   kable("html") %>%
   kable_styling()
 ```
+
+But between a highly successful regular season without trophy versus a lukewarm (I don't know, is 26-6 a lukewarm season?) regular season with a trophy at the end? I'll take the trophy day in and day out!
+
 
 
 
