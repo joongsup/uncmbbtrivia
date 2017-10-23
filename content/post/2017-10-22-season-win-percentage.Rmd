@@ -1,0 +1,140 @@
+---
+title: Season win percentage
+author: uncmbbtrivia
+date: '2017-10-22'
+slug: season-win-percentage
+categories: []
+tags: []
+draft: false
+---
+
+This past week, I was in a presentation training, and all the participants had to select a topic on the last day of training to give a (perfect) 15-min presentation. You know, after learning all the essential presentation skills, it was time to apply those fancy skills to work! 
+
+I decided to talk about UNC MBB and its great stories behind each of the 3 championship seasons during Williams-era. I made a 5-page deck using Rmd-driven slidy presentation, and I am planning to post it here either in its raw form or after some adjustment using [xaringan](https://github.com/yihui/xaringan). 
+
+The main driver of the presentation was each season's win percentage, including all match types (regular, conference tournament, and NCAA tournament) as so:
+
+```{r label = winning_pct, echo = FALSE, fig.width = 12, fig.heigth = 8}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+df_ncaa <- unc %>%
+            filter(Type == "NCAA") %>%
+            group_by(Season) %>% 
+            summarize(losses = sum(Result == "L")) %>%
+            filter(losses == 0) %>%
+            select(Season)
+
+df_pct <- unc %>% 
+            count(Season, Result) %>% 
+            group_by(Season) %>% 
+            mutate(pct = n/sum(n), games = sum(n)) %>% 
+            filter(Result == "W") %>% 
+            ungroup() %>%
+            mutate(champ = ifelse(Season %in% df_ncaa$Season, 1, 0))
+#head(df_pct)
+
+p <- df_pct %>%
+        mutate(season = substr(Season, 3, 4)) %>%
+        ggplot(aes(x = Season, y = pct)) +
+        geom_point() +
+        geom_line(group = 1) +
+        geom_point(aes(size = champ)) +
+        scale_y_continuous(labels = scales::percent) +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "none") +
+        labs(title = "Overall win %", caption = "Large circles represent NCAA championship winning season.")
+
+p
+```
+
+After I gave the final presentation, I realized that looking at regular season win % leading up to NCAA tournament might be also interesting, especially to say anything about each team's performance during the regular season and its final result at NCAA tournament level. So I made a small change in my script, and below is the regular season win % since 1949-50 season. 
+
+
+```{r label = high_pct_seasons, echo = FALSE, fig.width = 12, fig.heigth = 8}
+df_pct_reg <- unc %>% 
+            filter(Type == "REG") %>%
+            group_by(Season) %>%
+            summarize(wins = sum(Result == "W"), losses = sum(Result == "L")) %>%
+            mutate(games = wins + losses, pct = wins/games) %>%
+            mutate(champ = ifelse(Season %in% df_ncaa$Season, 1, 0))
+
+
+#head(df_pct_reg)
+
+p_reg <- df_pct_reg %>%
+        mutate(season = substr(Season, 3, 4)) %>%
+        ggplot(aes(x = Season, y = pct)) +
+        geom_point() +
+        geom_line(group = 1) +
+        geom_point(aes(size = champ)) +
+        scale_y_continuous(labels = scales::percent) +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), legend.position = "none") +
+        labs(title = "Regular season win %", caption = "Large circles represent NCAA championship winning season.")
+p_reg
+
+```
+
+There goes the perfect championship winning season in 1956-57, Dean Smith's first championship season in 1981-82, and his second one in 1992-93 season. And there goes Roy William's first championship season in 2004-05, second one in 2008-09 season, and last but not least, his latest in 2016-17 season. (And yes I do see that horrible deep in early 2000s.)
+
+There are also some seasons that had as much success as the crowning seasons in terms of regular season win %s but without bearing the NCAA championship trophy. Looking at the top 10 seasons by the regular season win % should make it easy to identify them:
+
+```{r, label = reg_win_percent, echo = FALSE}
+
+a <- df_pct_reg %>% 
+        arrange(desc(pct)) %>%
+        select(Season, games, wins, losses, pct, champ) %>%
+        mutate(champ = ifelse(champ == 1, "Yes", "No"))
+        
+#head(a, 20)
+a %>% head(10) %>%
+  kable("html") %>%
+  kable_styling()
+```
+
+Interestingly, only (?) half of the top 10 seasons with highest win % ended up with NCAA championship. Other half not-so-fortunate seasons include some that I'm familiar with (such as 2008, 1998) and others that I'm not (such as 1984, 1987, and 1976). Having players data readily available for each season could've made it a breeze to look into those highly successful yet not so fortunate seasons, and it's definitely something that I'd like to add to my data [source](https://cran.r-project.org/web/packages/uncmbb/index.html). 
+
+Also notable is that not all the 6 NCAA championship winning seasons are included in the list of top 10 regular season win %. Turns out the latest crowning season is not part of this elite seasons, having lost 6 games in the regular season, a feat that is not indeed so elite compared to the 5 highly successful yet unforunate seasons from above. 
+
+But between a highly successful regular season without trophy versus a lukewarm (I don't know, is 26-6 a lukewarm season?) regular season with a trophy at the end? I'll take the trophy day in and day out!
+
+```{r, echo = FALSE}
+a %>%
+  filter(champ == "Yes") %>%
+  kable("html") %>%
+  kable_styling()
+```
+
+
+
+```{r, label = win_gather, include = FALSE}
+df_pct2 <- df_pct %>%
+            mutate(calc_type = "overall") %>%
+            arrange(Season) %>%
+            select(Season, pct, calc_type)
+
+df_pct_reg2 <- df_pct_reg %>%
+            mutate(calc_type = "reg") %>%
+            arrange(Season) %>%
+            select(Season, pct, calc_type)
+
+df_pct_combined <- rbind(df_pct2, df_pct_reg2)
+              
+b <- df_pct_combined %>%
+        ggplot(aes(x = Season, y = pct)) + 
+        geom_point() +
+        geom_line(aes(group = calc_type, colour = calc_type)) +
+        #geom_point(aes(size = champ)) +
+        scale_y_continuous(labels = scales::percent) +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+        labs(title = "Regular season win %", caption = "Large circles represent NCAA championship winning season.")
+p_reg
+
+              
+```
+

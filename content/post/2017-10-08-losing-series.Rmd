@@ -118,7 +118,54 @@ And there they are: Kentucky and Duke have been relatively better than us since 
 Finally, I was wondering if there is any school that we have never won, not even once since 1949-50 season, having played at least 2 games. It's quite easy to do, because all I had to do was to change the variable "minimum number of games played" in the script that I used earlier. Regardless of amount of efforts involved, there shouldn't be a school that's having a perfect winning series against us, right?
 
 ```{r, label = perfect_losing, echo = FALSE}
+theme_uncmbb2 <- function () {
+  # http://www.color-hex.com/color/99badd
+  theme_bw(base_size = 12, base_family = "Avenir") %+replace%
+    theme(
+      plot.background = element_blank(),
+      panel.background = element_rect(fill = "#ccdcee", colour = NA),
+      #axis.text = element_text(colour = "#99badd"),
+      axis.ticks = element_blank(),
+      panel.border = element_rect(colour = "#99badd", fill = NA),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.minor.y = element_blank()
 
+    )
+}
+
+theme_uncmbb3 <- function () {
+  # http://www.color-hex.com/color/99badd
+  theme_bw(base_size = 12, base_family = "Avenir") %+replace%
+    theme(
+      panel.background = element_blank(),
+      plot.background = element_rect(fill = "transparent", colour = NA),
+      axis.text = element_text(colour = "#99badd"),
+      axis.ticks = element_blank(),
+     panel.border = element_rect(colour = "#99badd", fill = NA),
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_line(colour = "#99badd"),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.minor.y = element_blank()
+
+    )
+}
+  theme_uncmbb4 <- function () {
+  # http://www.color-hex.com/color/99badd
+  theme_bw(base_size = 12, base_family = "Avenir") %+replace%
+    theme(
+      plot.background = element_rect(fill = "transparent", colour = NA),
+      panel.background = element_rect(fill = "#f4f8fb"),
+      axis.text = element_text(colour = "#99badd"),
+      axis.ticks = element_blank(),
+      panel.border = element_rect(colour = "#99badd", fill = NA),
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_line(colour = "#99badd"),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.minor.y = element_blank()
+
+    )
+  }
+  
 start_yr <- 1950
 min_gms <- 2
 perc_threshold <- 0.5
@@ -130,11 +177,11 @@ losing <- unc %>%
 
 losing %>%
   ggplot(aes(x = reorder(Opponent_School, -win_perc), y = win_perc)) + 
-  geom_bar(stat = "identity") + 
+  geom_bar(stat = "identity") + #, fill = "white", colour = "black") + 
   geom_text(aes(label = paste0(wins, " wins out of ", games)), vjust = -0.25, size = 3) +
   scale_y_continuous(label = scales::percent) +
   labs(title = paste0("UNC has losing series records (minimum ", min_gms, " games) \nagainst these schools since 1949-50 season."), x = "Opponent", y = "Win %") +
-  theme_bw() +
+  #theme_uncmbb2() +
   theme(text = element_text(size = 10))
 
 losing %>% 
