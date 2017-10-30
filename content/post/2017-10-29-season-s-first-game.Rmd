@@ -1,0 +1,81 @@
+---
+title: Season’s first game
+author: uncmbbtrivia
+date: '2017-10-29'
+slug: season-s-first-game
+categories: []
+tags: []
+draft: false
+---
+
+UNC MBB team had its first official exhibition game of the 2017-18 season this past week against Barton college. It was the first official exhibition, because there was a scrimmage (unofficial exhibition?) with Memphis team about a week before UNC MBB faced Baron college. 
+
+The team's first official regular season game is in less than 2 weeks against Northern Iowa, and just like they won the unofficial games (with questionable performance) so far, I'd expect the team to start the season with a W. 
+
+But then again, I'm just another casual fan here, and history might say otherwise. So I took a look at how UNC MBB played its first official games since 1949-50 season. Surely we must have won the first game of each season?
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(jutilr))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+firsts <- unc %>% group_by(Season) %>% 
+        arrange(Game_Date) %>% 
+        mutate(game_order = row_number()) %>% 
+        filter(game_order == 1)  
+
+firsts %>% ungroup() %>% 
+        count(Result) %>% 
+        add_percent(var = n) %>%
+        kable("html") %>%
+        kable_styling()
+
+```
+
+Here we go again. Since 1949-50 season, there have been 5 seasons in which UNC MBB started a season with a L. Purely based on my memory, I knew the 2004-05 championship season started with a L against Santa Clara team, but let's see what other seasons gave the fans rather depressing outlook for the season, albeit briefly. 
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+firstsL <- firsts %>% filter(Result == "L") %>%
+        select(-game_order, -OT, -Game_Day) 
+
+firstsL %>%
+        kable("html", caption = "Season Opener Loss") %>%
+        kable_styling()
+
+```
+
+I'm not that familiar with 60s (and 70s) games, but it's interesting that the 1965-66 season's first game was against Clemson, an ACC team even back then (wasn't sure if Clemson was in ACC back then, and found out they were). ACC confererence games don't start until late December or early January these days, so maybe they had a different conference schedule policy back then. 
+
+1982-83 season was a championship defending season just like upcoming 2017-18 season, and the loss against St. John's must have given many fans an inauspicious feeling about their defending season. Let's hope we don't start this defending season like that, although I wouldn't mind finishing this defending season at regional final as MJ and team did back then. 
+
+1996-97 season is interesting, because we lost the first and last game of the season to the same team, Arizona  (see table below). Not quite the same setting, but I remember feeling so bad for Michigan State team back in 2008-09 season when we beat them twice, first quite early in the season (but not the season opener), and later in the season finale in Detroit. So it must have been really depressing for the team and the fans to start and end the season that way, losing twice to the same team.
+
+And there's that 2004-05 season opener loss to Santa Clara, but we know there's a happy ending to this one, so I won't go into much details for that season here. I know there is that 2001-02 season opener loss to Hampton too, but I'm pretending it didn't even exist for obvious reason. I know it's not fair, and that season (and failures leading up to the season) probably deserves a separate post in the future.
+
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+
+lasts <- unc %>% group_by(Season) %>% 
+        arrange(Game_Date) %>% 
+        mutate(game_order = row_number()) %>% 
+        filter(game_order == max(game_order))  
+
+lastsfL <- lasts %>% filter(Season %in% firstsL$Season)
+
+lastsfL %>%
+        select(-game_order, -OT, -Game_Day) %>%
+        kable("html", caption = "Season's Last Game") %>%
+        kable_styling()
+
+```
+
+Just out of curiosity, I looked for seasons where the first and last game was played against the same team, and it turns out since 1949-50 season, 1996-97 season was the only such season. 
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8, include = FALSE}
+fl <- firsts %>% inner_join(lasts, by = c("Season"))
+flsame <- fl %>% filter(Opponent_School.x == Opponent_School.y)
+
+```
