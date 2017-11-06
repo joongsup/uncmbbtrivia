@@ -6,10 +6,20 @@
     <description>Recent content on UNC MBB TRIVIA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>5th year players</title>
+      <link>/post/5th-year-players/</link>
+      <pubDate>Sun, 05 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/5th-year-players/</guid>
+      <description>As I mentioned it in an earlier post, I’ve been wanting to add each season’s players info to my data source. Although it needs more cleaning still, I finally got around to it and got to play with the players data a bit lately.
+As part of cleaning the players data, I needed to make sure that for most players, their college careers lasted at most for four years. At one end of the extreme sit those one-and-done players (e.</description>
+    </item>
     
     <item>
       <title>Season’s first game</title>

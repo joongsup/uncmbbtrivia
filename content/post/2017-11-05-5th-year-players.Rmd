@@ -1,0 +1,58 @@
+---
+title: 5th year players
+author: uncmbbtrivia
+date: '2017-11-05'
+slug: 5th-year-players
+categories: []
+tags: []
+draft: true
+---
+
+As I mentioned it in an earlier [post](http://uncmbbtrivia.netlify.com/post/season-win-percentage/), I've been wanting to add each season's players info to my data [source](https://cran.r-project.org/web/packages/uncmbb/index.html). Although it needs more cleaning still, I finally got around to it and got to play with the players data a bit lately. 
+
+As part of cleaning the players data, I needed to make sure that for most players, their college careers lasted at most for four years. At one end of the extreme sit those one-and-done players (e.g., Tony Bradley, Marvin Williams); at the other end are the 5th year players. 
+
+Fresh in memory from reading the 2009 championship book ("One Fantastic Ride") by Adam Lucas, I knew about Marcus Ginyard's case. He hurted one of his legs early in his senior season and sat out the remainder of what turned out to be the championship season. Also I remember reading an article about Stilman White taking a mission trip while in college. I was curious if there were other players like them. 
+
+
+```{r, echo = FALSE}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+t <- readRDS("../../../../uncmbb/data-raw/unc_roster_combined_fixed_all.RDS")
+t5 <- t %>% count(Player) %>% arrange(desc(n)) %>% filter(n > 4)
+t5 <- t %>% group_by(Player) %>% arrange(Season) %>% summarize(first_yr = min(Season), last_yr = max(Season)) %>% mutate(years = last_yr - first_yr + 1) %>% filter(years >= 5) %>% arrange(first_yr) %>% filter(Player != "Scott Williams")
+#t %>% filter(Player == "Tony Radovich")
+#t %>% filter(Player %in% t5$Player)
+t5$note <- NA
+t5[t5$Player == "Stilman White", ]$note <- "After 1st year, spent 2 years in mission trip."
+t5[t5$Player == "Leslie McDonald", ]$note <- "Redshirted 3rd year due to a knee injury."
+t5[t5$Player == "Marcus Ginyard", ]$note <- "Redshirted 4th year due to a foot injury."
+t5[t5$Player == "Orlando Melendez", ]$note <- "Redshirted 1st year due to a foot injury."
+t5[t5$Player == "Brian Bersticker", ]$note <- "Redshirted 3rd year due to an injury."
+#A native of Bogota, N.J., Sullivan played college basketball at North Carolina, where he was one of just eight Tar Heels to reach three Final Fours (1991, 1993 and 1995).
+t5[t5$Player == "Pat Sullivan", ]$note <- "Redshirted 4th year."
+t5[t5$Player == "Kevin Madden", ]$note <- "Redshirted 2nd year."
+t5[t5$Player == "Curtis Hunter", ]$note <- "Redshirted 2nd year."
+t5[t5$Player == "Warren Martin", ]$note <- "Redshirted 3rd year."
+t5[t5$Player == "Geoff Crompton", ]$note <- "Redshirted 2nd year."
+t5[t5$Player == "Tony Radovich", ]$note <- "Somehow played for 5 seasons."
+
+t5 %>% 
+  select(-years) %>%
+  kable("html") %>%
+  kable_styling()
+
+```
+
+Other than the three most recent players on the list (e.g., White, McDonald, and Ginyard), I had no idea who the remaining eight players were, thus needing googling and cross checking various sources I could find online. It was not a very comprehensive searching effort, but not surprisingly, this quick researching revealed that many of them took a year off due to injuries of various kinds, although it was hard to find exactly what kinds of injuries led players to redshirt a year expecially for those who played in pre 90s. 
+
+Best of luck to the players in the 2017-18 roster who open the season this Friday, and let's hope for an injury-free and awesome season (knocking on wood)! 
+
+
+
+
+
