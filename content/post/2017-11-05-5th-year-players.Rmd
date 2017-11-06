@@ -5,7 +5,7 @@ date: '2017-11-05'
 slug: 5th-year-players
 categories: []
 tags: []
-draft: true
+draft: false
 ---
 
 As I mentioned it in an earlier [post](http://uncmbbtrivia.netlify.com/post/season-win-percentage/), I've been wanting to add each season's players info to my data [source](https://cran.r-project.org/web/packages/uncmbb/index.html). Although it needs more cleaning still, I finally got around to it and got to play with the players data a bit lately. 
