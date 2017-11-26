@@ -1,0 +1,117 @@
+---
+title: Average points difference through first N games
+author: uncmbbtrivia
+date: '2017-11-25'
+slug: points-difference-season-average
+categories: []
+tags: []
+draft: true
+---
+
+Time flies, and the Tar Heels played the season's first 5 games already. And loosely speaking, they've played well so far (knocking on woods), to the eyes of just another casual fan here!
+
+I'm not going to say anything about this season's fate based on the results of the season's first 5 games, but still I was curious how well this season compares to other seasons at this point. There could be many different ways to do just that, but I thought looking at each season's running average of points difference after each regular season game might be interesting.
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+
+df_ncaa <- unc %>%
+            filter(Type == "NCAA") %>%
+            group_by(Season) %>% 
+            summarize(losses = sum(Result == "L")) %>%
+            filter(losses == 0) %>%
+            select(Season)
+
+a <- unc %>%
+            filter(Type == "REG") %>%
+            group_by(Season) %>% 
+            arrange(Game_Date) %>%
+            mutate(diff = Tm - Opp, diffsum = cumsum(diff), num = row_number(), diffavg = diffsum/num) %>%
+            mutate(champ = ifelse(Season %in% df_ncaa$Season, 1, 0)) %>%
+            select(Season, Type, Opponent_School, Tm, Opp, diffsum, num, diffavg, champ)
+
+nth_game_of_the_season <- 5
+
+b <- readRDS(file = "/Users/jl939a/projects/blog/backup/current_season.RDS")
+b <- b %>% 
+          mutate(Season = "2018", champ = 2) %>%
+          select(Season, Type, Opponent, Tm, Opp, diffsum, num, diffavg, champ) %>%
+          rename(Opponent_School = Opponent) %>%
+          filter(row_number() <= 5)
+
+d <- rbind(ungroup(a), b)
+
+```
+
+Looking through the 5th game of each season, the current season sits at 19th out of total 69 seasons since 1949-50 campaign as it shows in the next table. Also note that 3 of the top 6 seasons in the table (2017, 1993, and 2009) were championship winning seasons. 
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 12}
+g <- d %>% filter(num == 5) %>%
+      arrange(desc(diffavg)) %>%
+      mutate(rank = row_number()) %>%
+      select(rank, Season, Opponent_School, Tm, Opp, diffavg) %>%
+      rename(Rank = rank, Season = Season, Opponent = Opponent_School, Tm = Tm, Opp = Opp, Avg_Diff = diffavg)
+      
+
+head(g, 20) %>% 
+  kable("html", caption = "Average points difference through season's first 5 games (showing 5th game opponent)") %>%
+  kable_styling()
+```
+
+When we look at the running average of points difference each season, it seems to be stablizing after first couple of games each season. Maybe it's after the first 5 games, or maybe it's after the beginning of the conference games, but regardless, considering first few games each season are usually "easier" than later games, that observation seems to make sense. 
+
+I tried to distinguish three different types of seasons in the plot: (1) 6 NCAA championship winning seasons (in black), (2) current season (in carolin blue), and  (3) all the other seasons (in grey).
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+g <- d %>% ggplot(aes(x = num, y = diffavg)) + 
+        geom_line(aes(group = Season, colour = factor(champ))) + #, size = champ)) +
+        geom_point(data = b, aes(group = Season), colour = "#99badd") + 
+        geom_vline(xintercept = nth_game_of_the_season, linetype = 3) +
+        theme_bw() + 
+        theme(legend.position = "none") +
+        scale_x_continuous(breaks = 5 * c(0:7)) +
+        scale_colour_manual(values = c("grey", "black", "#99badd")) + ##99badd
+        labs(title = "Running average of points difference after each game for each season since 1949-50 season", x = "Season's First N Games", y = "Avg Points Difference")
+
+g
+```
+
+And what's with that high flying season in grey that had average points difference of 30+ through the first 15 games ?
+
+```{r, echo = FALSE}
+g <- d %>% filter(num == 15) %>% 
+      arrange(desc(diffavg)) %>%
+      mutate(rank = row_number()) %>%
+      select(rank, Season, Opponent_School, Tm, Opp, diffavg) %>%
+      rename(Rank = rank, Season = Season, Opponent = Opponent_School, Tm = Tm, Opp = Opp, Avg_Diff = diffavg) 
+
+g %>%
+      head(5) %>%
+      kable("html", caption = "Average points difference through season's first 15 games (showing 15th game opponent)") %>%
+      kable_styling()
+```
+
+It turns out it was the 1985-86 season, and it must have been a somewhat disappointing season without the championship trophy after blazing through opponents early in the season. Seems like their last game was against U of L. 
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 12}
+
+unc %>% filter(Season == 1986) %>% 
+  select(Season, Game_Date, Type, Where, Opponent_School, Result, Tm, Opp) %>%
+  head(5) %>%
+  kable("html") %>%
+  kable_styling()
+
+unc %>% filter(Season == 1986) %>% 
+  select(Season, Game_Date, Type, Where, Opponent_School, Result, Tm, Opp) %>%
+  tail(5) %>%
+  kable("html") %>%
+  kable_styling()
+
+```
+
+Next up Spartans! Go Heels!

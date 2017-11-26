@@ -6,10 +6,20 @@
     <description>Recent content in Posts on UNC MBB TRIVIA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Average points difference through first N games</title>
+      <link>/post/points-difference-season-average/</link>
+      <pubDate>Sat, 25 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/points-difference-season-average/</guid>
+      <description>Time flies, and the Tar Heels played the season’s first 5 games already. And loosely speaking, they’ve played well so far (knocking on woods), to the eyes of just another casual fan here!
+I’m not going to say anything about this season’s fate based on the results of the season’s first 5 games, but still I was curious how well this season compares to other seasons at this point. There could be many different ways to do just that, but I thought looking at each season’s running average of points difference after each regular season game might be interesting.</description>
+    </item>
     
     <item>
       <title>5th year players</title>
