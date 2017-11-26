@@ -5,7 +5,7 @@ date: '2017-11-25'
 slug: points-difference-season-average
 categories: []
 tags: []
-draft: true
+draft: false
 ---
 
 Time flies, and the Tar Heels played the season's first 5 games already. And loosely speaking, they've played well so far (knocking on woods), to the eyes of just another casual fan here!
