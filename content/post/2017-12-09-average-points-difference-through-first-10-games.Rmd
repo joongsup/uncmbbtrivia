@@ -1,0 +1,96 @@
+---
+title: Average points difference through first 10 games
+author: uncmbbtrivia
+date: '2017-12-09'
+slug: average-points-difference-through-first-10-games
+categories: []
+tags: []
+draft: false
+---
+
+A quick update to the last post, where I looked at the (running) average of points difference through first 5 games then. 5 more games were played since then, so let's look at the running average of points difference through the season's first 10 games. All I have to do was to change the current number of game (from 5 to 10) and re-run the script.
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+df_ncaa <- unc %>%
+            filter(Type == "NCAA") %>%
+            group_by(Season) %>% 
+            summarize(losses = sum(Result == "L")) %>%
+            filter(losses == 0) %>%
+            select(Season)
+
+a <- unc %>%
+            filter(Type == "REG") %>%
+            group_by(Season) %>% 
+            arrange(Game_Date) %>%
+            mutate(diff = Tm - Opp, diffsum = cumsum(diff), num = row_number(), diffavg = diffsum/num) %>%
+            mutate(champ = ifelse(Season %in% df_ncaa$Season, 1, 0)) %>%
+            select(Season, Type, Opponent_School, Tm, Opp, diffsum, num, diffavg, champ)
+
+nth_game_of_the_season <- 10
+
+# before reading current_season.RDS, need to refresh the file from uncmbb.Rproj
+b <- readRDS(file = "/Users/jl939a/projects/blog/backup/current_season.RDS")
+b <- b %>% 
+          mutate(Season = "2018", champ = 2) %>%
+          select(Season, Type, Opponent, Tm, Opp, diffsum, num, diffavg, champ) %>%
+          rename(Opponent_School = Opponent) %>%
+          filter(row_number() <= nth_game_of_the_season)
+
+d <- rbind(ungroup(a), b)
+
+g <- d %>% ggplot(aes(x = num, y = diffavg)) + 
+        geom_line(aes(group = Season, colour = factor(champ))) + #, size = champ)) +
+        geom_point(data = b, aes(group = Season), colour = "#99badd") + 
+        geom_vline(xintercept = nth_game_of_the_season, linetype = 3) +
+        theme_bw() + 
+        theme(legend.position = "none") +
+        scale_x_continuous(breaks = 5 * c(0:7)) +
+        scale_colour_manual(values = c("grey", "black", "#99badd")) + ##99badd
+        labs(title = "Running average of points difference after each game for each season since 1949-50 season", x = "Season's First N Games", y = "Avg Points Difference")
+
+g
+```
+
+```{r, echo = FALSE}
+g <- d %>% filter(num == nth_game_of_the_season) %>%
+      arrange(desc(diffavg)) %>%
+      mutate(rank = row_number()) %>%
+      select(rank, Season, Opponent_School, Tm, Opp, diffavg) %>%
+      rename(Rank = rank, Season = Season, Opponent = Opponent_School, Tm = Tm, Opp = Opp, Avg_Diff = diffavg)
+      
+
+g %>% filter(Season == 2018) %>% 
+  kable("html", caption = paste0("Average points difference through season's first ", nth_game_of_the_season, " games")) %>%
+  kable_styling()
+```
+
+The impact of the first loss of the season to Spartans is evident, as the running average dropped significantly from the 5th to the 6th game, which was the lost game. With the last game win against Western Carolina, the running average gained a good momentum, and the average through the season's first 10 games sits at 24 out of 69 seasons since 1949-50 season.
+
+Just for fun, let's see how bad the loss was in terms of its impact to the running average since 1949-50 season. 
+
+```{r, echo = FALSE}
+d1 <- d %>% 
+              group_by(Season) %>%
+              mutate(diffavg_next1 = lead(diffavg), diffavg_prev1 = lag(diffavg)) %>%
+              mutate(delta_n1 = diffavg_next1 - diffavg, delta_p1 = diffavg - diffavg_prev1) %>%
+              arrange(Season, delta_p1) %>%
+              select(-Type) %>%
+              filter(num == 6) %>% 
+              arrange(delta_p1)
+
+d1 %>% head(5) %>%
+            select(Season, Opponent_School, Tm, Opp, diffavg, diffavg_prev1, delta_p1) %>%
+            kable("html", caption = "6th games impact to points difference running average") %>%
+            kable_styling()
+```
+
+So the loss to Spartans was one of the worst, measured by the changes to the points difference running average between 5th and 6th games, dropping the season average by more than 6 points. It's probably not the most interesting number to quote to gauge how bad the game actually was, and many historic (and more intereting) low records have been already covered for the game. 
+
+Good news is that the running average is increaing sharply after a trio of relatively on-par performances since the loss until the Western Carolina game, in which we played so well that many historic high records have been produced. 
+

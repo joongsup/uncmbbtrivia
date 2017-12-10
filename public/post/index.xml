@@ -6,10 +6,20 @@
     <description>Recent content in Posts on UNC MBB TRIVIA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 Dec 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Average points difference through first 10 games</title>
+      <link>/post/average-points-difference-through-first-10-games/</link>
+      <pubDate>Sat, 09 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/average-points-difference-through-first-10-games/</guid>
+      <description>A quick update to the last post, where I looked at the (running) average of points difference through first 5 games then. 5 more games were played since then, so let’s look at the running average of points difference through the season’s first 10 games. All I have to do was to change the current number of game (from 5 to 10) and re-run the script.
+ Table 1: Average points difference through season’s first 10 games    Rank  Season  Opponent  Tm  Opp  Avg_Diff      24  2018  Western Carolina  104  61  17     The impact of the first loss of the season to Spartans is evident, as the running average dropped significantly from the 5th to the 6th game, which was the lost game.</description>
+    </item>
     
     <item>
       <title>Average points difference through first N games</title>
