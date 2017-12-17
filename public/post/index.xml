@@ -6,10 +6,21 @@
     <description>Recent content in Posts on UNC MBB TRIVIA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 Dec 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Days between games</title>
+      <link>/post/days-between-games/</link>
+      <pubDate>Fri, 15 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/days-between-games/</guid>
+      <description>After a long (exam) break, next up for the Tar Heels is Tennessee on Sunday, 12/17. 11 days since the last game against Western Carolina seemed unusually long to just another casual fan here, and I was curious how usual or unusual 11 days between any two games are.
+I started with the frequency of days between two consecutive regular season games since 1949-50 season.
+Ok, it looks like the majority of regular season games were 3 days apart, with such games accounting for approximately 28% (or 504 games) of all the regular season games played since 1949-50 season.</description>
+    </item>
     
     <item>
       <title>Average points difference through first 10 games</title>

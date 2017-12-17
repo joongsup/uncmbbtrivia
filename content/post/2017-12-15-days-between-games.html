@@ -1,0 +1,688 @@
+---
+title: Days between games
+author: uncmbbtrivia
+date: '2017-12-15'
+slug: days-between-games
+categories: []
+tags: []
+draft: false
+---
+
+
+
+<p>After a long (exam) break, next up for the Tar Heels is Tennessee on Sunday, 12/17. 11 days since the last game against Western Carolina seemed unusually long to just another casual fan here, and I was curious how usual or unusual 11 days between any two games are.</p>
+<p>I started with the frequency of days between two consecutive regular season games since 1949-50 season.</p>
+<p><img src="/post/2017-12-15-days-between-games_files/figure-html/unnamed-chunk-1-1.png" width="1152" /></p>
+<p>Ok, it looks like the majority of regular season games were 3 days apart, with such games accounting for approximately 28% (or 504 games) of all the regular season games played since 1949-50 season. Next frequent pair of games were 4 days apart (21%, 389 games).</p>
+<p>What is more interesting to me, however, was the fact that there were some consecutive games played more than 2 weeks apart. What were those games anyways?</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-2">Table 1: </span>Consecutive games played more than 2 weeks apart
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Season
+</th>
+<th style="text-align:left;">
+next_dt
+</th>
+<th style="text-align:left;">
+next_opp
+</th>
+<th style="text-align:left;">
+next_result
+</th>
+<th style="text-align:left;">
+last_dt
+</th>
+<th style="text-align:left;">
+last_opp
+</th>
+<th style="text-align:left;">
+last_result
+</th>
+<th style="text-align:right;">
+days_apart
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1950
+</td>
+<td style="text-align:left;">
+1949-12-28
+</td>
+<td style="text-align:left;">
+West Virginia
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1949-12-09
+</td>
+<td style="text-align:left;">
+George Washington
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1953
+</td>
+<td style="text-align:left;">
+1952-12-29
+</td>
+<td style="text-align:left;">
+Holy Cross
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1952-12-10
+</td>
+<td style="text-align:left;">
+Clemson
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1954
+</td>
+<td style="text-align:left;">
+1954-02-02
+</td>
+<td style="text-align:left;">
+Washington &amp; Lee
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1954-01-19
+</td>
+<td style="text-align:left;">
+North Carolina State
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1955
+</td>
+<td style="text-align:left;">
+1955-02-04
+</td>
+<td style="text-align:left;">
+Duke
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1955-01-18
+</td>
+<td style="text-align:left;">
+North Carolina State
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1956
+</td>
+<td style="text-align:left;">
+1956-02-04
+</td>
+<td style="text-align:left;">
+Duke
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1956-01-18
+</td>
+<td style="text-align:left;">
+North Carolina State
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1957
+</td>
+<td style="text-align:left;">
+1957-01-30
+</td>
+<td style="text-align:left;">
+Western Carolina
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1957-01-15
+</td>
+<td style="text-align:left;">
+North Carolina State
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1958
+</td>
+<td style="text-align:left;">
+1958-02-01
+</td>
+<td style="text-align:left;">
+South Carolina
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1958-01-18
+</td>
+<td style="text-align:left;">
+Clemson
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1959
+</td>
+<td style="text-align:left;">
+1959-01-30
+</td>
+<td style="text-align:left;">
+Clemson
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1959-01-14
+</td>
+<td style="text-align:left;">
+North Carolina State
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1960
+</td>
+<td style="text-align:left;">
+1960-02-03
+</td>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1960-01-16
+</td>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1962
+</td>
+<td style="text-align:left;">
+1962-01-06
+</td>
+<td style="text-align:left;">
+Notre Dame
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1961-12-11
+</td>
+<td style="text-align:left;">
+Indiana
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1962
+</td>
+<td style="text-align:left;">
+1962-02-03
+</td>
+<td style="text-align:left;">
+Duke
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1962-01-17
+</td>
+<td style="text-align:left;">
+North Carolina State
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1963
+</td>
+<td style="text-align:left;">
+1963-01-02
+</td>
+<td style="text-align:left;">
+Yale
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1962-12-17
+</td>
+<td style="text-align:left;">
+Kentucky
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1963
+</td>
+<td style="text-align:left;">
+1963-02-02
+</td>
+<td style="text-align:left;">
+Duke
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1963-01-19
+</td>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1964
+</td>
+<td style="text-align:left;">
+1964-01-04
+</td>
+<td style="text-align:left;">
+Notre Dame
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1963-12-18
+</td>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1964
+</td>
+<td style="text-align:left;">
+1964-02-03
+</td>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1964-01-18
+</td>
+<td style="text-align:left;">
+Virginia Tech
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1965
+</td>
+<td style="text-align:left;">
+1965-01-04
+</td>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1964-12-21
+</td>
+<td style="text-align:left;">
+Florida
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1965
+</td>
+<td style="text-align:left;">
+1965-01-30
+</td>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+1965-01-16
+</td>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1966
+</td>
+<td style="text-align:left;">
+1966-02-03
+</td>
+<td style="text-align:left;">
+Wake Forest
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1966-01-15
+</td>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1967
+</td>
+<td style="text-align:left;">
+1967-01-28
+</td>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1967-01-11
+</td>
+<td style="text-align:left;">
+North Carolina State
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1968
+</td>
+<td style="text-align:left;">
+1968-01-27
+</td>
+<td style="text-align:left;">
+Georgia Tech
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1968-01-13
+</td>
+<td style="text-align:left;">
+Clemson
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1969
+</td>
+<td style="text-align:left;">
+1969-02-01
+</td>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1969-01-18
+</td>
+<td style="text-align:left;">
+Wake Forest
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:left;">
+1970-01-31
+</td>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1970-01-17
+</td>
+<td style="text-align:left;">
+Wake Forest
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1971
+</td>
+<td style="text-align:left;">
+1971-01-30
+</td>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1971-01-16
+</td>
+<td style="text-align:left;">
+Wake Forest
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1992
+</td>
+<td style="text-align:left;">
+1992-01-02
+</td>
+<td style="text-align:left;">
+Purdue
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+1991-12-17
+</td>
+<td style="text-align:left;">
+Jacksonville
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+</tbody>
+</table>
+<p>So the two games against Indiana and Notre Dame were played 26 days apart (!!!) during 1961-62 season. Wonder what was all that about. A quick search didn’t turn up anything about the specifics of those two games, but a gentle reminder that 1961-62 season was coach Smith’s first season at Carolina. I like running into things like this while exploring the match data :) (and what about those pairs of NC State/Duke games in 1954-55 and 1955-56 seasons!?)</p>
+<p>Next, I became curious what’s the most frequent pair of game days. Easily weekends must be the most frequent game days, I guessed.</p>
+<p><img src="/post/2017-12-15-days-between-games_files/figure-html/unnamed-chunk-3-1.png" width="1152" /></p>
+<p>So I was half right, because the Tar Heels indeed played the most on Saturdays, but the next most frequent game day was Wednesdays. I wonder if there’s any particular reason as to why Wednesdays have seen unusually many game actions compared to other weekdays.</p>
+<p>In any case, the two observations seem to match, i.e., (1) two consecutive regular season games were played 3 days apart mostly, and (2) the games were played on Wed and Sat mostly. However, a Wed game may or may not have been followed by a Saturday game, nor a Saturday game may or may not have followed the previous Wed game. So I was wondering if indeed the two game days (Wed and Sat) are the most frequent consecutive game days.</p>
+<p><img src="/post/2017-12-15-days-between-games_files/figure-html/unnamed-chunk-4-1.png" width="1152" /></p>
+<p>So indeed, Wed/Sat (3-day apart) was the most frequent game day pair, followed by Sat/Wed (4-day apart) pair. Below chart shows the same thing, with each row representing previous game day vs. each folumn the next game day.</p>
+<p><img src="/post/2017-12-15-days-between-games_files/figure-html/unnamed-chunk-5-1.png" width="1152" /></p>
+<p>So then what about the results of those games played after a long break?</p>
+<p><img src="/post/2017-12-15-days-between-games_files/figure-html/unnamed-chunk-6-1.png" width="1152" /></p>
+<p>For games at least 10 days apart, Tar Heels won both games right before and after breaks mostly. For example, for consecutive games that are exacxtly 10 days apart, 6 times (purple fill) we won both the last game before the break and the first game after the break, and one time (green fill) we lost the last game before the break and won the first game after the break.</p>
+<p>Now for Sunday’s game against Tennessee, with 11 days apart from last game, we have a chance to even the results. So far 3 times (turquoise) we won the last game before the break and lost in the first game after the break, and 2 times (purple) we won both the last game before the break and the first game after the break.</p>
