@@ -6,10 +6,20 @@
     <description>Recent content on UNC MBB TRIVIA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Same day match results: UNC and Duke</title>
+      <link>/post/same-day-match-results-unc-and-duke/</link>
+      <pubDate>Sun, 07 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/same-day-match-results-unc-and-duke/</guid>
+      <description>So both UNC and Duke lost today (Saturday, 2018-01-06). I’d think it’s pretty rare that such event (both teams losing on a same day) happens, and I got curious how rare it is indeed. What are the odds of both teams winning, losing (like today), and splitting?
+I knew both teams have approximately 75% win percentage (since 1949-50 season), so I’m guessing on any given day, the probability of both teams winning should be close to 0.</description>
+    </item>
     
     <item>
       <title>Days between games</title>

@@ -1,0 +1,135 @@
+---
+title: 'Same day match results: UNC and Duke'
+author: uncmbbtrivia
+date: '2018-01-07'
+slug: same-day-match-results-unc-and-duke
+categories: []
+tags: []
+draft: false
+---
+
+
+
+<p>So both UNC and Duke lost today (Saturday, 2018-01-06). I’d think it’s pretty rare that such event (both teams losing on a same day) happens, and I got curious how rare it is indeed. What are the odds of both teams winning, losing (like today), and splitting?</p>
+<p>I knew both teams have approximately 75% win percentage (since 1949-50 season), so I’m guessing on any given day, the probability of both teams winning should be close to 0.75 x 0.75 = 0.5625, assuming either team’s game result doesn’t really impact the other team’s result. Similarly, both teams losing at the same time should be close to 0.25 x 0.25 = 0.0625. Let’s see if history tells us otherwise.</p>
+<p><img src="/post/2018-01-07-same-day-match-results-unc-and-duke_files/figure-html/unnamed-chunk-2-1.png" width="1152" /></p>
+<p>It seems like the quick calculations seem to match the actual game results. Between 1949-50 and 2016-17 season, there were total 835 days in which both UNC and Duke played, not with each other, and it’s indeed rare that both teams lose on a same day (48 out of 835 days).</p>
+<p>Looking at the split days (W/L and L/W days), it seems UNC gathered more Ws than Duke did when they played on a same day. Let’s see how they played when they played on a same day (again not with each other, but playing some other teams).</p>
+<p><img src="/post/2018-01-07-same-day-match-results-unc-and-duke_files/figure-html/unnamed-chunk-3-1.png" width="1152" /></p>
+<p>So indeed, UNC have won slightly more matches than Duke did on days in which they both played, in all match types.</p>
+<p>One thing seems odd, though. Why have UNC played 719 regular matches when Duke played one fewer games in 718 if we’re talking about games played on same days? And reciprocally for CTOURN, Duke (76) played one more game than UNC (75). They should have played the same number of games, like that for NIT and NCAA.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-4">Table 1: </span>One extra regular game for UNC
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Season
+</th>
+<th style="text-align:left;">
+Game_Date
+</th>
+<th style="text-align:left;">
+Game_Day
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Where
+</th>
+<th style="text-align:left;">
+Opponent_School
+</th>
+<th style="text-align:left;">
+Result
+</th>
+<th style="text-align:right;">
+Tm
+</th>
+<th style="text-align:right;">
+Opp
+</th>
+<th style="text-align:left;">
+OT
+</th>
+<th style="text-align:left;">
+team
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1955
+</td>
+<td style="text-align:left;">
+1955-03-03
+</td>
+<td style="text-align:left;">
+Thu
+</td>
+<td style="text-align:left;">
+REG
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+Wake Forest
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+UNC’s Record
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1955
+</td>
+<td style="text-align:left;">
+1955-03-03
+</td>
+<td style="text-align:left;">
+Thu
+</td>
+<td style="text-align:left;">
+CTOURN
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+South Carolina
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Duke’s Record
+</td>
+</tr>
+</tbody>
+</table>
+<p>A quick investigation and <a href="https://en.wikipedia.org/wiki/1955_ACC_Men%27s_Basketball_Tournament">search</a> reveals that the UNC vs. Wake Forest game on 1955-03-03 was an ACC conference tournament game (CTOURN), not a regular season game. So it looks like the data source I’m using seems to have an incorrect record there. Although nothing big, another good gotcha while exploring the match data :)</p>

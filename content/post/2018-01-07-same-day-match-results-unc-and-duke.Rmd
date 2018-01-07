@@ -1,0 +1,107 @@
+---
+title: 'Same day match results: UNC and Duke'
+author: uncmbbtrivia
+date: '2018-01-07'
+slug: same-day-match-results-unc-and-duke
+categories: []
+tags: []
+draft: false
+---
+
+So both UNC and Duke lost today (Saturday, 2018-01-06). I'd think it's pretty rare that such event (both teams losing on a same day) happens, and I got curious how rare it is indeed. What are the odds of both teams winning, losing (like today), and splitting?
+
+I knew both teams have approximately 75% win percentage (since 1949-50 season), so I'm guessing on any given day, the probability of both teams winning should be close to 0.75 x 0.75 = `r 0.75 * 0.75`, assuming either team's game result doesn't really impact the other team's result. Similarly, both teams losing at the same time should be close to 0.25 x 0.25 = `r 0.25 * 0.25`. Let's see if history tells us otherwise. 
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+suppressPackageStartupMessages(library(tidyverse))
+
+# dates on which UNC and Duke played a game with other opponents
+target_dates <- unc %>% inner_join(duke, by = "Game_Date") %>%
+                        select(Game_Date)
+                        
+# UNC games played on same dates against non-Duke opponents
+a <- unc %>% filter(Game_Date %in% target_dates$Game_Date) %>%
+             filter(Opponent_School != "Duke")
+
+
+# Duke games played on same dates against non-UNC opponents
+b <- duke %>% filter(Game_Date %in% target_dates$Game_Date) %>%
+             filter(Opponent_School != "North Carolina")
+
+
+```
+
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+results <- a %>% select(Game_Date, Result) %>%
+            inner_join(b %>% select(Game_Date, Result), by = "Game_Date") %>%
+            rename(unc_result = Result.x, duke_result = Result.y)
+
+p <- results %>% group_by(unc_result, duke_result) %>%
+            summarize(n = n()) %>% ungroup() %>%
+            mutate(perc = n/sum(n)) %>%
+            arrange(desc(perc)) %>%
+            ggplot(aes(x = reorder(paste0(unc_result, "/", duke_result), -perc), y = perc)) + 
+            geom_bar(stat = "identity") +
+            geom_text(aes(label = paste0(n, " out of ", sum(n))), vjust = -0.1) +
+            theme_bw() +
+            labs(title = "Same day match results: UNC and Duke", x = "UNC/Duke Results", y = "%") +
+            scale_y_continuous(label = scales::percent, breaks = 0.05 * c(0:20))
+p
+```
+
+It seems like the quick calculations seem to match the actual game results. Between 1949-50 and 2016-17 season, there were total 835 days in which both UNC and Duke played, not with each other, and it's indeed rare that both teams lose on a same day (48 out of 835 days).
+
+Looking at the split days (W/L and L/W days), it seems UNC gathered more Ws than Duke did when they played on a same day. Let's see how they played when they played on a same day (again not with each other, but playing some other teams).
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+a1 <- a %>% group_by(Type, Result) %>%
+            summarize(n = n()) %>%
+            mutate(matches = sum(n), perc = n/sum(n)) %>%
+            mutate(school = "UNC")
+
+b1 <- b %>% group_by(Type, Result) %>%
+            summarize(n = n()) %>%
+            mutate(matches = sum(n), perc = n/sum(n)) %>%
+            mutate(school = "Duke")
+
+combined <- rbind(a1, b1)
+combined$Type <- factor(combined$Type, levels = c("REG", "NCAA", "CTOURN", "NIT"))
+p <- combined %>% filter(Result == "W") %>%
+             ggplot(aes(x = school, y = perc)) +
+             geom_bar(aes(fill = Type), stat = "identity") +
+             geom_text(aes(label = paste0(n, " out of ", matches)), vjust = 1.1) +
+             facet_grid(Type ~ .) +
+             theme_bw() +
+             labs(title = "Win percentage for each match type", x = "School", y = "Win %") +
+             theme(legend.position = "none")
+p
+
+```
+
+So indeed, UNC have won slightly more matches than Duke did on days in which they both played, in all match types. 
+
+One thing seems odd, though. Why have UNC played 719 regular matches when Duke played one fewer games in 718 if we're talking about games played on same days? And reciprocally for CTOURN, Duke (76) played one more game than UNC (75). They should have played the same number of games, like that for NIT and NCAA. 
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+
+x <- a %>% filter(Type == "REG")
+y <- b %>% filter(Type == "REG")
+xy <- x %>% left_join(y, by = "Game_Date") 
+
+# turns out it's 1955-03-03 matches that have different game types
+rbind(unc %>% filter(Game_Date == "1955-03-03") %>% mutate(team = "UNC's Record"), duke %>% filter(Game_Date == "1955-03-03") %>% mutate(team = "Duke's Record")) %>%
+  kable("html", caption = "One extra regular game for UNC") %>%
+  kable_styling()
+
+```
+
+A quick investigation and [search](https://en.wikipedia.org/wiki/1955_ACC_Men%27s_Basketball_Tournament) reveals that the UNC vs. Wake Forest game on 1955-03-03 was an ACC conference tournament game (CTOURN), not a regular season game. So it looks like the data source I'm using seems to have an incorrect record there. Although nothing big, another good gotcha while exploring the match data :)
+
+
+
+
+
