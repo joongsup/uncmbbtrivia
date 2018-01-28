@@ -1,0 +1,73 @@
+---
+title: Running command line scripts from R vs. Running R scripts from command line
+author: uncmbbtrivia
+date: '2018-01-08'
+slug: running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line
+categories: []
+tags: []
+draft: true
+---
+
+
+
+<p>Combining command line tools and R commands</p>
+<ol style="list-style-type: decimal">
+<li>R package itself</li>
+</ol>
+<ul>
+<li>command line utilities</li>
+<li>R wrapper functions</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>How functions in R package are used</li>
+</ol>
+<ul>
+<li>Use the wrapper functions in interactive way (explore.R)</li>
+<li>Use the wrapper functions in another .R script
+<ul>
+<li>Call the .R script in command line tools</li>
+<li>Make the .R script into R command line utility itself</li>
+</ul></li>
+</ul>
+<p>What I have so far:</p>
+<ol style="list-style-type: decimal">
+<li>read_hive_tbl() function</li>
+</ol>
+<ul>
+<li>What is it? R function</li>
+<li>What does it do? This function calls command line utility to read hive tables in R</li>
+<li>How is it used? It’s included in explore.R script (interactively in an R session)</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>ihx_lookup_batch.sh</li>
+</ol>
+<ul>
+<li>What is it? a shell script</li>
+<li>What does it do? This script calls R function to do ban lookup</li>
+<li>How is it used? It’s used as a command line utility (i.e., call the script directly from CLI)</li>
+</ul>
+<p>Comparison:</p>
+<ol style="list-style-type: decimal">
+<li>Run command line scripts (bash shell script) from within R</li>
+</ol>
+<ul>
+<li>When working interactively in R shell
+<ul>
+<li>Example: read_hive_tbl function in R</li>
+<li>at least two types of files required (.sh to do command line thingy and explore.R that calls the .sh)</li>
+</ul></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Run R scripts from command line</li>
+</ol>
+<ul>
+<li>Use shell script to run R command
+<ul>
+<li>at least two types of files required (.sh and .R)</li>
+</ul></li>
+<li>Call R command directly from command line
+<ul>
+<li>Example: R command line utilities ( <a href="http://blog.sellorm.com/2017/12/18/learn-to-write-command-line-utilities-in-r/" class="uri">http://blog.sellorm.com/2017/12/18/learn-to-write-command-line-utilities-in-r/</a>)</li>
+<li>only .R file type</li>
+</ul></li>
+</ul>

@@ -1,0 +1,50 @@
+---
+title: Running command line scripts from R vs. Running R scripts from command line
+author: uncmbbtrivia
+date: '2018-01-08'
+slug: running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line
+categories: []
+tags: []
+draft: true
+---
+
+Combining command line tools and R commands
+
+1. R package itself
+  - command line utilities
+  - R wrapper functions
+  
+2. How functions in R package are used
+  - Use the wrapper functions in interactive way (explore.R)
+  - Use the wrapper functions in another .R script
+    - Call the .R script in command line tools
+    - Make the .R script into R command line utility itself
+
+
+
+What I have so far:
+
+1.  read_hive_tbl() function
+- What is it? R function
+- What does it do? This function calls command line utility to read hive tables in R
+- How is it used? It's included in explore.R script (interactively in an R session)
+
+2. ihx_lookup_batch.sh 
+- What is it? a shell script
+- What does it do? This script calls R function to do ban lookup
+- How is it used? It's used as a command line utility (i.e., call the script directly from CLI)
+
+
+Comparison:
+
+1. Run command line scripts (bash shell script) from within R
+- When working interactively in R shell 
+    - Example: read_hive_tbl function in R
+    - at least two types of files required (.sh to do command line thingy and explore.R that calls the .sh)
+
+2. Run R scripts from command line
+- Use shell script to run R command
+    - at least two types of files required (.sh and .R)
+- Call R command directly from command line 
+    - Example: R command line utilities ( http://blog.sellorm.com/2017/12/18/learn-to-write-command-line-utilities-in-r/)
+    - only .R file type

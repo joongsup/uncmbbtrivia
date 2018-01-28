@@ -1,6 +1,6 @@
 baseURL = "https://uncmbbtrivia.netlify.com/"
 languageCode = "en-us"
-title = "UNC MBB TRIVIA"
+title = "Jay's Notes"
 theme = "minimal"
 #disqusShortname = "" 
 #googleAnalytics = ""
@@ -9,7 +9,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
     author = "UNCMBBTRIVIA"
-    description = "UNC Men's Basketball Trivia"
+    description = "Mostly About R and UNC MBB Trivia"
     #githubUsername = "#"
     accent = "#99badd" #caroina blue
     showBorder = true

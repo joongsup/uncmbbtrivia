@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>UNC MBB TRIVIA</title>
+    <title>Jay&#39;s Notes</title>
     <link>/</link>
-    <description>Recent content on UNC MBB TRIVIA</description>
+    <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data Analysis Workflow at Work</title>
+      <link>/post/data-analysis-workflow/</link>
+      <pubDate>Fri, 19 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/data-analysis-workflow/</guid>
+      <description>Introduction Data analysis workflow. This is one of my favorite topics in data science, because it deals with everything from data ingestion to report/insight documentation in a project. One might say applying tidyverse approach/techniques is a micro level data science skill, whereas following a specific workflow, which can vary from one person to another, is a macro level one. Tidyverse can definitely be a part of your workflow, and there are many other components of a workflow that I touch on later, but why should we care about data analysis workflow?</description>
+    </item>
+    
+    <item>
+      <title>Running command line scripts from R vs. Running R scripts from command line</title>
+      <link>/post/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</link>
+      <pubDate>Mon, 08 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</guid>
+      <description>Combining command line tools and R commands
+R package itself   command line utilities R wrapper functions  How functions in R package are used   Use the wrapper functions in interactive way (explore.R) Use the wrapper functions in another .R script  Call the .R script in command line tools Make the .R script into R command line utility itself   What I have so far:</description>
+    </item>
     
     <item>
       <title>Same day match results: UNC and Duke</title>

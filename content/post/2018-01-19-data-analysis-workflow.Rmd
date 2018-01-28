@@ -1,0 +1,122 @@
+---
+title: Data Analysis Workflow at Work
+author: uncmbbtrivia
+date: '2018-01-19'
+slug: data-analysis-workflow
+draft: true
+---
+
+# Introduction
+
+Data analysis workflow. This is one of my favorite topics in data science, because it deals with everything from data ingestion to report/insight documentation in a project. One might say applying tidyverse approach/techniques is a micro level data science skill, whereas following a specific workflow, which can vary from one person to another, is a macro level one. Tidyverse can definitely be a part of your workflow, and there are many other components of a workflow that I touch on later, but why should we care about data analysis workflow?
+
+There are several benefits of establishing a good and routine data analysis workflow that one follows on a daily basis. To me, the most helpful benefits have been: 
+
+1. Having a good data analysis workflow is beneficial and needed to do reproducible research/work (Reproducible Research, as they say). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break. For example, after spending 2-3 days on project A, I might go off to do something else for the next 2-3 days, and when I come back to project A, I want to know exactly what's been done and what I need to do. There are many components of data analysis workflow that can be helpful for one to do RR, and I try to outline them below. But before going into each component of a workflow, there's one more benefit at least as I see it. 
+
+2. A routine workflow helps us avoid mental fatigue (I can be wrong, but this may be from one of the books by Hadley). To me, this means knowing what, where, why, and how to do things right off the bat when starting a new project. Slowly but surely, I'm settling down to a specific approach that I'll touch upon later, but to get to this point, I tried several different alternatives, and many times ended up failing, for example, to keep track of how to do things (e.g., refresh data with new source data) all over again when needed. Typical challenges have been, but are not limited to, (1) keeping track of data generation, preparation, and movement steps, (2) having to switch between several environments to do specific tasks (e.g., visual inspection), and (3) saving analysis summary and results in a place that's as close to the scripts as possible. 
+
+Next, below are my attempts to define data analysis workflow in general by its components. 
+
+--- "How"s of workflow
+
+1. How do we produce data: this describes knowing all the activities by which we generate, prepare, read, and write data. (e.g., I want to do data generation and preparation in a specific way.)
+
+2. How do we write codes: this describes knowing specifically how we're writing codes (e.g., coding style, convention, environment set up)
+
+3. How do we share work by-products: this describes knowing how we share by-products of our work, such as, data, reports, presentation, etc. (e.g., I could keep my reports in my local computer as opposed to the codes in the lake).
+
+--- "What"s of workflow 
+
+1. What do we do with data: this describes knowing what to do with data at hand (e.g., once data is all tidied up, I look for each variable's frequency distribution first, and this is where tidyverse approach can be helpful).
+
+2. What do we keep: this describes knowing which by-products are important for future re-use. (e.g., for the initial explore, it's typical that I end up working with many hive tables downloaded to local, and I keep them in RDS format)
+
+--- "Where"s of workflow
+
+1. Where do we do work: this describes knowing the sufficiently good enough data analysis environment (e.g., I could work on my local RStudio, or in RCloud).
+
+2. Where do we save code/data/plots/reports: this describes knowing how to organize your project (e.g., all my by-products reside in a project directory with several other subdirectories).
+
+--- "Why"s of workflow
+
+1. Why do we do things in a particular way: this describes knowing the pros and cons of different workflow approaches available (e.g., through trials-and-errors, I realized that doing everything in RCloud (e.g., data prep, visuals, modeling, reports) is not a good idea, and that rather I needed to incorporate RCloud somehow in my workflow for specific tasks only). 
+
+# Sample workflow (my example)
+
+Before starting to settle down on a particular workflow, I realized that first thing I needed to do was to take a closer look at my day-to-day needs. Not exhaustively, answers to below questions may provide better insights to what we do on a daily basis. 
+
+--- What's been the objectives of projects so far?
+
+--- What kind of data do I work with the most? 
+
+--- How are the data generated and prepared before they reach me?
+
+--- What do I do with the data? 
+
+--- Do I need interactive environment or batch jobs? 
+
+To me, It turns out that more often than not, majority of my day-to-day tasks especially in the early stage of a project are:
+
+--- Explore data stored in hive tables 
+
+--- Visualize data stored in hive tables
+
+--- Summarize/document analysis results  
+
+So it became apparent that the integration of R and hive is rather important in my day-to-day work, and that I still rely much on an interactive environment. Hence, I needed to come up with a better way to use data stored in hive tables in an interactive R session. After several trials-and-errors, I came to the conclusion that the combination of bash shell scripts, remote R shell, and RCloud should do for majority of what I do on a daily basis during this stage. This workflow uses bash shell scripts and remote R shell for quick data exploration and additional data prep, typically followed by RCloud for visualization and summary/documentation. Below, I describe how this workflow typically works. 
+
+1. Create a project directory and start up remote R shell from there.
+
+2. Quick/iterative exploration in remote R shell
+
+  - Data generation and preparation
+
+      --- Typically involves (intermediate) hive table generations and loading them in R (hive sql, bash, R shell)
+      
+      --- Needs custom bash scripts and R functions for common tasks
+
+  - Descriptive
+
+      --- Typical R operations without visuals
+
+  - Additional data prep needed for further actions
+
+      --- Typically for visual inspection in RCloud
+
+  - Intermediate data saving
+
+      --- Typically in RDS format for visual inspections in RCloud
+  
+  - Iterate above steps as needed
+
+3. Visual inspection and summary in RCloud
+
+  - Create a new notebook in RCloud.
+
+  - Start documenting findings from the exploration step.
+
+  - Visual inspection
+
+    --- Using RDS files saved from quick explore step
+
+  - Reports and summary
+    
+    --- Quick notes on findings according to the visuals
+    
+    --- Also quick notes on further actions, if needed
+
+This is only an example workflow that I've come to rely on in early stages of a project, albeit a couple of cons that I don't share here. Unless your daily tasks are similar to mine, my workflow may not be helpful at all for your needs. And that's exactly why I'm writing this post, because I believe there is huge benefit of having a concrete workflow embedded in our day to day work, surely beyond what I listed here. I invite you to establish your own workflow, if you have not already, and share the benefits of working in your own workflow. Maybe share your workflow too, so that we can all learn from each other. I end with a couple of links for further readings for those interested. 
+
+#Links
+
+- http://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf
+
+- https://www.tidyverse.org/articles/2017/12/workflow-vs-script/
+
+- http://r4ds.had.co.nz/explore-intro.html
+
+- https://edwinth.github.io/blog/workflow/
+
+- https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext
+
