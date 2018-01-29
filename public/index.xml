@@ -6,10 +6,29 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Blog at rbind.io</title>
+      <link>/post/blog-at-rbind-io/</link>
+      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/blog-at-rbind-io/</guid>
+      <description>This weekend, I made a small but meaningful change to the blog that I started late last year. Initially, my blog was named UNCMBBTRIVIA to emphasize to the readers that this blog is about my beloved UNC Men’s Basketball team’s trivia. But I always wanted to have a blog where I write not only about UNC MBB trivia, but more importantly about data analysis and R.
+As I thought about it more, it became clear that I’d better drop the UNCMBBTrivia-only identity of the blog to start writing more about data analysis and R, and ever since then I’ve been thinking about how and when to make the change.</description>
+    </item>
+    
+    <item>
+      <title>One year after rstudio::conf 2017</title>
+      <link>/post/one-year-after-rstudio-conf-2017/</link>
+      <pubDate>Sun, 28 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/one-year-after-rstudio-conf-2017/</guid>
+      <description>Hadley’s autograph Started using github Wrote my first R (data) package (uncmbb), now available on CRAN Started preaching tidyverse and RR at work Started having a second thought about R package and tinkered with .Rprofile Turned around once again and made a second R package, primarily for use at work (local) Started a blog, now using rbind.io subdomain.  Unfortunately, I’m not going to the rstudio conference this year (training/conference schedule didn’t work out), and boy do I want to be there this week.</description>
+    </item>
     
     <item>
       <title>Data Analysis Workflow at Work</title>

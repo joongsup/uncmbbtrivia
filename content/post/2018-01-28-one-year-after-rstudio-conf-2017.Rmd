@@ -1,0 +1,26 @@
+---
+title: One year after rstudio::conf 2017
+author: Jay
+date: '2018-01-28'
+slug: one-year-after-rstudio-conf-2017
+categories: []
+tags: []
+draft: true
+---
+
+
+
+
+
+1. Hadley's autograph
+2. Started using github
+3. Wrote my first R (data) package (uncmbb), now available on CRAN
+4. Started preaching tidyverse and RR at work
+5. Started having a second thought about R package and tinkered with .Rprofile
+6. Turned around once again and made a second R package, primarily for use at work (local)
+7. Started a blog, now using rbind.io subdomain. 
+
+Unfortunately, I'm not going to the rstudio conference this year (training/conference schedule didn't work out), and boy do I want to be there this week. For those of you lucky attendees, I hope you make the best out of the conference and enjoy everything you get to learn from amazing people and do amazing things after the conference. 
+
+I know you will :)
+
