@@ -6,10 +6,29 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quiz from work</title>
+      <link>/post/quiz-from-work/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/quiz-from-work/</guid>
+      <description>There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1) if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar.</description>
+    </item>
+    
+    <item>
+      <title>3 game losing streak</title>
+      <link>/post/3-game-losing-streak/</link>
+      <pubDate>Tue, 30 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/3-game-losing-streak/</guid>
+      <description>Here we go again. 3 Ls in a row. When was the last time we had this kind of losing skid?
+suppressPackageStartupMessages(library(uncmbb)) suppressPackageStartupMessages(library(knitr)) suppressPackageStartupMessages(library(kableExtra)) suppressPackageStartupMessages(library(tidyverse)) suppressPackageStartupMessages(library(jutilr)) n &amp;lt;- 3 losing_streaks &amp;lt;- function(df, n){ a &amp;lt;- df %&amp;gt;% group_by(Season) # dynamically create a new field for next match result for (future in 1:n){ rname &amp;lt;- paste0(&amp;quot;Result_&amp;quot;, future) a &amp;lt;- a %&amp;gt;% mutate(!!rname := lead(Result, future)) } # first losing game b &amp;lt;- a %&amp;gt;% filter(Result == &amp;quot;L&amp;quot;) # dynamically filter rows based on next match result (note not using dplyr::filter) for (future in 1:n){ if (future !</description>
+    </item>
     
     <item>
       <title>Blog at rbind.io</title>

@@ -1,0 +1,120 @@
+---
+title: Quiz from work
+author: Jay
+date: '2018-02-01'
+slug: quiz-from-work
+categories: []
+tags: []
+draft: false
+---
+
+> There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1)  if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar. Can we win the game, and if yes, what's the probability that we win the game?
+
+Since this quiz was asked in a "coding challenge" session at work, I went ahead and wrote the following to see what happens, even though I suspected this could be solved with pen/paper, especially because the quiz was introduced as a question that had been asked at a job interview. 
+
+```{r}
+
+draw_balls <- function(balls){ # balls = list(begin_w, begin_b)
+  w <- balls[[1]]
+  b <- balls[[2]]
+  #print(paste0("Beginning balls (w, b): ", w, ", ", b))
+  
+  # note I'm assuming two balls are drawn one at a time, not together
+  # other drawing rules are possible
+  # drawing rule for first ball
+  if (runif(1) < w/(w + b)) {
+    wtmp1 <- 1 # draw white
+    btmp1 <- 0
+  } else {
+    wtmp1 <- 0
+    btmp1 <- 1 # draw black
+  }
+      
+  # drawing rule for second ball
+  if (runif(1) < (w - wtmp1)/(w - wtmp1 + b - btmp1)){
+    wtmp2 <- 1 # draw white
+    btmp2 <- 0
+  } else {
+    wtmp2 <- 0
+    btmp2 <- 1 # draw black
+  } 
+      
+  # post-draw actions
+ 
+  if (wtmp1 == 1 & wtmp2 == 1) {
+    #print("Balls drawn: 2 W")
+    w <- w - (wtmp1 + wtmp2)
+    b <- b
+  } else if (btmp1 == 1 & btmp2 == 1){
+    #print("Balls drawn: 2 B")
+    w <- w
+    b <- b
+  } else { # if mixed
+    #print("Balls drawn: mixed")
+    w <- w
+    b <- b - 1
+  }
+
+  #print(paste0("Ending balls (w, b): ", w, ", ", b))
+  balls <- list(ending_w = w, ending_b = b)
+}
+
+# stopping rule1: if whilte ball = 0, black balls >= 1; then white loses
+# stopping rule2: if black ball = 0, white ball odd numbers are left; then white wins
+# stopping rule3: if black ball = 0, white ball even numbers are left; then white loses
+
+iterate_draw_balls <- function(count = 0, begin_w, begin_b){
+
+  while(begin_w * begin_b > 0){
+    #print("==============================")
+    count <- count + 1
+    #print(paste0("Count: ", count))
+    
+    a <- draw_balls(list(begin_w, begin_b))
+    begin_w <- a$ending_w
+    begin_b <- a$ending_b
+  }
+
+  
+  if (begin_w == 0){ # stopping rule 1
+    win <- 0
+    #print("The last ball was a black one")
+    win
+  } else if (begin_w %% 2 == 1) { # stopping rule 2
+    win <- 1
+    #print("The last ball was a white one.")
+    win
+  } else if (begin_w %% 2 == 0) { # stopping rule 3
+    win <- 0
+    #print("There is no ball left.")
+    win
+  } else {
+    #print("Shouldn't see this!")
+    win <- -9999999999
+  }
+}
+
+#--------------------------------
+# run the monte carlo simulation
+#--------------------------------
+
+set.seed(1234)
+N <- 100
+begin_w <- 25
+begin_b <- 25
+results <- vector("list", length = N)
+for (sim in 1:N){
+  #print(paste0("Simulation iteration: ", sim))
+  results[[sim]] <- iterate_draw_balls(count = 0, begin_w = begin_w, begin_b = begin_b)
+  #print(paste0("Simulation result: ", results[[sim]]))
+}
+sum(unlist(results))/N
+```
+
+For different values of N, the results were the same, depending on whether the number of white balls was odd or even. So the immediate answer to the quiz seems to be that we always win, since we started the game with 25 white balls. 
+
+Seeing such pattern, I thought about state space of white and black balls in terms of them being odd or even, and after tinkering with different transition cases, it confirmed my simulation experiment. 
+
+
+
+

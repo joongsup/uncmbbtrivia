@@ -1,0 +1,114 @@
+---
+title: Quiz from work
+author: Jay
+date: '2018-02-01'
+slug: quiz-from-work
+categories: []
+tags: []
+draft: false
+---
+
+
+
+<blockquote>
+<p>There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1) if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar. Can we win the game, and if yes, what’s the probability that we win the game?</p>
+</blockquote>
+<p>Since this quiz was asked in a “coding challenge” session at work, I went ahead and wrote the following to see what happens, even though I suspected this could be solved with pen/paper, especially because the quiz was introduced as a question that had been asked at a job interview.</p>
+<pre class="r"><code>draw_balls &lt;- function(balls){ # balls = list(begin_w, begin_b)
+  w &lt;- balls[[1]]
+  b &lt;- balls[[2]]
+  #print(paste0(&quot;Beginning balls (w, b): &quot;, w, &quot;, &quot;, b))
+  
+  # note I&#39;m assuming two balls are drawn one at a time, not together
+  # other drawing rules are possible
+  # drawing rule for first ball
+  if (runif(1) &lt; w/(w + b)) {
+    wtmp1 &lt;- 1 # draw white
+    btmp1 &lt;- 0
+  } else {
+    wtmp1 &lt;- 0
+    btmp1 &lt;- 1 # draw black
+  }
+      
+  # drawing rule for second ball
+  if (runif(1) &lt; (w - wtmp1)/(w - wtmp1 + b - btmp1)){
+    wtmp2 &lt;- 1 # draw white
+    btmp2 &lt;- 0
+  } else {
+    wtmp2 &lt;- 0
+    btmp2 &lt;- 1 # draw black
+  } 
+      
+  # post-draw actions
+ 
+  if (wtmp1 == 1 &amp; wtmp2 == 1) {
+    #print(&quot;Balls drawn: 2 W&quot;)
+    w &lt;- w - (wtmp1 + wtmp2)
+    b &lt;- b
+  } else if (btmp1 == 1 &amp; btmp2 == 1){
+    #print(&quot;Balls drawn: 2 B&quot;)
+    w &lt;- w
+    b &lt;- b
+  } else { # if mixed
+    #print(&quot;Balls drawn: mixed&quot;)
+    w &lt;- w
+    b &lt;- b - 1
+  }
+
+  #print(paste0(&quot;Ending balls (w, b): &quot;, w, &quot;, &quot;, b))
+  balls &lt;- list(ending_w = w, ending_b = b)
+}
+
+# stopping rule1: if whilte ball = 0, black balls &gt;= 1; then white loses
+# stopping rule2: if black ball = 0, white ball odd numbers are left; then white wins
+# stopping rule3: if black ball = 0, white ball even numbers are left; then white loses
+
+iterate_draw_balls &lt;- function(count = 0, begin_w, begin_b){
+
+  while(begin_w * begin_b &gt; 0){
+    #print(&quot;==============================&quot;)
+    count &lt;- count + 1
+    #print(paste0(&quot;Count: &quot;, count))
+    
+    a &lt;- draw_balls(list(begin_w, begin_b))
+    begin_w &lt;- a$ending_w
+    begin_b &lt;- a$ending_b
+  }
+
+  
+  if (begin_w == 0){ # stopping rule 1
+    win &lt;- 0
+    #print(&quot;The last ball was a black one&quot;)
+    win
+  } else if (begin_w %% 2 == 1) { # stopping rule 2
+    win &lt;- 1
+    #print(&quot;The last ball was a white one.&quot;)
+    win
+  } else if (begin_w %% 2 == 0) { # stopping rule 3
+    win &lt;- 0
+    #print(&quot;There is no ball left.&quot;)
+    win
+  } else {
+    #print(&quot;Shouldn&#39;t see this!&quot;)
+    win &lt;- -9999999999
+  }
+}
+
+#--------------------------------
+# run the monte carlo simulation
+#--------------------------------
+
+set.seed(1234)
+N &lt;- 100
+begin_w &lt;- 25
+begin_b &lt;- 25
+results &lt;- vector(&quot;list&quot;, length = N)
+for (sim in 1:N){
+  #print(paste0(&quot;Simulation iteration: &quot;, sim))
+  results[[sim]] &lt;- iterate_draw_balls(count = 0, begin_w = begin_w, begin_b = begin_b)
+  #print(paste0(&quot;Simulation result: &quot;, results[[sim]]))
+}
+sum(unlist(results))/N</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>For different values of N, the results were the same, depending on whether the number of white balls was odd or even. So the immediate answer to the quiz seems to be that we always win, since we started the game with 25 white balls.</p>
+<p>Seeing such pattern, I thought about state space of white and black balls in terms of them being odd or even, and after tinkering with different transition cases, it confirmed my simulation experiment.</p>
