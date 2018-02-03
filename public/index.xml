@@ -6,10 +6,20 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>New Hugo theme</title>
+      <link>/post/2018/02/03/new-hugo-theme/</link>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/02/03/new-hugo-theme/</guid>
+      <description>Last tike, I wrote about a quiz from work, including the code solution. Unfortunately, I didn’t really like how the code block was printed in the minimal theme. I’m pretty sure there’s a quick and/or easy fix, but since I’m starting this blogging thing, I decided to try some other themes while at it.
+It took some googling/reading/tweaking, but overall I’m ok with what I ended up with at the moment.</description>
+    </item>
     
     <item>
       <title>Quiz from work</title>
@@ -177,6 +187,15 @@ Before writing about the other end of the spectrum in series history, I started 
       <guid>/post/2017/10/01/winning-series/</guid>
       <description>Here it is, the very first trivia! Frankly I was initially curious which schools have winning series against UNC and found out which (and here’s the link to that post), but to start off things on a positive note :) I’m posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times.
 There they are: Citadel, Rutgers, Stanford, and Tulane! Two of these teams are on UNC’s schedule for upcoming 2017-2018 season, so it’ll be interesting to see if UNC can keep the winning streak.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>I like data analysis, statistics, R, and UNC men&amp;rsquo;s basketball.</description>
     </item>
     
   </channel>

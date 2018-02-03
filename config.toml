@@ -15,8 +15,6 @@ footnotereturnlinkcontents = "↩"
 [params]
     author = "Jay"
     description = "Mostly About R and UNC MBB Trivia"
-    #footer = "&copy; [Yihui Xie](https://yihui.name) 2017 -- 2018 | [Github](https://github.com/yihui) | [Twitter](https://twitter.com/xieyihui)"
-#githubUsername = "#"
     #accent = "#99badd" #caroina blue
     #showBorder = true
     #backgroundColor = "white"
@@ -29,14 +27,17 @@ footnotereturnlinkcontents = "↩"
     name = "Home"
     url = "/"
     weight = 1
-#[[menu.main]]
-#    name = "About"
-#    url = "/about/"
-#    weight = 2
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 2
+
 #[[menu.main]]
 #    name = "Categories"
 #    url = "/categories/"
 #    weight = 3
+
 [[menu.main]]
     name = "Twitter"
     url = "https://twitter.com/uncmbbtrivia"
@@ -44,32 +45,3 @@ footnotereturnlinkcontents = "↩"
 #[[menu.main]]
 #    name = "Subscribe"
 #    url = "/index.xml"
-
-# Social icons to be shown on the right-hand side of the navigation bar
-# The "name" field should match the name of the icon to be used
-# The list of available icons can be found at http://fontawesome.io/icons/
-
-#[[menu.icon]]
-#    url = "mailto:uncmbbtrivia@gmail.com"
-#    name = "envelope-o"
-#    weight = 1
-
-#[[menu.icon]]
-#    url = "https://github.com/username/"
-#    name = "github"
-#    weight = 2
-
-[[menu.icon]]
-    url = "https://twitter.com/uncmbbtrivia/"
-    name = "twitter"
-    weight = 3
-
-#[[menu.icon]]
-#    url = "https://www.linkedin.com/in/username/"
-#    name = "linkedin"
-#    weight = 4
-
-#[[menu.icon]]
-#    url = "https://www.stackoverflow.com/username/"
-#    name = "stack-overflow"
-#    weight = 5
