@@ -1,0 +1,113 @@
+---
+title: 3 game losing streak
+author: Jay
+date: '2018-01-30'
+slug: 3-game-losing-streak
+categories: []
+tags: []
+draft: true
+---
+
+Here we go again. 3 Ls in a row. When was the last time we had this kind of losing skid? 
+
+```{r, include = FALSE}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(jutilr)) # dev
+
+#losing_streaks <- function(df, n){ # n: number of losing streak
+#aa <- df %>% group_by(Season) %>%
+#            mutate(game_order = row_number()) %>%
+#            mutate(result_enum = case_when(Result == "W" ~ 1,
+#                                           Result == "L" ~ -1)) %>%
+#            mutate(result_enum_cumulative = cumsum(result_enum))
+           
+# dynamically create new fields for next match result
+#for (future in 1:(n+1)){ # need n+1 for first win after n-game losing streak
+#  rname <- paste0("Result_", future) 
+#  a <- aa %>% mutate(!!rname := lead(Result, future))
+#}
+
+# start with a win
+#b <- a %>% filter(Result == "W", game_order != 1)
+# first losing game
+# b <- a %>% filter(Result == "L")
+
+# dynamically filter rows based on next match result (note not using dplyr::filter)
+#for (future in 1:n){
+#  rname <- paste0("Result_", future)
+#  b <- b[b[rname] == "L", ]
+#  b <- b %>% filter(!is.na(Season)) # unlike the first win == "W" case, need to make sure all three #results are "L"
+#}
+
+# first win after L streaks
+#rname <- paste0("Result_", n+1)
+#b <- b[b[rname] == "W" | is.na(b[rname]), ] # use is.na to avoid season's last game 
+#b
+#head(b)
+# now for seasons with first 3 games of the season all being Ls
+#aa %>% filter((game_order == 3, result_enum_cumulative == -3), 
+#              (game_order == 4, result_enum_cumulative == -2)) %>% head
+#}
+
+#streak <- 3
+#streak_3Ls <- losing_streaks(unc, streak) %>%
+#              count(Season)
+
+#tail(streak_3Ls, 5) %>% kable("html", caption = "Last 5 seasons with 3 game losing streaks") %>%
+#                        kable_styling()
+```
+
+So the last time there was a 3-game losing streak was back in 2014, and to my surprise,  
+
+```{r, include = FALSE}
+#streak <- 3
+#a <- losing_streaks(unc, streak) %>% 
+#     filter(Season == 2014) #%>%
+#     #select(Season, Game_Date, starts_with("Result"))
+#a
+#unc %>% filter(Game_Date >= a$Game_Date) %>%
+#        head(5) %>%
+#        kable("html", caption = "2016 season 3 game losing streak records") %>%
+#        kable_styling()
+```
+
+I got curious as to what the worst losing streak was since 1950 season. To do that I'm looking at the number of seasons with losing streaks up to certain nuber. 
+
+```{r, include = FALSE}
+#target_streaks <- 8 # code breaks when n = 9
+#streaks <- vector("list", length = target_streaks)
+#for (streak in 1:target_streaks){
+#streaks[[streak]] <-  losing_streaks(unc, streak) %>% count(Season)
+#}
+
+#names(streaks) <- 1:target_streaks
+
+#a <- tibble(streak = 1:target_streaks, seasons = streaks %>% map_int(function(x) nrow(x)), perc = round(seasons/67, 2)) 
+
+#a %>% ggplot(aes(x = streak, y = perc)) +
+#      geom_bar(stat = "identity") +
+#      geom_text(aes(label = seasons), vjust = -0.1) +
+#      theme_bw() +
+#      scale_y_continuous(label = scales::percent) +
+#      labs(title = "Number of seasons with losing streaks", x = "Losing streak", y = "Number of seasons")
+            
+```
+
+So as seen earlier, one in every four seasons, we've seen at least one occasion of 3-game losing streaks. What gets me is that there's been seasons in which we had 4+ game losing streaks! Let's see what those seasons were and what were those games for those seasons with at least one 6-game losing streaks. 
+
+```{r, include = FALSE}
+#losing_streaks(unc, 6) %>%
+#        kable("html") %>%
+#        kable_styling()
+
+#losing_streaks(unc, 7) %>%
+#        kable("html") %>%
+#        kable_styling()
+
+#losing_streaks(unc, 8) %>%
+#        kable("html") %>%
+#        kable_styling()
+```

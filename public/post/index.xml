@@ -13,77 +13,78 @@
     
     <item>
       <title>Quiz from work</title>
-      <link>/post/quiz-from-work/</link>
+      <link>/post/2018/02/01/quiz-from-work/</link>
       <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/quiz-from-work/</guid>
+      <guid>/post/2018/02/01/quiz-from-work/</guid>
       <description>There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1) if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar.</description>
     </item>
     
     <item>
       <title>3 game losing streak</title>
-      <link>/post/3-game-losing-streak/</link>
+      <link>/post/2018/01/30/3-game-losing-streak/</link>
       <pubDate>Tue, 30 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/3-game-losing-streak/</guid>
+      <guid>/post/2018/01/30/3-game-losing-streak/</guid>
       <description>Here we go again. 3 Ls in a row. When was the last time we had this kind of losing skid?
-suppressPackageStartupMessages(library(uncmbb)) suppressPackageStartupMessages(library(knitr)) suppressPackageStartupMessages(library(kableExtra)) suppressPackageStartupMessages(library(tidyverse)) suppressPackageStartupMessages(library(jutilr)) n &amp;lt;- 3 losing_streaks &amp;lt;- function(df, n){ a &amp;lt;- df %&amp;gt;% group_by(Season) # dynamically create a new field for next match result for (future in 1:n){ rname &amp;lt;- paste0(&amp;quot;Result_&amp;quot;, future) a &amp;lt;- a %&amp;gt;% mutate(!!rname := lead(Result, future)) } # first losing game b &amp;lt;- a %&amp;gt;% filter(Result == &amp;quot;L&amp;quot;) # dynamically filter rows based on next match result (note not using dplyr::filter) for (future in 1:n){ if (future !</description>
+So the last time there was a 3-game losing streak was back in 2014, and to my surprise,
+I got curious as to what the worst losing streak was since 1950 season. To do that I’m looking at the number of seasons with losing streaks up to certain nuber.</description>
     </item>
     
     <item>
       <title>Blog at rbind.io</title>
-      <link>/post/blog-at-rbind-io/</link>
+      <link>/post/2018/01/29/blog-at-rbind-io/</link>
       <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/blog-at-rbind-io/</guid>
+      <guid>/post/2018/01/29/blog-at-rbind-io/</guid>
       <description>This weekend, I made a small but meaningful change to the blog that I started late last year. Initially, my blog was named UNCMBBTRIVIA to emphasize to the readers that this blog is about my beloved UNC Men’s Basketball team’s trivia. But I always wanted to have a blog where I write not only about UNC MBB trivia, but more importantly about data analysis and R.
 As I thought about it more, it became clear that I’d better drop the UNCMBBTrivia-only identity of the blog to start writing more about data analysis and R, and ever since then I’ve been thinking about how and when to make the change.</description>
     </item>
     
     <item>
       <title>One year after rstudio::conf 2017</title>
-      <link>/post/one-year-after-rstudio-conf-2017/</link>
+      <link>/post/2018/01/29/one-year-after-rstudio-conf-2017/</link>
       <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/one-year-after-rstudio-conf-2017/</guid>
+      <guid>/post/2018/01/29/one-year-after-rstudio-conf-2017/</guid>
       <description>It was merely a name change, but with the new blog address at rbind.io, I’m excited about the fact that I am a blogger who uses his name in his blog address, because I’ve always considered it to be one of the coolest things you can do online :) And it got me thinking, where did it all start from? After many failed attempts to start and maintain my own blog, how is it that this time, it seems it’ll just work?</description>
     </item>
     
     <item>
       <title>Data Analysis Workflow at Work</title>
-      <link>/post/data-analysis-workflow/</link>
+      <link>/post/2018/01/19/data-analysis-workflow/</link>
       <pubDate>Fri, 19 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/data-analysis-workflow/</guid>
+      <guid>/post/2018/01/19/data-analysis-workflow/</guid>
       <description>Introduction Data analysis workflow. This is one of my favorite topics in data science, because it deals with everything from data ingestion to report/insight documentation in a project. One might say applying tidyverse approach/techniques is a micro level data science skill, whereas following a specific workflow, which can vary from one person to another, is a macro level one. Tidyverse can definitely be a part of your workflow, and there are many other components of a workflow that I touch on later, but why should we care about data analysis workflow?</description>
     </item>
     
     <item>
       <title>Running command line scripts from R vs. Running R scripts from command line</title>
-      <link>/post/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</link>
+      <link>/post/2018/01/08/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</link>
       <pubDate>Mon, 08 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</guid>
+      <guid>/post/2018/01/08/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</guid>
       <description>Combining command line tools and R commands
 R package itself   command line utilities R wrapper functions  How functions in R package are used   Use the wrapper functions in interactive way (explore.R) Use the wrapper functions in another .R script  Call the .R script in command line tools Make the .R script into R command line utility itself   What I have so far:</description>
     </item>
     
     <item>
       <title>Same day match results: UNC and Duke</title>
-      <link>/post/same-day-match-results-unc-and-duke/</link>
+      <link>/post/2018/01/07/same-day-match-results-unc-and-duke/</link>
       <pubDate>Sun, 07 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/same-day-match-results-unc-and-duke/</guid>
+      <guid>/post/2018/01/07/same-day-match-results-unc-and-duke/</guid>
       <description>So both UNC and Duke lost today (Saturday, 2018-01-06). I’d think it’s pretty rare that such event (both teams losing on a same day) happens, and I got curious how rare it is indeed. What are the odds of both teams winning, losing (like today), and splitting?
 I knew both teams have approximately 75% win percentage (since 1949-50 season), so I’m guessing on any given day, the probability of both teams winning should be close to 0.</description>
     </item>
     
     <item>
       <title>Days between games</title>
-      <link>/post/days-between-games/</link>
+      <link>/post/2017/12/15/days-between-games/</link>
       <pubDate>Fri, 15 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/days-between-games/</guid>
+      <guid>/post/2017/12/15/days-between-games/</guid>
       <description>After a long (exam) break, next up for the Tar Heels is Tennessee on Sunday, 12/17. 11 days since the last game against Western Carolina seemed unusually long to just another casual fan here, and I was curious how usual or unusual 11 days between any two games are.
 I started with the frequency of days between two consecutive regular season games since 1949-50 season.
 Ok, it looks like the majority of regular season games were 3 days apart, with such games accounting for approximately 28% (or 504 games) of all the regular season games played since 1949-50 season.</description>
@@ -91,89 +92,89 @@ Ok, it looks like the majority of regular season games were 3 days apart, with s
     
     <item>
       <title>Average points difference through first 10 games</title>
-      <link>/post/average-points-difference-through-first-10-games/</link>
+      <link>/post/2017/12/09/average-points-difference-through-first-10-games/</link>
       <pubDate>Sat, 09 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/average-points-difference-through-first-10-games/</guid>
+      <guid>/post/2017/12/09/average-points-difference-through-first-10-games/</guid>
       <description>A quick update to the last post, where I looked at the (running) average of points difference through first 5 games then. 5 more games were played since then, so let’s look at the running average of points difference through the season’s first 10 games. All I have to do was to change the current number of game (from 5 to 10) and re-run the script.
  Table 1: Average points difference through season’s first 10 games    Rank  Season  Opponent  Tm  Opp  Avg_Diff      24  2018  Western Carolina  104  61  17     The impact of the first loss of the season to Spartans is evident, as the running average dropped significantly from the 5th to the 6th game, which was the lost game.</description>
     </item>
     
     <item>
       <title>Average points difference through first N games</title>
-      <link>/post/points-difference-season-average/</link>
+      <link>/post/2017/11/25/points-difference-season-average/</link>
       <pubDate>Sat, 25 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/points-difference-season-average/</guid>
+      <guid>/post/2017/11/25/points-difference-season-average/</guid>
       <description>Time flies, and the Tar Heels played the season’s first 5 games already. And loosely speaking, they’ve played well so far (knocking on woods), to the eyes of just another casual fan here!
 I’m not going to say anything about this season’s fate based on the results of the season’s first 5 games, but still I was curious how well this season compares to other seasons at this point. There could be many different ways to do just that, but I thought looking at each season’s running average of points difference after each regular season game might be interesting.</description>
     </item>
     
     <item>
       <title>5th year players</title>
-      <link>/post/5th-year-players/</link>
+      <link>/post/2017/11/05/5th-year-players/</link>
       <pubDate>Sun, 05 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/5th-year-players/</guid>
+      <guid>/post/2017/11/05/5th-year-players/</guid>
       <description>As I mentioned it in an earlier post, I’ve been wanting to add each season’s players info to my data source. Although it needs more cleaning still, I finally got around to it and got to play with the players data a bit lately.
 As part of cleaning the players data, I needed to make sure that for most players, their college careers lasted at most for four years. At one end of the extreme sit those one-and-done players (e.</description>
     </item>
     
     <item>
       <title>Season’s first game</title>
-      <link>/post/season-s-first-game/</link>
+      <link>/post/2017/10/29/season-s-first-game/</link>
       <pubDate>Sun, 29 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/season-s-first-game/</guid>
+      <guid>/post/2017/10/29/season-s-first-game/</guid>
       <description>UNC MBB team had its first official exhibition game of the 2017-18 season this past week against Barton college. It was the first official exhibition, because there was a scrimmage (unofficial exhibition?) with Memphis team about a week before UNC MBB faced Baron college.
 The team’s first official regular season game is in less than 2 weeks against Northern Iowa, and just like they won the unofficial games (with questionable performance) so far, I’d expect the team to start the season with a W.</description>
     </item>
     
     <item>
       <title>Season win percentage</title>
-      <link>/post/season-win-percentage/</link>
+      <link>/post/2017/10/22/season-win-percentage/</link>
       <pubDate>Sun, 22 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/season-win-percentage/</guid>
+      <guid>/post/2017/10/22/season-win-percentage/</guid>
       <description>This past week, I was in a presentation training, and all the participants had to select a topic on the last day of training to give a (perfect) 15-min presentation. You know, after learning all the essential presentation skills, it was time to apply those fancy skills to work!
 I decided to talk about UNC MBB and its great stories behind each of the 3 championship seasons during Williams-era. I made a 5-page deck using Rmd-driven slidy presentation, and I am planning to post it here either in its raw form or after some adjustment using xaringan.</description>
     </item>
     
     <item>
       <title>Losing Series</title>
-      <link>/post/losing-series/</link>
+      <link>/post/2017/10/08/losing-series/</link>
       <pubDate>Sun, 08 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/losing-series/</guid>
+      <guid>/post/2017/10/08/losing-series/</guid>
       <description>In my first uncmbbtrivia post last week, I looked at perfect winning series of UNC MBB team, particularly looking for those schools that the team has never lost to since 1949-50 season (minimum of 10 games). Again, say hello to: Citadel, Rutgers, Stanford, and Tulane :)
 This week, I look at the opposite end of the series history. Are there any schools that the UNC MBB team kept losing to? I know we haven’t been playing particularly well against Duke lately, so at least I knew depending on how far back I go that there will be some schools that we have losing series against.</description>
     </item>
     
     <item>
       <title>Best 4 Year Span</title>
-      <link>/post/best-4-year-span/</link>
+      <link>/post/2017/10/07/best-4-year-span/</link>
       <pubDate>Sat, 07 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/best-4-year-span/</guid>
+      <guid>/post/2017/10/07/best-4-year-span/</guid>
       <description>In my first uncmbbtrivia post last week, I looked at some winning series of UNC MBB team, particularly those schools that the team has never lost to since 1949-50 season (minimum of 10 games). Say hello to: Citadel, Rutgers, Stanford, and Tulane :)
 Before writing about the other end of the spectrum in series history, I started reading the 2009 champion season book, “One Fantastic Ride: The Inside Story of Carolina Basketball’s 2009 Championship Season” and posted about it on twitter: “Re-reading my fav 4 seasons of all time in @UNC_Basketball (so far) while waiting on the latest by the great @jadamlucas #uncmbbtrivia”.</description>
     </item>
     
     <item>
       <title>Hello World!</title>
-      <link>/post/hello-world/</link>
+      <link>/post/2017/10/01/hello-world/</link>
       <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/hello-world/</guid>
+      <guid>/post/2017/10/01/hello-world/</guid>
       <description>Welcome to UNC MBB TRIVIA! Just another casual fan here to talk about UNC Men’s Basketball trivia time to time for all Tar Heels fans to enjoy. Stay tuned!</description>
     </item>
     
     <item>
       <title>Winning Series</title>
-      <link>/post/winning-series/</link>
+      <link>/post/2017/10/01/winning-series/</link>
       <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/winning-series/</guid>
+      <guid>/post/2017/10/01/winning-series/</guid>
       <description>Here it is, the very first trivia! Frankly I was initially curious which schools have winning series against UNC and found out which (and here’s the link to that post), but to start off things on a positive note :) I’m posting which schools have never won against UNC since 1949-50 season while having played UNC at least 10 times.
 There they are: Citadel, Rutgers, Stanford, and Tulane! Two of these teams are on UNC’s schedule for upcoming 2017-2018 season, so it’ll be interesting to see if UNC can keep the winning streak.</description>
     </item>

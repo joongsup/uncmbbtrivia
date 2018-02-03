@@ -1,43 +1,49 @@
-baseURL = "https://uncmbbtrivia.netlify.com/"
+baseurl = "https://uncmbbtrivia.netlify.com/"
 languageCode = "en-us"
 title = "Jay's Notes"
-theme = "minimal"
-#disqusShortname = "" 
-#googleAnalytics = ""
-
+theme = "hugo-xmin"
+googleAnalytics = "UA-113470893-1"
+disqusShortname = "Jay Lee" 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+preserveTaxonomyNames = true
+footnotereturnlinkcontents = "↩"
+
+[permalinks]
+    post = "/post/:year/:month/:day/:slug/"
+    note = "/note/:year/:month/:day/:slug/"
 
 [params]
     author = "Jay"
     description = "Mostly About R and UNC MBB Trivia"
-    #githubUsername = "#"
-    accent = "#99badd" #caroina blue
-    showBorder = true
-    backgroundColor = "white"
-    font = "Raleway" # should match the name on Google Fonts!
-    highlight = true
-    highlightStyle = "solarized-dark"
+    #footer = "&copy; [Yihui Xie](https://yihui.name) 2017 -- 2018 | [Github](https://github.com/yihui) | [Twitter](https://twitter.com/xieyihui)"
+#githubUsername = "#"
+    #accent = "#99badd" #caroina blue
+    #showBorder = true
+    #backgroundColor = "white"
+    #font = "Raleway" # should match the name on Google Fonts!
+    #highlight = true
+    #highlightStyle = "solarized-dark"
     highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift", "R"]
-
+    
 [[menu.main]]
-    url = "/"
     name = "Home"
+    url = "/"
     weight = 1
-
-[[menu.main]]
-    url = "/post/"
-    name = "Posts"
-    weight = 2
-
 #[[menu.main]]
-#    url = "/project/"
-#    name = "Projects"
-#    weight = 3
-
-#[[menu.main]]
-#    url = "/about/"
 #    name = "About"
-#    weight = 4
+#    url = "/about/"
+#    weight = 2
+#[[menu.main]]
+#    name = "Categories"
+#    url = "/categories/"
+#    weight = 3
+[[menu.main]]
+    name = "Twitter"
+    url = "https://twitter.com/uncmbbtrivia"
+    weght = 4
+#[[menu.main]]
+#    name = "Subscribe"
+#    url = "/index.xml"
 
 # Social icons to be shown on the right-hand side of the navigation bar
 # The "name" field should match the name of the icon to be used
