@@ -7,6 +7,7 @@ disqusShortname = "jays-notes-1"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 preserveTaxonomyNames = true
 footnotereturnlinkcontents = "↩"
+paginate = 7
 
 [permalinks]
     post = "/post/:year/:month/:day/:slug/"
