@@ -1,0 +1,88 @@
+---
+title: Run system commands or shell scripts from an interactive R session
+author: Jay
+date: '2018-02-05'
+slug: run-system-commands-or-shell-sripts-from-an-interactive-r-session
+draft: false
+---
+
+When you are working in an interactive R shell and need to run some system commands, you can use a base R function [`system`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/system.html)^[Both a newer version function [`system2`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/system2.html) and a relatively new file system operations opackage [fs](http://fs.r-lib.org) seem great alternatives, but I haven't tried them yet.]. 
+
+```{r}
+# toy example
+system("ls")
+```
+
+The `system` funtion can also be used to run custom shell scripts, like so,
+
+```{r, eval = FALSE}
+system("custom_script.sh arg1 arg2")
+```
+where `custom_script.sh` is a shell script that does some custom operations with `arg1` and `arg2`. For example, let's say I want to extract all the lines in a source file that contains the word "NOTE". Below^[Note that in addition to familiar R code chunks, you can also execute code chunks in other lanauges by calling the target language engine in place of r. For options, see [here](http://rmarkdown.rstudio.com/authoring_knitr_engines.html).] is one such shell script, `show_notes.sh`:
+
+```{sh, eval = FALSE}
+#!/bin/sh
+
+if [ -z "$1" ]; then
+        echo "Usage: ./show_notes.sh file_with_notes marker"
+else
+
+rm $1.$2 2> /dev/null
+
+echo "#-----------------------------------------------------" >> $1.$2
+echo "# $2 from" $1 >> $1.$2
+echo "#-----------------------------------------------------" >> $1.$2
+
+less $1 | grep $2 >> $1.$2
+
+echo "$2 are saved to file: $1.$2"
+fi
+```
+
+The shell script extracts all the lines from the 'file_with_notes' (`arg1`) that contains a word 'marker' (`arg2`) and save it to a new file (with a specific file name). Then, from within an open interactive R shell, I can call the shell script like so:
+
+```{r, eval = FALSE}
+system("show_notes.sh explore.R NOTE")
+```
+This will extracts all lines with 'NOTE' in them from `explore.R` file and save it to `explore.R.NOTE`. 
+
+There are several comments to be made about this approach: 
+
+1. Unless `show_notes.sh` file is already executable from anywhere (i.e., the directory that contains the show_notes.sh file is in the PATH), you might have to provide the absolute paths for both files. For example, above snippet won't work, unless the two files (`show_notes.sh` and `explore.R`) are in the same directory. 
+
+2. In order for this shell script to be useful, the source file (`explore.R`) is assumed to have many lines that contain the marker 'NOTE'. The user must have put in conscious efforts to leave 'NOTE' marker in `explore.R` file. 
+
+For the most part, once above two limitations are understood and resolved, the shell script can be useful. 
+
+Going one step further, if you find yourself using this particular shell script quite often in your data analysis workflow, you can include this shell script as well as the corresponding R wrapper function that calls the shell script (much like `system("ls")` above) in an R package^[Check out Jim Hester's 2018 rstudio conference presentation [here](https://github.com/jimhester/presentations/tree/master/2018_02_03-You-can-make-a-package-in-20-minutes) for motivations and minimal package file structure.].
+
+The two main files (custom shell script and R wrapper function) need to be in a specific directory, respectively. 
+
+1. The custom shell script needs to be in a subdirectory under `/inst` [directory](http://r-pkgs.had.co.nz/inst.html) under the package's root. Let's say for this example, the `show_notes.sh` file is in `/inst/sh` directory. 
+
+2. The R wrapper function needs to be in the usual `/R` directory under the package's root directory. For this example, the corresponding R wrapper function is called `show_notes()` and looks like so:
+
+```{r, eval = FALSE}
+show_notes <- function(src, marker = "NOTE"){
+
+  main_sh <- system.file("sh", "show_notes.sh", package = "my_awesome_R_pkg")
+  cmd <- paste0(main_sh, " ", src, " ", marker)
+  print(cmd)
+  system(cmd)
+
+}
+
+```
+
+Note that R's base `system.file()` function is used here to search for the `show_notes.sh` file in a subdirectory `/sh` under the root directory of `my_awesome_R_pkg`.^[Note that source files in /inst/sh/ are copied to /sh/ when R package is built.]
+
+Once `my_awesome_R_pkg` is installed and loaded, you can call this R wrapper function from your open interactive R shell, like so (assuming `explore.R` file is in the current working directory of the open interactive R session):
+
+```{r, eval = FALSE}
+show_notes("explore.R")
+```
+
+This function call will extract all the lines from `explore.R` file that contains "NOTE" in them and save it to `explore.R.NOTE` in the same directory as the `explore.R`. 
+
+This approach can be useful, for example, if you want to keep track of intermediate narratives of your data analysis, which is done interactively in an R session with codes from a source file. 
+
