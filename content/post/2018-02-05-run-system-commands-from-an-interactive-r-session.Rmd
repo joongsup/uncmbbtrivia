@@ -39,18 +39,18 @@ echo "$2 are saved to file: $1.$2"
 fi
 ```
 
-The shell script extracts all the lines from the 'file_with_notes' (`arg1`) that contains a word 'marker' (`arg2`) and save it to a new file (with a specific file name). Then, from within an open interactive R shell, I can call the shell script like so:
+The shell script extracts all the lines from the "file_with_notes" (`arg1`) that contains a word "marker" (`arg2`) and save it to a new file (with a specific file name). Then, from within an open interactive R shell, I can call the shell script like so:
 
 ```{r, eval = FALSE}
 system("show_notes.sh explore.R NOTE")
 ```
-This will extracts all lines with 'NOTE' in them from `explore.R` file and save it to `explore.R.NOTE`. 
+This will extracts all lines with "NOTE" in them from `explore.R` file and save it to `explore.R.NOTE`. 
 
 There are several comments to be made about this approach: 
 
 1. Unless `show_notes.sh` file is already executable from anywhere (i.e., the directory that contains the show_notes.sh file is in the PATH), you might have to provide the absolute paths for both files. For example, above snippet won't work, unless the two files (`show_notes.sh` and `explore.R`) are in the same directory. 
 
-2. In order for this shell script to be useful, the source file (`explore.R`) is assumed to have many lines that contain the marker 'NOTE'. The user must have put in conscious efforts to leave 'NOTE' marker in `explore.R` file. 
+2. In order for this shell script to be useful, the source file (`explore.R`) is assumed to have many lines that contain the marker "NOTE". The user must have put in conscious efforts to leave "NOTE" marker in `explore.R` file. 
 
 For the most part, once above two limitations are understood and resolved, the shell script can be useful. 
 
@@ -74,7 +74,7 @@ show_notes <- function(src, marker = "NOTE"){
 
 ```
 
-Note that R's base `system.file()` function is used here to search for the `show_notes.sh` file in a subdirectory `/sh` under the root directory of `my_awesome_R_pkg`.^[Note that source files in /inst/sh/ are copied to /sh/ when R package is built.]
+Note that R's base `system.file()` function is used here to search for the `show_notes.sh` file in a subdirectory `/sh` under the root directory of installed package, `my_awesome_R_pkg`.^[Note that source files in `/inst/sh` are copied to `/sh` when R package is installed.]
 
 Once `my_awesome_R_pkg` is installed and loaded, you can call this R wrapper function from your open interactive R shell, like so (assuming `explore.R` file is in the current working directory of the open interactive R session):
 

@@ -30,13 +30,13 @@ less $1 | grep $2 &gt;&gt; $1.$2
 
 echo &quot;$2 are saved to file: $1.$2&quot;
 fi</code></pre>
-<p>The shell script extracts all the lines from the ‘file_with_notes’ (<code>arg1</code>) that contains a word ‘marker’ (<code>arg2</code>) and save it to a new file (with a specific file name). Then, from within an open interactive R shell, I can call the shell script like so:</p>
+<p>The shell script extracts all the lines from the “file_with_notes” (<code>arg1</code>) that contains a word “marker” (<code>arg2</code>) and save it to a new file (with a specific file name). Then, from within an open interactive R shell, I can call the shell script like so:</p>
 <pre class="r"><code>system(&quot;show_notes.sh explore.R NOTE&quot;)</code></pre>
-<p>This will extracts all lines with ‘NOTE’ in them from <code>explore.R</code> file and save it to <code>explore.R.NOTE</code>.</p>
+<p>This will extracts all lines with “NOTE” in them from <code>explore.R</code> file and save it to <code>explore.R.NOTE</code>.</p>
 <p>There are several comments to be made about this approach:</p>
 <ol style="list-style-type: decimal">
 <li><p>Unless <code>show_notes.sh</code> file is already executable from anywhere (i.e., the directory that contains the show_notes.sh file is in the PATH), you might have to provide the absolute paths for both files. For example, above snippet won’t work, unless the two files (<code>show_notes.sh</code> and <code>explore.R</code>) are in the same directory.</p></li>
-<li><p>In order for this shell script to be useful, the source file (<code>explore.R</code>) is assumed to have many lines that contain the marker ‘NOTE’. The user must have put in conscious efforts to leave ‘NOTE’ marker in <code>explore.R</code> file.</p></li>
+<li><p>In order for this shell script to be useful, the source file (<code>explore.R</code>) is assumed to have many lines that contain the marker “NOTE”. The user must have put in conscious efforts to leave “NOTE” marker in <code>explore.R</code> file.</p></li>
 </ol>
 <p>For the most part, once above two limitations are understood and resolved, the shell script can be useful.</p>
 <p>Going one step further, if you find yourself using this particular shell script quite often in your data analysis workflow, you can include this shell script as well as the corresponding R wrapper function that calls the shell script (much like <code>system(&quot;ls&quot;)</code> above) in an R package<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>.</p>
@@ -53,7 +53,7 @@ fi</code></pre>
   system(cmd)
 
 }</code></pre>
-<p>Note that R’s base <code>system.file()</code> function is used here to search for the <code>show_notes.sh</code> file in a subdirectory <code>/sh</code> under the root directory of <code>my_awesome_R_pkg</code>.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<p>Note that R’s base <code>system.file()</code> function is used here to search for the <code>show_notes.sh</code> file in a subdirectory <code>/sh</code> under the root directory of installed package, <code>my_awesome_R_pkg</code>.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
 <p>Once <code>my_awesome_R_pkg</code> is installed and loaded, you can call this R wrapper function from your open interactive R shell, like so (assuming <code>explore.R</code> file is in the current working directory of the open interactive R session):</p>
 <pre class="r"><code>show_notes(&quot;explore.R&quot;)</code></pre>
 <p>This function call will extract all the lines from <code>explore.R</code> file that contains “NOTE” in them and save it to <code>explore.R.NOTE</code> in the same directory as the <code>explore.R</code>.</p>
@@ -64,6 +64,6 @@ fi</code></pre>
 <li id="fn1"><p>Both a newer version function <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/system2.html"><code>system2</code></a> and a relatively new file system operations opackage <a href="http://fs.r-lib.org">fs</a> seem great alternatives, but I haven’t tried them yet.<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p>Note that in addition to familiar R code chunks, you can also execute code chunks in other lanauges by calling the target language engine in place of r. For options, see <a href="http://rmarkdown.rstudio.com/authoring_knitr_engines.html">here</a>.<a href="#fnref2">↩</a></p></li>
 <li id="fn3"><p>Check out Jim Hester’s 2018 rstudio conference presentation <a href="https://github.com/jimhester/presentations/tree/master/2018_02_03-You-can-make-a-package-in-20-minutes">here</a> for motivations and minimal package file structure.<a href="#fnref3">↩</a></p></li>
-<li id="fn4"><p>Note that source files in /inst/sh/ are copied to /sh/ when R package is built.<a href="#fnref4">↩</a></p></li>
+<li id="fn4"><p>Note that source files in <code>/inst/sh</code> are copied to <code>/sh</code> when R package is installed.<a href="#fnref4">↩</a></p></li>
 </ol>
 </div>
