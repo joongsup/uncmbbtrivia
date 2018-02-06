@@ -1,4 +1,4 @@
-baseurl = "https://joongsup.rbind.io/"
+baseurl = "https://uncmbbtrivia.netlify.com/"
 languageCode = "en-us"
 title = "Jay's Notes"
 theme = "hugo-xmin"
@@ -46,5 +46,5 @@ rssLimit = 10
     weght = 4
 
 [[menu.main]]
-    name = "Subscribe"
+    name = "RSS"
     url = "/index.xml"
