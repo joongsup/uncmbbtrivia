@@ -1,0 +1,30 @@
+---
+title: RSS feed and rbind github repo
+author: Jay
+date: '2018-02-06'
+slug: rss-feed
+categories: []
+tags: []
+draft: true
+---
+
+
+
+<p><span class="citation">@ma_salmon</span> reminded me to submit posts/blog RSS feed to R <a href="">weekly</a> on my <a href="">tweet</a>, and I set out to do just that. I didn’t have much understanding as to how to though, and googling things like “how to generate rss feed in xmin blogdown” didn’t really turn up anything useful for new bloggers like me. Maybe it’s a quite straighforward knowledge that my full blog url is not a valid RSS feed address, but I got to know that only after checking my blog url from the R weekly submit <a href="">page</a>. And besides, I’m pretty sure for most blogs that I wanted to add to my Feedly, entering their url address worked just fine, and it was a bit of a head scratcher.</p>
+<p>A bit of digression before getting into how I was able to turn on RSS feed. Since my main excitement with blogdown was being able to focus on content generation (mostly about data science and UNC basketball) and not having to worry about the site set-up, deployment, etc., I naturally followed Yihui’s recommneded <a href="https://bookdown.org/yihui/blogdown/workflow.html">workflow</a> of using netlify for the site deployment. I was very pleased with how easy it was to start my own blog and kept going for quite some time. Then I quickly ran into a little identity crisis (as my netlify subdomain was “uncmbbtrivia”<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>), and I decided to get a subdomain under rbind.io, which I had known about before. With the domain change, I’d change my subdomain name too, I figured.</p>
+<p>So I set out to switch over to rbind.io and ran into rbind support’s about <a href="https://support.rbind.io/about/">page</a>. I opened a <a href="https://github.com/rbind/support/issues/145">ticket</a>, and <span class="citation">@road2stat</span> quickly helped me with .rbind.io subdomain creation, and now my blog’s at rbind.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>Without a doubt, it was a very pleasant experience (thanks to <span class="citation">@road2stat</span> once again), and I was all set. Except that my source files were still residing in my person github account, when I had expected that the source repo would have somehow automatically transferred to rbind github account when my rbind.io subdomain was created. At least that’s how I read the how to join rbind section in the about page, but it wasn’t the case, and I ended up transferring my blog source repo to rbind organization repo on github, literally with a click of a button.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> So I joined the other 150+ people (or 60+ repos) that are hosted under rbind github account.</p>
+<p>Back to the RSS feed story, so I needed some quick help on how to generate an RSS feed, and I could’ve just fired up a question on twitterverse and/or opened a ticket on rbind github, but I decided to make use of the rbind repo. These are the people who more or less have the same interest as me, especially in using R for data science and also likely blogdown for blogging, so I should be able to find some clues as to how to generate an RSS feed, I figured.</p>
+<p>And I did find a working solution (if not the solution)! I noticed that I didn’t have /layouts/rss.xml file<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> which according to the hugo RSS template <a href="https://gohugo.io/templates/rss/">documentation</a> ships with hugo. Once I manually added the file and inserted a couple of lines in my /layouts/partials/header.html, I was all set, and my RSS feed was generated successfully for now<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>.</p>
+<p>So there, I was happy to have my blog subdomain in .rbind.io<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a>, and I’m also happy to have my source repo under rbind github account, which can “make it easier to discover websites and get inspirations from other people’s websites”, and “…may study its source files, or even ask the author via Github issues.”</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I understand I could’ve changed the netlify subdomain, but opted to rbind anyway.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>The netlify address still works, but it forwards to rbind. Notes on forwarding <a href="https://yihui.name/en/2017/11/301-redirect/">here</a>, thanks to <span class="citation">@yihui</span>.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>And I think I need to change my local git setting too, at least that’s the message I get whenever I commit/push changes, although it seems like it’s not critical at the moment.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>Maybe it was not needed, and I could’ve turned on RSS feed somehow differently?<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>When I validated the RSS link, it gave me some recommendations, and I haven’t spent time to address them yet, but they don’t seem to be errors.<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>Besides the new name, my other attraction to rbind.io is that rbind.io address automatically tells the world that the blogger cares for R.<a href="#fnref6">↩</a></p></li>
+</ol>
+</div>

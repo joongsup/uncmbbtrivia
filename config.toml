@@ -45,6 +45,6 @@ rssLimit = 10
     url = "https://twitter.com/uncmbbtrivia"
     weght = 4
 
-[[menu.main]]
-    name = "RSS"
-    url = "/index.xml"
+#[[menu.main]]
+#    name = "Feed"
+#    url = "/index.xml"
