@@ -1,4 +1,4 @@
-baseurl = "https://uncmbbtrivia.netlify.com/"
+baseurl = "https://joongsup.rbind.io/"
 languageCode = "en-us"
 title = "Jay's Notes"
 theme = "hugo-xmin"
@@ -44,6 +44,7 @@ rssLimit = 10
     name = "Twitter"
     url = "https://twitter.com/uncmbbtrivia"
     weght = 4
-#[[menu.main]]
-#    name = "Subscribe"
-#    url = "/index.xml"
+
+[[menu.main]]
+    name = "Subscribe"
+    url = "/index.xml"
