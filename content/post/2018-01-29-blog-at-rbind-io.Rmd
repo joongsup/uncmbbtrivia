@@ -14,7 +14,7 @@ As I thought about it more, it became clear that I'd better drop the UNCMBBTrivi
 
 Everything about *.rbind.io option was just right for what I wanted: moving away from UNCMBBTrivia-only identity, showing a taste of data-powered contents of the blog, and being more active in the R community (who among useRs are not excited about interacting with @yihui, @hadley, @drob, and many more amazing folks in R community?)
 
-So this weekend, I jumpted the gun and created an issue on rbind support github, which is what one needs to do to request for an rbind.io subdomain. To my pleasant surprise, @road2stat responded to my request quickly, and less than 24 hours later, the new blog address is joongsup.rbind.io :) (I wonder if there's a way to automatically redirect the visit to the original netlify address to the new rbind.io one?)
+So this weekend, I jumpted the gun and created an issue on rbind support github, which is what one needs to do to request for an rbind.io subdomain. To my pleasant surprise, @road2stat responded to my request quickly, and less than 24 hours later, the new blog address is joongsup.rbind.io :) (~~I wonder if there's a way to automatically redirect the visit to the original netlify address to the new rbind.io one?~~ And there's a way to do it. See [here](https://yihui.name/en/2017/11/301-redirect/).)
 
 I couldn't be happier with the whole experience, and am looking forward to sharing my journey in data analysis and R in addition to UNCMBBTrivia here. 
 
