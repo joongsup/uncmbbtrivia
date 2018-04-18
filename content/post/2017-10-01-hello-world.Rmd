@@ -5,7 +5,7 @@ date: '2017-10-01'
 slug: hello-world
 categories: []
 tags: []
-draft: true
+draft: false
 ---
 
 Welcome to UNC MBB TRIVIA! Just another casual fan here to talk about UNC Men's Basketball trivia time to time for all Tar Heels fans to enjoy. Stay tuned! 
