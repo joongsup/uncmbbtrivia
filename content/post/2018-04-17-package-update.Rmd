@@ -1,0 +1,49 @@
+---
+title: Package uncmbb updated!
+author: Jay
+date: '2018-04-17'
+slug: package-update
+categories: []
+tags: []
+draft: false
+---
+
+Ever since UNCMBB team's season ended about a month ago, I've been meaning to update the data in uncmbb package, and I finally got to it. Obviously the new version includes 2017-2018 season match results for both UNC and Duke MBB teams, but it also includes new features in wrapper functions that are useful when working with uncmbb package. 
+
+I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN for the first time last year, and this time I remembered to do so and take some screenshots too. Below are some notes related to package submission:
+
+- Update R and RStudio versions
+    - This is one of the prompts asked when calling devtools::release(), which is almost^[I say it almost here, because there's literally last step one has to do before submitting to CRAN.] the final step in submitting a package to CRAN.
+    - I didn't really start with updating R and RStudio this time and only ended up doing so when I ran into this prompt. 
+    - For R version update, there seem to be much better ways to do it, but I ended up manually downloading latest R from CRAN and installing packages as I needed them, starting, e.g., with tidyverse. I could've copied over from previous version's directory as well as personal directory, but I figured some packages needed to be updated anyway, so I might as well start anew with the packages.^[Yes it's quite cumbersome, and there's got to be a better way to do this that I don't know of yet.] 
+- Make changes/load all/install and restart/document/check, and commit as needed.
+    - This workflow (constant cycles of cmd-shift-L/B/D/E) makes sure my package is ok on current OS, which is Mac. 
+- Travis CI builds linux (Ubuntu) binary package and makes sure package is ok on linux (Ubuntu). 
+    - I already added Travis-CI to uncmbb project during the season^[https://juliasilge.com/blog/beginners-guide-to-travis/] and added build badge to the package github page along with other badges^[The badges ended up giving me some headache during CRAN submission.]. 
+- Once CI is passed, run devtools::build_win()
+    - This function builds windows binary package and makes sure package is ok on windows (runs R CMD check on windows).
+    - Built package and check log are sent to email.
+- Once devtools::build_win() is passed, run devtools::release()
+    - The function performs a series of tasks, and for the first several attempts, I kept getting this warning: "...* checking top-level files ... WARNING Conversion of ‘README.md’ failed: pandoc: Could not fetch...TlsExceptionHostPort (HandshakeFailed Error_EOF) "img.shields.io" 443...". 
+	  - It seemed pandoc had something to do with this warning, so after several searches, I ended up updating my pandoc via homebrew. 
+	  - But even after I updated my pandoc, rmarkdown was still using the old version, and I found out I had to run brew link pandoc to use the latest version. 
+- Once devtools::release() is passed, do the following last step task:
+    - Go to confirmation page provided in the submission confirmation email^[I didn't do this after receiving the confirmation email first time (after devtools::release() was completed), and kept wondering why there was no more update coming from CRAN.].
+    - Once confirmed on the page, there will be another cran submission confirmation email.
+    - Less than an hour later, I received yet another email from CRAN team that says the updated package "is on its way to CRAN now". Yay!
+
+
+```{r}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+
+tail(unc)
+
+duke %>% mbb_season_result() %>%
+        filter(Type == "REG") %>%
+        arrange(desc(pct_win)) %>%
+        head(5) 
+
+unc %>% mbb_champ_season()
+
+```

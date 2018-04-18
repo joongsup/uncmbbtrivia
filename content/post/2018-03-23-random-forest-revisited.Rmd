@@ -1,0 +1,64 @@
+---
+title: Random Forest Revisited
+author: Jay
+date: '2018-03-23'
+slug: random-forest-revisited
+categories: []
+tags: []
+draft: true
+---
+
+I'm revisiting some nitty gritty details of a popular classification/regression method, random forest that I've put aside for whatever reasons. 
+
+## Example setting
+- Objective: binary classification
+- N = 5M observations
+- p = 10 variables (5 categorical and 5 continuous variables)
+- ntree = 100
+- mtry = determined by resampling (10-fold cv)
+
+## Bootstrap samples for each tree
+- Bootstrap samples of same size as the original data (N) is taken for each tree.
+- This results in about 1/3 of N (hence approx. 1.5M) samples never being chosen for each tree. This is called out of bag (OOB) samples.
+- This OOB samples are used for:
+    - Unbiased estimate of test set error
+  
+## Split criteria
+- At each split, the mtry number of features are randomly selected to be consdiered as the splitting variable.
+- The best feature is the one that reduces the impurity of the resulting descendents. (exactly how?)
+- Come scoring/prediction time, once the best mtry is fixed (via resampling, such as cv), is the final model using the same features selected in training phase, or are they selected at random?
+
+## Categorical variable treatment (various encoding methods)
+- Has implications in variable importance!
+    - How to "aggregate" one-hot encoded feature importance!?
+- Has implications in grid search step!
+    - Grid search for best mtry (in k-fold cv) might result in different result for mtry
+- Various encoding methods [https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931] 
+    - Label encoding (integer encoding)
+        - One-liner custom function available 
+    - One-hot encoding (dummy variable)
+        - Default method in caret (seems for both character and factor variables)
+        - Is one-hot encoding bad? See [http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/]
+    - Binary encoding
+        - Seems interesting, but see this: 
+
+## Continuous variable treatment (binning vs. raw)
+- For customers subscription based analyses, it seems customary to bin some continuous variables such as tenures into bins, instead of using raw numbers. 
+
+## Variable importance interpretations
+- From the original randomForest package (and not from caret)
+    - Mean decrease in accuracy (by permutatino test, type = 1)
+        - How's permutation done?
+    - Mean decrease in impurity (no need for additional test, type = 2): total decrease in impurities resulting from using variable k as a splitter, averaged over all trees. 
+        - "... is often very consistent with the permutation importance measure", from [https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#varimp]
+- What am I getting from caret::varImp vs. randomForest::importance?
+    - By default, it seems both caret::varImp and randomForest::importance gives the impurity measure (type = 2)
+    - randomForest::importance(caret_model_object$fit$finalModel) gives the MeanDescreaseGini importance values, and so does caret::varImp(caret_model_object$fit, scale = FALSE)!!
+- Variable selection/importance quality?
+    - Relevant to different categorical encoding method (e.g., one-hot encoding results in individual level vs. label encoding just one)
+    - See Strobl et al. [https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25]
+        - RF favors continuous variables and categoricals with many levels
+          - So if all variables are categoricals with relatively small number of levels, prob ok for now
+  
+## Class imbalance
+- See https://dpmartin42.github.io/posts/r/imbalanced-classes-part-1

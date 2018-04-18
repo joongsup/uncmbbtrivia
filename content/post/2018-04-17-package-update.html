@@ -1,0 +1,101 @@
+---
+title: Package uncmbb updated!
+author: Jay
+date: '2018-04-17'
+slug: package-update
+categories: []
+tags: []
+draft: false
+---
+
+
+
+<p>Ever since UNCMBB team’s season ended about a month ago, I’ve been meaning to update the data in uncmbb package, and I finally got to it. Obviously the new version includes 2017-2018 season match results for both UNC and Duke MBB teams, but it also includes new features in wrapper functions that are useful when working with uncmbb package.</p>
+<p>I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN for the first time last year, and this time I remembered to do so and take some screenshots too. Below are some notes related to package submission:</p>
+<ul>
+<li>Update R and RStudio versions
+<ul>
+<li>This is one of the prompts asked when calling devtools::release(), which is almost<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> the final step in submitting a package to CRAN.</li>
+<li>I didn’t really start with updating R and RStudio this time and only ended up doing so when I ran into this prompt.</li>
+<li>For R version update, there seem to be much better ways to do it, but I ended up manually downloading latest R from CRAN and installing packages as I needed them, starting, e.g., with tidyverse. I could’ve copied over from previous version’s directory as well as personal directory, but I figured some packages needed to be updated anyway, so I might as well start anew with the packages.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
+</ul></li>
+<li>Make changes/load all/install and restart/document/check, and commit as needed.
+<ul>
+<li>This workflow (constant cycles of cmd-shift-L/B/D/E) makes sure my package is ok on current OS, which is Mac.</li>
+</ul></li>
+<li>Travis CI builds linux (Ubuntu) binary package and makes sure package is ok on linux (Ubuntu).
+<ul>
+<li>I already added Travis-CI to uncmbb project during the season<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> and added build badge to the package github page along with other badges<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</li>
+</ul></li>
+<li>Once CI is passed, run devtools::build_win()
+<ul>
+<li>This function builds windows binary package and makes sure package is ok on windows (runs R CMD check on windows).</li>
+<li>Built package and check log are sent to email.</li>
+</ul></li>
+<li>Once devtools::build_win() is passed, run devtools::release()
+<ul>
+<li>The function performs a series of tasks, and for the first several attempts, I kept getting this warning: “…* checking top-level files … WARNING Conversion of ‘README.md’ failed: pandoc: Could not fetch…TlsExceptionHostPort (HandshakeFailed Error_EOF)”img.shields.io&quot; 443…“.
+<ul>
+<li>It seemed pandoc had something to do with this warning, so after several searches, I ended up updating my pandoc via homebrew.</li>
+<li>But even after I updated my pandoc, rmarkdown was still using the old version, and I found out I had to run brew link pandoc to use the latest version.</li>
+</ul></li>
+</ul></li>
+<li>Once devtools::release() is passed, do the following last step task:
+<ul>
+<li>Go to confirmation page provided in the submission confirmation email<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</li>
+<li>Once confirmed on the page, there will be another cran submission confirmation email.</li>
+<li>Less than an hour later, I received yet another email from CRAN team that says the updated package “is on its way to CRAN now”. Yay!</li>
+</ul></li>
+</ul>
+<pre class="r"><code>suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+
+tail(unc)</code></pre>
+<pre><code>##      Season  Game_Date Game_Day   Type Where Opponent_School Result Tm Opp
+## 2187   2018 2018-03-07      Wed CTOURN     N        Syracuse      W 78  59
+## 2188   2018 2018-03-08      Thu CTOURN     N           Miami      W 82  65
+## 2189   2018 2018-03-09      Fri CTOURN     N            Duke      W 74  69
+## 2190   2018 2018-03-10      Sat CTOURN     N        Virginia      L 63  71
+## 2191   2018 2018-03-16      Fri   NCAA     N        Lipscomb      W 84  66
+## 2192   2018 2018-03-18      Sun   NCAA     N       Texas A&amp;M      L 65  86
+##        OT
+## 2187 &lt;NA&gt;
+## 2188 &lt;NA&gt;
+## 2189 &lt;NA&gt;
+## 2190 &lt;NA&gt;
+## 2191 &lt;NA&gt;
+## 2192 &lt;NA&gt;</code></pre>
+<pre class="r"><code>duke %&gt;% mbb_season_result() %&gt;%
+        filter(Type == &quot;REG&quot;) %&gt;%
+        arrange(desc(pct_win)) %&gt;%
+        head(5) </code></pre>
+<pre><code>## # A tibble: 5 x 7
+## # Groups:   Season [5]
+##   Season Type  games  wins losses pct_win pct_loss
+##   &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+## 1 1999   REG      30    29      1   0.967   0.0333
+## 2 1986   REG      31    29      2   0.935   0.0645
+## 3 1998   REG      29    27      2   0.931   0.0690
+## 4 1992   REG      27    25      2   0.926   0.0741
+## 5 1963   REG      23    21      2   0.913   0.0870</code></pre>
+<pre class="r"><code>unc %&gt;% mbb_champ_season()</code></pre>
+<pre><code>## # A tibble: 6 x 1
+## # Groups:   Season [6]
+##   Season
+##   &lt;chr&gt; 
+## 1 1957  
+## 2 1982  
+## 3 1993  
+## 4 2005  
+## 5 2009  
+## 6 2017</code></pre>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I say it almost here, because there’s literally last step one has to do before submitting to CRAN.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Yes it’s quite cumbersome, and there’s got to be a better way to do this that I don’t know of yet.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p><a href="https://juliasilge.com/blog/beginners-guide-to-travis/" class="uri">https://juliasilge.com/blog/beginners-guide-to-travis/</a><a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>The badges ended up giving me some headache during CRAN submission.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>I didn’t do this after receiving the confirmation email first time (after devtools::release() was completed), and kept wondering why there was no more update coming from CRAN.<a href="#fnref5" class="footnote-back">↩</a></p></li>
+</ol>
+</div>

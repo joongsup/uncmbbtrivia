@@ -1,0 +1,116 @@
+---
+title: Categorical variable treatment
+author: Jay
+date: '2018-03-24'
+slug: categorical-variable-treatment
+categories: []
+tags: []
+draft: true
+---
+
+
+
+<p>In reviewing details of random forest, I came upon several concepts that I thought were both interesting and important enough to be highlighted in a separate post. Mainly for my own reference, but if it helps others, that’d be great too!</p>
+<div id="various-categorical-variable-encoding-methods-and-related-concepts" class="section level2">
+<h2>Various categorical variable encoding methods and related concepts</h2>
+<ul>
+<li>Reference cell coding (dummy encoding/one-hot encoding)
+<ul>
+<li>How categorical variables are treated (by default?) in regressions in R</li>
+<li>Appreciating R’s way of doing things (behind the scence)</li>
+<li>Turns out same thing as dummy coding!</li>
+<li>Default method in caret (seems for both character and factor variables)</li>
+</ul></li>
+<li>Label encoding (integer encoding)
+<ul>
+<li>Replace each level with a numeric value</li>
+</ul></li>
+<li>Links
+<ul>
+<li><a href="https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931">Categorical features and encoding in decision trees</a></li>
+<li><a href="%5Bhttp://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/%5D">Is one-hot encoding bad?</a></li>
+<li><a href="https://stats.stackexchange.com/questions/21282/regression-based-for-example-on-days-of-week#21292">Interpreting linear model output</a></li>
+<li><a href="https://stats.idre.ucla.edu/r/modules/coding-for-categorical-variables-in-regression-models/">UCLA</a></li>
+<li><a href="https://stats.stackexchange.com/questions/70699/qualitative-variable-coding-in-regression-leads-to-singularities/70708?utm_medium=organic&amp;utm_source=google_rich_qa&amp;utm_campaign=google_rich_qa">SE</a></li>
+<li><a href="https://stats.stackexchange.com/questions/120030/interpretation-of-betas-when-there-are-multiple-categorical-variables?utm_medium=organic&amp;utm_source=google_rich_qa&amp;utm_campaign=google_rich_qa">SE</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="when-to-use-label-encoding-vs.dummy-encoding" class="section level2">
+<h2>When to use label encoding vs. dummy encoding</h2>
+<ul>
+<li>Correlation plot
+<ul>
+<li>Winner: dummy encoding, because unless the categorical variable is ordinal, labeled value doesn’t mean anything.</li>
+</ul></li>
+<li>Regression
+<ul>
+<li>Winner: dummy encoding, because of the same reason as above.</li>
+</ul></li>
+<li>Tree-based models
+<ul>
+<li>Winner: label encoding, because
+<ul>
+<li>Variable importance interpretation</li>
+<li>Grid search for best mtry (in k-fold cv) might result in different result for mtry</li>
+</ul></li>
+</ul></li>
+</ul>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<pre class="r"><code>headers &lt;- c(&quot;age&quot;, &quot;workclass&quot;, &quot;fnlwgt&quot;, &quot;education&quot;, &quot;education_num&quot;, &quot;marital_status&quot;, &quot;occupation&quot;, &quot;relationship&quot;, &quot;race&quot;, &quot;sex&quot;, &quot;capital_gain&quot;, &quot;capital_loss&quot;, &quot;hours_per_week&quot;,  &quot;native_country&quot;, &quot;response&quot;)
+adult &lt;- read_csv(&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data&quot;, col_names = headers)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   age = col_character(),
+##   workclass = col_character(),
+##   fnlwgt = col_character(),
+##   education = col_character(),
+##   education_num = col_character(),
+##   marital_status = col_character(),
+##   occupation = col_character(),
+##   relationship = col_character(),
+##   race = col_character(),
+##   sex = col_character(),
+##   capital_gain = col_character(),
+##   capital_loss = col_character(),
+##   hours_per_week = col_character(),
+##   native_country = col_character(),
+##   response = col_character()
+## )</code></pre>
+<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
+## a multiple of vector length (arg 1)</code></pre>
+<pre><code>## Warning: 231 parsing failures.
+## row # A tibble: 5 x 5 col     row   col   expected    actual expected   &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt; actual 1     1  &lt;NA&gt; 15 columns 1 columns file 2     2  &lt;NA&gt; 15 columns 1 columns row 3     3  &lt;NA&gt; 15 columns 1 columns col 4     4  &lt;NA&gt; 15 columns 1 columns expected 5     5  &lt;NA&gt; 15 columns 1 columns actual # ... with 1 more variables: file &lt;chr&gt;
+## ... ................. ... .................................. ........ .................................. ...... .................................. .... .................................. ... .................................. ... .................................. ........ .................................. ...... .......................................
+## See problems(...) for more details.</code></pre>
+<pre class="r"><code>#head(adult)
+
+vars &lt;- c(&quot;age&quot;, &quot;education&quot;, &quot;response&quot;)
+df &lt;- adult[, vars]
+head(df)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##                                                           age
+##                                                         &lt;chr&gt;
+## 1                                             &lt;!doctype html&gt;
+## 2                                        &quot;&lt;html lang=\&quot;en\&quot;&gt;&quot;
+## 3                                                      &lt;head&gt;
+## 4                                  &quot;&lt;meta charset=\&quot;utf-8\&quot;&gt;&quot;
+## 5 &quot;&lt;meta http-equiv=\&quot;X-UA-Compatible\&quot; content=\&quot;IE=edge\&quot;&gt;&quot;
+## 6      &quot;&lt;meta name=\&quot;viewport\&quot; content=\&quot;width=device-width&quot;
+## # ... with 2 more variables: education &lt;chr&gt;, response &lt;chr&gt;</code></pre>
+<pre class="r"><code>df %&gt;% group_by(education, response) %&gt;% summarize(n = n())</code></pre>
+<pre><code>## # A tibble: 1 x 3
+## # Groups:   education [?]
+##   education response     n
+##       &lt;chr&gt;    &lt;chr&gt; &lt;int&gt;
+## 1      &lt;NA&gt;     &lt;NA&gt;   231</code></pre>
+</div>

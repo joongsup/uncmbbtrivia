@@ -6,8 +6,338 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Package uncmbb updated!</title>
+      <link>/post/2018/04/17/package-update/</link>
+      <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/04/17/package-update/</guid>
+      <description>
+        &lt;p&gt;Ever since UNCMBB team’s season ended about a month ago, I’ve been meaning to update the data in uncmbb package, and I finally got to it. Obviously the new version includes 2017-2018 season match results for both UNC and Duke MBB teams, but it also includes new features in wrapper functions that are useful when working with uncmbb package.&lt;/p&gt;
+&lt;p&gt;I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN for the first time last year, and this time I remembered to do so and take some screenshots too. Below are some notes related to package submission:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Update R and RStudio versions
+&lt;ul&gt;
+&lt;li&gt;This is one of the prompts asked when calling devtools::release(), which is almost&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; the final step in submitting a package to CRAN.&lt;/li&gt;
+&lt;li&gt;I didn’t really start with updating R and RStudio this time and only ended up doing so when I ran into this prompt.&lt;/li&gt;
+&lt;li&gt;For R version update, there seem to be much better ways to do it, but I ended up manually downloading latest R from CRAN and installing packages as I needed them, starting, e.g., with tidyverse. I could’ve copied over from previous version’s directory as well as personal directory, but I figured some packages needed to be updated anyway, so I might as well start anew with the packages.&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Make changes/load all/install and restart/document/check, and commit as needed.
+&lt;ul&gt;
+&lt;li&gt;This workflow (constant cycles of cmd-shift-L/B/D/E) makes sure my package is ok on current OS, which is Mac.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Travis CI builds linux (Ubuntu) binary package and makes sure package is ok on linux (Ubuntu).
+&lt;ul&gt;
+&lt;li&gt;I already added Travis-CI to uncmbb project during the season&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; and added build badge to the package github page along with other badges&lt;a href=&#34;#fn4&#34; class=&#34;footnote-ref&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Once CI is passed, run devtools::build_win()
+&lt;ul&gt;
+&lt;li&gt;This function builds windows binary package and makes sure package is ok on windows (runs R CMD check on windows).&lt;/li&gt;
+&lt;li&gt;Built package and check log are sent to email.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Once devtools::build_win() is passed, run devtools::release()
+&lt;ul&gt;
+&lt;li&gt;The function performs a series of tasks, and for the first several attempts, I kept getting this warning: “…* checking top-level files … WARNING Conversion of ‘README.md’ failed: pandoc: Could not fetch…TlsExceptionHostPort (HandshakeFailed Error_EOF)”img.shields.io&amp;quot; 443…“.
+&lt;ul&gt;
+&lt;li&gt;It seemed pandoc had something to do with this warning, so after several searches, I ended up updating my pandoc via homebrew.&lt;/li&gt;
+&lt;li&gt;But even after I updated my pandoc, rmarkdown was still using the old version, and I found out I had to run brew link pandoc to use the latest version.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Once devtools::release() is passed, do the following last step task:
+&lt;ul&gt;
+&lt;li&gt;Go to confirmation page provided in the submission confirmation email&lt;a href=&#34;#fn5&#34; class=&#34;footnote-ref&#34; id=&#34;fnref5&#34;&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Once confirmed on the page, there will be another cran submission confirmation email.&lt;/li&gt;
+&lt;li&gt;Less than an hour later, I received yet another email from CRAN team that says the updated package “is on its way to CRAN now”. Yay!&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(dplyr))
+
+tail(unc)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##      Season  Game_Date Game_Day   Type Where Opponent_School Result Tm Opp
+## 2187   2018 2018-03-07      Wed CTOURN     N        Syracuse      W 78  59
+## 2188   2018 2018-03-08      Thu CTOURN     N           Miami      W 82  65
+## 2189   2018 2018-03-09      Fri CTOURN     N            Duke      W 74  69
+## 2190   2018 2018-03-10      Sat CTOURN     N        Virginia      L 63  71
+## 2191   2018 2018-03-16      Fri   NCAA     N        Lipscomb      W 84  66
+## 2192   2018 2018-03-18      Sun   NCAA     N       Texas A&amp;amp;M      L 65  86
+##        OT
+## 2187 &amp;lt;NA&amp;gt;
+## 2188 &amp;lt;NA&amp;gt;
+## 2189 &amp;lt;NA&amp;gt;
+## 2190 &amp;lt;NA&amp;gt;
+## 2191 &amp;lt;NA&amp;gt;
+## 2192 &amp;lt;NA&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;duke %&amp;gt;% mbb_season_result() %&amp;gt;%
+        filter(Type == &amp;quot;REG&amp;quot;) %&amp;gt;%
+        arrange(desc(pct_win)) %&amp;gt;%
+        head(5) &lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5 x 7
+## # Groups:   Season [5]
+##   Season Type  games  wins losses pct_win pct_loss
+##   &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+## 1 1999   REG      30    29      1   0.967   0.0333
+## 2 1986   REG      31    29      2   0.935   0.0645
+## 3 1998   REG      29    27      2   0.931   0.0690
+## 4 1992   REG      27    25      2   0.926   0.0741
+## 5 1963   REG      23    21      2   0.913   0.0870&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;unc %&amp;gt;% mbb_champ_season()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 1
+## # Groups:   Season [6]
+##   Season
+##   &amp;lt;chr&amp;gt; 
+## 1 1957  
+## 2 1982  
+## 3 1993  
+## 4 2005  
+## 5 2009  
+## 6 2017&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;I say it almost here, because there’s literally last step one has to do before submitting to CRAN.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Yes it’s quite cumbersome, and there’s got to be a better way to do this that I don’t know of yet.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;&lt;a href=&#34;https://juliasilge.com/blog/beginners-guide-to-travis/&#34; class=&#34;uri&#34;&gt;https://juliasilge.com/blog/beginners-guide-to-travis/&lt;/a&gt;&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;The badges ended up giving me some headache during CRAN submission.&lt;a href=&#34;#fnref4&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn5&#34;&gt;&lt;p&gt;I didn’t do this after receiving the confirmation email first time (after devtools::release() was completed), and kept wondering why there was no more update coming from CRAN.&lt;a href=&#34;#fnref5&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Categorical variable treatment</title>
+      <link>/post/2018/03/24/categorical-variable-treatment/</link>
+      <pubDate>Sat, 24 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/03/24/categorical-variable-treatment/</guid>
+      <description>
+        &lt;p&gt;In reviewing details of random forest, I came upon several concepts that I thought were both interesting and important enough to be highlighted in a separate post. Mainly for my own reference, but if it helps others, that’d be great too!&lt;/p&gt;
+&lt;div id=&#34;various-categorical-variable-encoding-methods-and-related-concepts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Various categorical variable encoding methods and related concepts&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Reference cell coding (dummy encoding/one-hot encoding)
+&lt;ul&gt;
+&lt;li&gt;How categorical variables are treated (by default?) in regressions in R&lt;/li&gt;
+&lt;li&gt;Appreciating R’s way of doing things (behind the scence)&lt;/li&gt;
+&lt;li&gt;Turns out same thing as dummy coding!&lt;/li&gt;
+&lt;li&gt;Default method in caret (seems for both character and factor variables)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Label encoding (integer encoding)
+&lt;ul&gt;
+&lt;li&gt;Replace each level with a numeric value&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Links
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931&#34;&gt;Categorical features and encoding in decision trees&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;%5Bhttp://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/%5D&#34;&gt;Is one-hot encoding bad?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stats.stackexchange.com/questions/21282/regression-based-for-example-on-days-of-week#21292&#34;&gt;Interpreting linear model output&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stats.idre.ucla.edu/r/modules/coding-for-categorical-variables-in-regression-models/&#34;&gt;UCLA&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stats.stackexchange.com/questions/70699/qualitative-variable-coding-in-regression-leads-to-singularities/70708?utm_medium=organic&amp;amp;utm_source=google_rich_qa&amp;amp;utm_campaign=google_rich_qa&#34;&gt;SE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stats.stackexchange.com/questions/120030/interpretation-of-betas-when-there-are-multiple-categorical-variables?utm_medium=organic&amp;amp;utm_source=google_rich_qa&amp;amp;utm_campaign=google_rich_qa&#34;&gt;SE&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;when-to-use-label-encoding-vs.dummy-encoding&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;When to use label encoding vs. dummy encoding&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Correlation plot
+&lt;ul&gt;
+&lt;li&gt;Winner: dummy encoding, because unless the categorical variable is ordinal, labeled value doesn’t mean anything.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Regression
+&lt;ul&gt;
+&lt;li&gt;Winner: dummy encoding, because of the same reason as above.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Tree-based models
+&lt;ul&gt;
+&lt;li&gt;Winner: label encoding, because
+&lt;ul&gt;
+&lt;li&gt;Variable importance interpretation&lt;/li&gt;
+&lt;li&gt;Grid search for best mtry (in k-fold cv) might result in different result for mtry&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Conflicts with tidy packages ----------------------------------------------&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## filter(): dplyr, stats
+## lag():    dplyr, stats&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;headers &amp;lt;- c(&amp;quot;age&amp;quot;, &amp;quot;workclass&amp;quot;, &amp;quot;fnlwgt&amp;quot;, &amp;quot;education&amp;quot;, &amp;quot;education_num&amp;quot;, &amp;quot;marital_status&amp;quot;, &amp;quot;occupation&amp;quot;, &amp;quot;relationship&amp;quot;, &amp;quot;race&amp;quot;, &amp;quot;sex&amp;quot;, &amp;quot;capital_gain&amp;quot;, &amp;quot;capital_loss&amp;quot;, &amp;quot;hours_per_week&amp;quot;,  &amp;quot;native_country&amp;quot;, &amp;quot;response&amp;quot;)
+adult &amp;lt;- read_csv(&amp;quot;http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data&amp;quot;, col_names = headers)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Parsed with column specification:
+## cols(
+##   age = col_character(),
+##   workclass = col_character(),
+##   fnlwgt = col_character(),
+##   education = col_character(),
+##   education_num = col_character(),
+##   marital_status = col_character(),
+##   occupation = col_character(),
+##   relationship = col_character(),
+##   race = col_character(),
+##   sex = col_character(),
+##   capital_gain = col_character(),
+##   capital_loss = col_character(),
+##   hours_per_week = col_character(),
+##   native_country = col_character(),
+##   response = col_character()
+## )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning in rbind(names(probs), probs_f): number of columns of result is not
+## a multiple of vector length (arg 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: 231 parsing failures.
+## row # A tibble: 5 x 5 col     row   col   expected    actual expected   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt; actual 1     1  &amp;lt;NA&amp;gt; 15 columns 1 columns file 2     2  &amp;lt;NA&amp;gt; 15 columns 1 columns row 3     3  &amp;lt;NA&amp;gt; 15 columns 1 columns col 4     4  &amp;lt;NA&amp;gt; 15 columns 1 columns expected 5     5  &amp;lt;NA&amp;gt; 15 columns 1 columns actual # ... with 1 more variables: file &amp;lt;chr&amp;gt;
+## ... ................. ... .................................. ........ .................................. ...... .................................. .... .................................. ... .................................. ... .................................. ........ .................................. ...... .......................................
+## See problems(...) for more details.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#head(adult)
+
+vars &amp;lt;- c(&amp;quot;age&amp;quot;, &amp;quot;education&amp;quot;, &amp;quot;response&amp;quot;)
+df &amp;lt;- adult[, vars]
+head(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 3
+##                                                           age
+##                                                         &amp;lt;chr&amp;gt;
+## 1                                             &amp;lt;!doctype html&amp;gt;
+## 2                                        &amp;quot;&amp;lt;html lang=\&amp;quot;en\&amp;quot;&amp;gt;&amp;quot;
+## 3                                                      &amp;lt;head&amp;gt;
+## 4                                  &amp;quot;&amp;lt;meta charset=\&amp;quot;utf-8\&amp;quot;&amp;gt;&amp;quot;
+## 5 &amp;quot;&amp;lt;meta http-equiv=\&amp;quot;X-UA-Compatible\&amp;quot; content=\&amp;quot;IE=edge\&amp;quot;&amp;gt;&amp;quot;
+## 6      &amp;quot;&amp;lt;meta name=\&amp;quot;viewport\&amp;quot; content=\&amp;quot;width=device-width&amp;quot;
+## # ... with 2 more variables: education &amp;lt;chr&amp;gt;, response &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;% group_by(education, response) %&amp;gt;% summarize(n = n())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 3
+## # Groups:   education [?]
+##   education response     n
+##       &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1      &amp;lt;NA&amp;gt;     &amp;lt;NA&amp;gt;   231&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Random Forest Revisited</title>
+      <link>/post/2018/03/23/random-forest-revisited/</link>
+      <pubDate>Fri, 23 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/03/23/random-forest-revisited/</guid>
+      <description>
+        &lt;p&gt;I’m revisiting some nitty gritty details of a popular classification/regression method, random forest that I’ve put aside for whatever reasons.&lt;/p&gt;
+&lt;div id=&#34;example-setting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example setting&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Objective: binary classification&lt;/li&gt;
+&lt;li&gt;N = 5M observations&lt;/li&gt;
+&lt;li&gt;p = 10 variables (5 categorical and 5 continuous variables)&lt;/li&gt;
+&lt;li&gt;ntree = 100&lt;/li&gt;
+&lt;li&gt;mtry = determined by resampling (10-fold cv)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;bootstrap-samples-for-each-tree&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Bootstrap samples for each tree&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Bootstrap samples of same size as the original data (N) is taken for each tree.&lt;/li&gt;
+&lt;li&gt;This results in about 1/3 of N (hence approx. 1.5M) samples never being chosen for each tree. This is called out of bag (OOB) samples.&lt;/li&gt;
+&lt;li&gt;This OOB samples are used for:
+&lt;ul&gt;
+&lt;li&gt;Unbiased estimate of test set error&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;split-criteria&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Split criteria&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;At each split, the mtry number of features are randomly selected to be consdiered as the splitting variable.&lt;/li&gt;
+&lt;li&gt;The best feature is the one that reduces the impurity of the resulting descendents. (exactly how?)&lt;/li&gt;
+&lt;li&gt;Come scoring/prediction time, once the best mtry is fixed (via resampling, such as cv), is the final model using the same features selected in training phase, or are they selected at random?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;categorical-variable-treatment-various-encoding-methods&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Categorical variable treatment (various encoding methods)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Has implications in variable importance!
+&lt;ul&gt;
+&lt;li&gt;How to “aggregate” one-hot encoded feature importance!?&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Has implications in grid search step!
+&lt;ul&gt;
+&lt;li&gt;Grid search for best mtry (in k-fold cv) might result in different result for mtry&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Various encoding methods [&lt;a href=&#34;https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931&#34; class=&#34;uri&#34;&gt;https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931&lt;/a&gt;]
+&lt;ul&gt;
+&lt;li&gt;Label encoding (integer encoding)
+&lt;ul&gt;
+&lt;li&gt;One-liner custom function available&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;One-hot encoding (dummy variable)
+&lt;ul&gt;
+&lt;li&gt;Default method in caret (seems for both character and factor variables)&lt;/li&gt;
+&lt;li&gt;Is one-hot encoding bad? See [&lt;a href=&#34;http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/&#34; class=&#34;uri&#34;&gt;http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/&lt;/a&gt;]&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Binary encoding
+&lt;ul&gt;
+&lt;li&gt;Seems interesting, but see this:&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;continuous-variable-treatment-binning-vs.raw&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Continuous variable treatment (binning vs. raw)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For customers subscription based analyses, it seems customary to bin some continuous variables such as tenures into bins, instead of using raw numbers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;variable-importance-interpretations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Variable importance interpretations&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;From the original randomForest package (and not from caret)
+&lt;ul&gt;
+&lt;li&gt;Mean decrease in accuracy (by permutatino test, type = 1)
+&lt;ul&gt;
+&lt;li&gt;How’s permutation done?&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Mean decrease in impurity (no need for additional test, type = 2): total decrease in impurities resulting from using variable k as a splitter, averaged over all trees.
+&lt;ul&gt;
+&lt;li&gt;“… is often very consistent with the permutation importance measure”, from [&lt;a href=&#34;https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#varimp&#34; class=&#34;uri&#34;&gt;https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#varimp&lt;/a&gt;]&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What am I getting from caret::varImp vs. randomForest::importance?
+&lt;ul&gt;
+&lt;li&gt;By default, it seems both caret::varImp and randomForest::importance gives the impurity measure (type = 2)&lt;/li&gt;
+&lt;li&gt;randomForest::importance(caret_model_object&lt;span class=&#34;math inline&#34;&gt;\(fit\)&lt;/span&gt;finalModel) gives the MeanDescreaseGini importance values, and so does caret::varImp(caret_model_object$fit, scale = FALSE)!!&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Variable selection/importance quality?
+&lt;ul&gt;
+&lt;li&gt;Relevant to different categorical encoding method (e.g., one-hot encoding results in individual level vs. label encoding just one)&lt;/li&gt;
+&lt;li&gt;See Strobl et al. [&lt;a href=&#34;https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25&#34; class=&#34;uri&#34;&gt;https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25&lt;/a&gt;]
+&lt;ul&gt;
+&lt;li&gt;RF favors continuous variables and categoricals with many levels&lt;/li&gt;
+&lt;li&gt;So if all variables are categoricals with relatively small number of levels, prob ok for now&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;class-imbalance&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Class imbalance&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;See &lt;a href=&#34;https://dpmartin42.github.io/posts/r/imbalanced-classes-part-1&#34; class=&#34;uri&#34;&gt;https://dpmartin42.github.io/posts/r/imbalanced-classes-part-1&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>RSS feed and rbind github repo</title>
@@ -311,309 +641,6 @@ sum(unlist(results))/N&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;At the conference, I didn’t really pay attention to @&lt;a href=&#34;https://github.com/yihui&#34;&gt;yihui&lt;/a&gt;’s talks on blogdown. As my first R package became available on CRAN, however, I wanted to share a couple of quick data analyses that can be done with the data, and quickly I ran into a couple of how-to’s using blogdown. There’s been many failed attempts to create and maintain my own blog in the past, but I was able to start blogging and keep doing it still, thanks to @&lt;a href=&#34;https://github.com/yihui&#34;&gt;yihui&lt;/a&gt; and other great folks in R community.&lt;/p&gt;
 &lt;p&gt;Unfortunately, I’m not going to the rstudio conference this year (training/conference schedule just didn’t work out), and boy do I want to be there this week. For those of you lucky attendees, I hope you make the best out of the conference and enjoy everything you get to learn from amazing people and do your own cool/amazing things after the conference.&lt;/p&gt;
 &lt;p&gt;I know you will :)&lt;/p&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Data Analysis Workflow at Work</title>
-      <link>/post/2018/01/19/data-analysis-workflow/</link>
-      <pubDate>Fri, 19 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/01/19/data-analysis-workflow/</guid>
-      <description>
-        &lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Introduction&lt;/h1&gt;
-&lt;p&gt;Data analysis workflow. This is one of my favorite topics in data science, because it deals with everything from data ingestion to report/insight documentation in a project. One might say applying tidyverse approach/techniques is a micro level data science skill, whereas following a specific workflow, which can vary from one person to another, is a macro level one. Tidyverse can definitely be a part of your workflow, and there are many other components of a workflow that I touch on later, but why should we care about data analysis workflow?&lt;/p&gt;
-&lt;p&gt;There are several benefits of establishing a good and routine data analysis workflow that one follows on a daily basis. To me, the most helpful benefits have been:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Having a good data analysis workflow is beneficial and needed to do reproducible research/work (Reproducible Research, as they say). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break. For example, after spending 2-3 days on project A, I might go off to do something else for the next 2-3 days, and when I come back to project A, I want to know exactly what’s been done and what I need to do. There are many components of data analysis workflow that can be helpful for one to do RR, and I try to outline them below. But before going into each component of a workflow, there’s one more benefit at least as I see it.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;A routine workflow helps us avoid mental fatigue (I can be wrong, but this may be from one of the books by Hadley). To me, this means knowing what, where, why, and how to do things right off the bat when starting a new project. Slowly but surely, I’m settling down to a specific approach that I’ll touch upon later, but to get to this point, I tried several different alternatives, and many times ended up failing, for example, to keep track of how to do things (e.g., refresh data with new source data) all over again when needed. Typical challenges have been, but are not limited to, (1) keeping track of data generation, preparation, and movement steps, (2) having to switch between several environments to do specific tasks (e.g., visual inspection), and (3) saving analysis summary and results in a place that’s as close to the scripts as possible.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Next, below are my attempts to define data analysis workflow in general by its components.&lt;/p&gt;
-&lt;p&gt;— “How”s of workflow&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;How do we produce data: this describes knowing all the activities by which we generate, prepare, read, and write data. (e.g., I want to do data generation and preparation in a specific way.)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;How do we write codes: this describes knowing specifically how we’re writing codes (e.g., coding style, convention, environment set up)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;How do we share work by-products: this describes knowing how we share by-products of our work, such as, data, reports, presentation, etc. (e.g., I could keep my reports in my local computer as opposed to the codes in the lake).&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;— “What”s of workflow&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;What do we do with data: this describes knowing what to do with data at hand (e.g., once data is all tidied up, I look for each variable’s frequency distribution first, and this is where tidyverse approach can be helpful).&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;What do we keep: this describes knowing which by-products are important for future re-use. (e.g., for the initial explore, it’s typical that I end up working with many hive tables downloaded to local, and I keep them in RDS format)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;— “Where”s of workflow&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Where do we do work: this describes knowing the sufficiently good enough data analysis environment (e.g., I could work on my local RStudio, or in RCloud).&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Where do we save code/data/plots/reports: this describes knowing how to organize your project (e.g., all my by-products reside in a project directory with several other subdirectories).&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;— “Why”s of workflow&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Why do we do things in a particular way: this describes knowing the pros and cons of different workflow approaches available (e.g., through trials-and-errors, I realized that doing everything in RCloud (e.g., data prep, visuals, modeling, reports) is not a good idea, and that rather I needed to incorporate RCloud somehow in my workflow for specific tasks only).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div id=&#34;sample-workflow-my-example&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Sample workflow (my example)&lt;/h1&gt;
-&lt;p&gt;Before starting to settle down on a particular workflow, I realized that first thing I needed to do was to take a closer look at my day-to-day needs. Not exhaustively, answers to below questions may provide better insights to what we do on a daily basis.&lt;/p&gt;
-&lt;p&gt;— What’s been the objectives of projects so far?&lt;/p&gt;
-&lt;p&gt;— What kind of data do I work with the most?&lt;/p&gt;
-&lt;p&gt;— How are the data generated and prepared before they reach me?&lt;/p&gt;
-&lt;p&gt;— What do I do with the data?&lt;/p&gt;
-&lt;p&gt;— Do I need interactive environment or batch jobs?&lt;/p&gt;
-&lt;p&gt;To me, It turns out that more often than not, majority of my day-to-day tasks especially in the early stage of a project are:&lt;/p&gt;
-&lt;p&gt;— Explore data stored in hive tables&lt;/p&gt;
-&lt;p&gt;— Visualize data stored in hive tables&lt;/p&gt;
-&lt;p&gt;— Summarize/document analysis results&lt;/p&gt;
-&lt;p&gt;So it became apparent that the integration of R and hive is rather important in my day-to-day work, and that I still rely much on an interactive environment. Hence, I needed to come up with a better way to use data stored in hive tables in an interactive R session. After several trials-and-errors, I came to the conclusion that the combination of bash shell scripts, remote R shell, and RCloud should do for majority of what I do on a daily basis during this stage. This workflow uses bash shell scripts and remote R shell for quick data exploration and additional data prep, typically followed by RCloud for visualization and summary/documentation. Below, I describe how this workflow typically works.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Create a project directory and start up remote R shell from there.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Quick/iterative exploration in remote R shell&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Data generation and preparation&lt;/p&gt;
-&lt;p&gt;— Typically involves (intermediate) hive table generations and loading them in R (hive sql, bash, R shell)&lt;/p&gt;
-&lt;p&gt;— Needs custom bash scripts and R functions for common tasks&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Descriptive&lt;/p&gt;
-&lt;p&gt;— Typical R operations without visuals&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Additional data prep needed for further actions&lt;/p&gt;
-&lt;p&gt;— Typically for visual inspection in RCloud&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Intermediate data saving&lt;/p&gt;
-&lt;p&gt;— Typically in RDS format for visual inspections in RCloud&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Iterate above steps as needed&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Visual inspection and summary in RCloud&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Create a new notebook in RCloud.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Start documenting findings from the exploration step.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Visual inspection&lt;/p&gt;
-&lt;p&gt;— Using RDS files saved from quick explore step&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Reports and summary&lt;/p&gt;
-&lt;p&gt;— Quick notes on findings according to the visuals&lt;/p&gt;
-&lt;p&gt;— Also quick notes on further actions, if needed&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This is only an example workflow that I’ve come to rely on in early stages of a project, albeit a couple of cons that I don’t share here. Unless your daily tasks are similar to mine, my workflow may not be helpful at all for your needs. And that’s exactly why I’m writing this post, because I believe there is huge benefit of having a concrete workflow embedded in our day to day work, surely beyond what I listed here. I invite you to establish your own workflow, if you have not already, and share the benefits of working in your own workflow. Maybe share your workflow too, so that we can all learn from each other. I end with a couple of links for further readings for those interested.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;links&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Links&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf&#34; class=&#34;uri&#34;&gt;http://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.tidyverse.org/articles/2017/12/workflow-vs-script/&#34; class=&#34;uri&#34;&gt;https://www.tidyverse.org/articles/2017/12/workflow-vs-script/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://r4ds.had.co.nz/explore-intro.html&#34; class=&#34;uri&#34;&gt;http://r4ds.had.co.nz/explore-intro.html&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://edwinth.github.io/blog/workflow/&#34; class=&#34;uri&#34;&gt;https://edwinth.github.io/blog/workflow/&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext&#34; class=&#34;uri&#34;&gt;https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Running command line scripts from R vs. Running R scripts from command line</title>
-      <link>/post/2018/01/08/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</link>
-      <pubDate>Mon, 08 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/01/08/running-command-line-scripts-from-r-vs-running-r-scripts-from-command-line/</guid>
-      <description>
-        &lt;p&gt;Combining command line tools and R commands&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;R package itself&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;command line utilities&lt;/li&gt;
-&lt;li&gt;R wrapper functions&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;How functions in R package are used&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;Use the wrapper functions in interactive way (explore.R)&lt;/li&gt;
-&lt;li&gt;Use the wrapper functions in another .R script
-&lt;ul&gt;
-&lt;li&gt;Call the .R script in command line tools&lt;/li&gt;
-&lt;li&gt;Make the .R script into R command line utility itself&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;What I have so far:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;read_hive_tbl() function&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;What is it? R function&lt;/li&gt;
-&lt;li&gt;What does it do? This function calls command line utility to read hive tables in R&lt;/li&gt;
-&lt;li&gt;How is it used? It’s included in explore.R script (interactively in an R session)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;ihx_lookup_batch.sh&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;What is it? a shell script&lt;/li&gt;
-&lt;li&gt;What does it do? This script calls R function to do ban lookup&lt;/li&gt;
-&lt;li&gt;How is it used? It’s used as a command line utility (i.e., call the script directly from CLI)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Comparison:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Run command line scripts (bash shell script) from within R&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;When working interactively in R shell
-&lt;ul&gt;
-&lt;li&gt;Example: read_hive_tbl function in R&lt;/li&gt;
-&lt;li&gt;at least two types of files required (.sh to do command line thingy and explore.R that calls the .sh)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Run R scripts from command line&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;Use shell script to run R command
-&lt;ul&gt;
-&lt;li&gt;at least two types of files required (.sh and .R)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Call R command directly from command line
-&lt;ul&gt;
-&lt;li&gt;Example: R command line utilities ( &lt;a href=&#34;http://blog.sellorm.com/2017/12/18/learn-to-write-command-line-utilities-in-r/&#34; class=&#34;uri&#34;&gt;http://blog.sellorm.com/2017/12/18/learn-to-write-command-line-utilities-in-r/&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;only .R file type&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Same day match results: UNC and Duke</title>
-      <link>/post/2018/01/07/same-day-match-results-unc-and-duke/</link>
-      <pubDate>Sun, 07 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/01/07/same-day-match-results-unc-and-duke/</guid>
-      <description>
-        &lt;p&gt;So both UNC and Duke lost today (Saturday, 2018-01-06). I’d think it’s pretty rare that such event (both teams losing on a same day) happens, and I got curious how rare it is indeed. What are the odds of both teams winning, losing (like today), and splitting?&lt;/p&gt;
-&lt;p&gt;I knew both teams have approximately 75% win percentage (since 1949-50 season), so I’m guessing on any given day, the probability of both teams winning should be close to 0.75 x 0.75 = 0.5625, assuming either team’s game result doesn’t really impact the other team’s result. Similarly, both teams losing at the same time should be close to 0.25 x 0.25 = 0.0625. Let’s see if history tells us otherwise.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-01-07-same-day-match-results-unc-and-duke_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;It seems like the quick calculations seem to match the actual game results. Between 1949-50 and 2016-17 season, there were total 835 days in which both UNC and Duke played, not with each other, and it’s indeed rare that both teams lose on a same day (48 out of 835 days).&lt;/p&gt;
-&lt;p&gt;Looking at the split days (W/L and L/W days), it seems UNC gathered more Ws than Duke did when they played on a same day. Let’s see how they played when they played on a same day (again not with each other, but playing some other teams).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-01-07-same-day-match-results-unc-and-duke_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;So indeed, UNC have won slightly more matches than Duke did on days in which they both played, in all match types.&lt;/p&gt;
-&lt;p&gt;One thing seems odd, though. Why have UNC played 719 regular matches when Duke played one fewer games in 718 if we’re talking about games played on same days? And reciprocally for CTOURN, Duke (76) played one more game than UNC (75). They should have played the same number of games, like that for NIT and NCAA.&lt;/p&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;caption&gt;
-&lt;span id=&#34;tab:unnamed-chunk-4&#34;&gt;Table 1: &lt;/span&gt;One extra regular game for UNC
-&lt;/caption&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Season
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Game_Date
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Game_Day
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Type
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Where
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Opponent_School
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Result
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Tm
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Opp
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-OT
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-team
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1955
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1955-03-03
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Thu
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-REG
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Wake Forest
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-L
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-82
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-95
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-UNC’s Record
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1955
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1955-03-03
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Thu
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-CTOURN
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-South Carolina
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-W
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-83
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-67
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Duke’s Record
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;A quick investigation and &lt;a href=&#34;https://en.wikipedia.org/wiki/1955_ACC_Men%27s_Basketball_Tournament&#34;&gt;search&lt;/a&gt; reveals that the UNC vs. Wake Forest game on 1955-03-03 was an ACC conference tournament game (CTOURN), not a regular season game. So it looks like the data source I’m using seems to have an incorrect record there. Although nothing big, another good gotcha while exploring the match data :)&lt;/p&gt;
 
         
       </description>

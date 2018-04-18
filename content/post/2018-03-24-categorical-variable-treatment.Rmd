@@ -1,0 +1,58 @@
+---
+title: Categorical variable treatment
+author: Jay
+date: '2018-03-24'
+slug: categorical-variable-treatment
+categories: []
+tags: []
+draft: true
+---
+
+In reviewing details of random forest, I came upon several concepts that I thought were both interesting and important enough to be highlighted in a separate post. Mainly for my own reference, but if it helps others, that'd be great too!
+
+## Various categorical variable encoding methods and related concepts
+- Reference cell coding (dummy encoding/one-hot encoding)
+    - How categorical variables are treated (by default?) in regressions in R
+    - Appreciating R's way of doing things (behind the scence)
+    - Turns out same thing as dummy coding!
+    - Default method in caret (seems for both character and factor variables)
+        
+- Label encoding (integer encoding)
+    - Replace each level with a numeric value
+
+- Links
+    - [Categorical features and encoding in decision trees](https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931)
+    - [Is one-hot encoding bad?]([http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/]
+)
+    - [Interpreting linear model output](https://stats.stackexchange.com/questions/21282/regression-based-for-example-on-days-of-week#21292)
+    - [UCLA](https://stats.idre.ucla.edu/r/modules/coding-for-categorical-variables-in-regression-models/)
+    - [SE](https://stats.stackexchange.com/questions/70699/qualitative-variable-coding-in-regression-leads-to-singularities/70708?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
+    - [SE](https://stats.stackexchange.com/questions/120030/interpretation-of-betas-when-there-are-multiple-categorical-variables?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
+        
+   
+
+## When to use label encoding vs. dummy encoding
+- Correlation plot
+    - Winner: dummy encoding, because unless the categorical variable is ordinal, labeled value doesn't mean anything. 
+- Regression
+    - Winner: dummy encoding, because of the same reason as above.
+- Tree-based models
+    - Winner: label encoding, because 
+        - Variable importance interpretation
+        - Grid search for best mtry (in k-fold cv) might result in different result for mtry
+
+```{r}
+library(tidyverse)
+headers <- c("age", "workclass", "fnlwgt", "education", "education_num", "marital_status", "occupation", "relationship", "race", "sex", "capital_gain", "capital_loss", "hours_per_week",  "native_country", "response")
+adult <- read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data", col_names = headers)
+#head(adult)
+
+vars <- c("age", "education", "response")
+df <- adult[, vars]
+head(df)
+
+df %>% group_by(education, response) %>% summarize(n = n())
+```
+
+
+
