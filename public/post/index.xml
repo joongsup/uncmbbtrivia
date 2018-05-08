@@ -6,10 +6,28 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>rJava and Mac OS</title>
+      <link>/post/2018/05/03/rjava-and-mac-os/</link>
+      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/03/rjava-and-mac-os/</guid>
+      <description>For the past couple of days, I needed to install rJava package on my Mac, and boy did I know how complicated the process would turn out to be! I vaguely knew about the mess that is java and Mac OS, but I didn’t care that much until now, because (1) most of my development work has been done in my company environment (Linux) which I ssh into and is pretty well managed by folks more qualified to do so than me and (2) for my personal work (i.</description>
+    </item>
+    
+    <item>
+      <title>Use of quos</title>
+      <link>/post/2018/04/20/use-of-quos/</link>
+      <pubDate>Fri, 20 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/04/20/use-of-quos/</guid>
+      <description>suppressPackageStartupMessages(library(uncmbb)) suppressPackageStartupMessages(library(tidyverse)) suppressPackageStartupMessages(library(jutilr)) head(unc)  ## Season Game_Date Game_Day Type Where Opponent_School Result Tm Opp ## 1 1950 1949-12-01 Thu REG H Elon W 57 39 ## 2 1950 1949-12-03 Sat REG A Richmond W 58 50 ## 3 1950 1949-12-05 Mon REG A Virginia Tech L 48 62 ## 4 1950 1949-12-07 Wed REG A Lenoir-Rhyne L 78 79 ## 5 1950 1949-12-09 Fri REG H George Washington L 44 54 ## 6 1950 1949-12-28 Wed REG N West Virginia L 50 58 ## OT ## 1 &amp;lt;NA&amp;gt; ## 2 &amp;lt;NA&amp;gt; ## 3 &amp;lt;NA&amp;gt; ## 4 OT ## 5 &amp;lt;NA&amp;gt; ## 6 &amp;lt;NA&amp;gt; plot1 &amp;lt;- function(lst, x, y){ x &amp;lt;- enquo(x) y &amp;lt;- enquo(y) x_name &amp;lt;- quo_name(x) y_name &amp;lt;- quo_name(y) lst %&amp;gt;% map(function(df) df %&amp;gt;% ggplot(aes_string(x = paste0(&amp;quot;reorder(&amp;quot;, x_name, &amp;quot;, -&amp;quot;, y_name, &amp;quot;)&amp;quot;), y = y_name)) + geom_bar(stat = &amp;quot;identity&amp;quot;) + geom_text(aes(label = n), vjust = -0.</description>
+    </item>
     
     <item>
       <title>Package uncmbb updated!</title>
@@ -89,25 +107,6 @@ It took some googling/reading/tweaking, but I ended up with Yihui’s XMin theme
       <description>Here we go again. 3 Ls in a row. When was the last time we had this kind of losing skid?
 So the last time there was a 3-game losing streak was back in 2014, and to my surprise,
 I got curious as to what the worst losing streak was since 1950 season. To do that I’m looking at the number of seasons with losing streaks up to certain nuber.</description>
-    </item>
-    
-    <item>
-      <title>Blog at rbind.io</title>
-      <link>/post/2018/01/29/blog-at-rbind-io/</link>
-      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/01/29/blog-at-rbind-io/</guid>
-      <description>This weekend, I made a small but meaningful change to the blog that I started late last year. Initially, my blog was named UNCMBBTRIVIA to emphasize to the readers that this blog is about my beloved UNC Men’s Basketball team’s trivia. But I always wanted to have a blog where I write not only about UNC MBB trivia, but more importantly about data analysis and R.
-As I thought about it more, it became clear that I’d better drop the UNCMBBTrivia-only identity of the blog to start writing more about data analysis and R, and ever since then I’ve been thinking about how and when to make the change.</description>
-    </item>
-    
-    <item>
-      <title>One year after rstudio::conf 2017</title>
-      <link>/post/2018/01/29/one-year-after-rstudio-conf-2017/</link>
-      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/01/29/one-year-after-rstudio-conf-2017/</guid>
-      <description>It was merely a name change, but with the new blog address at rbind.io, I’m excited about the fact that I am a blogger who uses his name in his blog address, because I’ve always considered it to be one of the coolest things you can do online :) And it got me thinking, where did it all start from? After many failed attempts to start and maintain my own blog, how is it that this time, it seems it’ll just work?</description>
     </item>
     
   </channel>

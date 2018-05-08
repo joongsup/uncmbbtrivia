@@ -1,0 +1,79 @@
+---
+title: Use of quos
+author: Jay
+date: '2018-04-20'
+slug: use-of-quos
+categories: []
+tags: []
+draft: true
+---
+
+
+
+<pre class="r"><code>suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(jutilr))
+
+head(unc) </code></pre>
+<pre><code>##   Season  Game_Date Game_Day Type Where   Opponent_School Result Tm Opp
+## 1   1950 1949-12-01      Thu  REG     H              Elon      W 57  39
+## 2   1950 1949-12-03      Sat  REG     A          Richmond      W 58  50
+## 3   1950 1949-12-05      Mon  REG     A     Virginia Tech      L 48  62
+## 4   1950 1949-12-07      Wed  REG     A      Lenoir-Rhyne      L 78  79
+## 5   1950 1949-12-09      Fri  REG     H George Washington      L 44  54
+## 6   1950 1949-12-28      Wed  REG     N     West Virginia      L 50  58
+##     OT
+## 1 &lt;NA&gt;
+## 2 &lt;NA&gt;
+## 3 &lt;NA&gt;
+## 4   OT
+## 5 &lt;NA&gt;
+## 6 &lt;NA&gt;</code></pre>
+<pre class="r"><code>plot1 &lt;- function(lst, x, y){
+  
+  x &lt;- enquo(x)
+  y &lt;- enquo(y)
+  
+  x_name &lt;- quo_name(x)
+  y_name &lt;- quo_name(y)
+  
+  lst %&gt;% map(function(df) df %&gt;% 
+                ggplot(aes_string(x = paste0(&quot;reorder(&quot;, x_name, &quot;, -&quot;, y_name, &quot;)&quot;), y = y_name)) +
+                geom_bar(stat = &quot;identity&quot;) +
+                geom_text(aes(label = n), vjust = -0.2) +
+                theme_bw() +
+                scale_y_continuous(label = scales::percent) +
+                labs(title = paste0(&quot;Frequency of &quot;, x_name)))
+
+}
+
+teams &lt;- list(unc, duke)
+
+get_freq &lt;- function(df, var){
+  var &lt;- enquo(var)
+  df %&gt;% count(!!var) %&gt;% 
+          arrange(desc(n)) %&gt;%
+          add_percent(var = &quot;n&quot;)
+}
+teams %&gt;% map(function(df) df %&gt;% get_freq(Opponent_School) %&gt;% head)</code></pre>
+<pre><code>## [[1]]
+## # A tibble: 6 x 3
+##   Opponent_School          n   perc
+##   &lt;chr&gt;                &lt;int&gt;  &lt;dbl&gt;
+## 1 Duke                   179 0.0817
+## 2 North Carolina State   167 0.0762
+## 3 Wake Forest            155 0.0707
+## 4 Maryland               142 0.0648
+## 5 Clemson                140 0.0639
+## 6 Virginia               140 0.0639
+## 
+## [[2]]
+## # A tibble: 6 x 3
+##   Opponent_School          n   perc
+##   &lt;chr&gt;                &lt;int&gt;  &lt;dbl&gt;
+## 1 North Carolina         179 0.0818
+## 2 Wake Forest            173 0.0790
+## 3 North Carolina State   163 0.0745
+## 4 Maryland               146 0.0667
+## 5 Virginia               138 0.0630
+## 6 Clemson                127 0.0580</code></pre>

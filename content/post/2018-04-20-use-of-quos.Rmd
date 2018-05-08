@@ -1,0 +1,47 @@
+---
+title: Use of quos
+author: Jay
+date: '2018-04-20'
+slug: use-of-quos
+categories: []
+tags: []
+draft: true
+---
+
+```{r}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(jutilr))
+
+head(unc) 
+
+plot1 <- function(lst, x, y){
+  
+  x <- enquo(x)
+  y <- enquo(y)
+  
+  x_name <- quo_name(x)
+  y_name <- quo_name(y)
+  
+  lst %>% map(function(df) df %>% 
+                ggplot(aes_string(x = paste0("reorder(", x_name, ", -", y_name, ")"), y = y_name)) +
+                geom_bar(stat = "identity") +
+                geom_text(aes(label = n), vjust = -0.2) +
+                theme_bw() +
+                scale_y_continuous(label = scales::percent) +
+                labs(title = paste0("Frequency of ", x_name)))
+
+}
+
+teams <- list(unc, duke)
+
+get_freq <- function(df, var){
+  var <- enquo(var)
+  df %>% count(!!var) %>% 
+          arrange(desc(n)) %>%
+          add_percent(var = "n")
+}
+teams %>% map(function(df) df %>% get_freq(Opponent_School) %>% head)
+
+
+```

@@ -1,0 +1,24 @@
+---
+title: rJava and Mac OS
+author: Jay
+date: '2018-05-03'
+slug: rjava-and-mac-os
+categories: []
+tags: []
+draft: false
+---
+
+
+
+<p>For the past couple of days, I needed to install rJava package on my Mac, and boy did I know how complicated the process would turn out to be! I vaguely knew about the mess that is java and Mac OS, but I didn’t care that much until now, because (1) most of my development work has been done in my company environment (Linux) which I ssh into and is pretty well managed by folks more qualified to do so than me and (2) for my personal work (i.e., blogging, R package development, etc.), I didn’t need to touch java so far (or so I think).</p>
+<p>Then I thought of writing a wrapper function that makes a connection from within R to a company database<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. I had a snippet of code that does the job, and I decided to turn it into an R function and include it to my personal R package. Among other things, the code required rJava package, and that’s how I entered this mess that is java and Mac OS.</p>
+<p>Since I’m no expert there, I’m not going to try to explain each step I took, but basically, I searched for similar problems and solution, and I ended up following the awesome instruction given <a href="http://www.owsiak.org/r-3-4-rjava-macos-and-even-more-mess/">here</a>. I should’ve taken screenshots of the error/ok messages that I got through this whole process, but long story short, I accidentally dropped “lib” at the end of this line where LDFLAGS<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> is being set, and it took a while to figure out what I was doing wrong:</p>
+<pre><code>&quot;LDFLAGS = -L/usr/local/lib -L/Users/user_name/opt/clang+llvm-4.0.1-x86_64-apple-macosx10.9.0/lib -lomp&quot;</code></pre>
+<p>Once I fixed the error, rJava was installed successfully, and the database connection wrapper function is added to the personal package. Special thanks to the <a href="http://www.owsiak.org/about-author/">author</a> of the above blog post and the <a href="http://urbanek.info/proj.php">author</a> of the rJava package!</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Making a database connection should be doable via the Connections pane in RStudio, but let’s assume it can’t be used for whatever reason.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Don’t even know what it is, but I’m ok with that for now.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
