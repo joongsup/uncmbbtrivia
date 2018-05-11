@@ -1,0 +1,17 @@
+---
+title: Vim mode in RStudio
+author: Jay
+date: '2018-05-11'
+slug: vim-mode-in-rstudio
+categories: []
+tags: []
+draft: false
+---
+
+I heard about Vim mode in RStudio but haven't really given it a try. While working on a new blog post (not this one), I decided to give it a try, as I had to keep switching between non-Vim mode on my local Mac and Vim mode in my remote server (Linux). I'm not a Vim expert by any measure, but for some reason, I like working in Vim.
+
+So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started using Vim in RStudio. One thing I ran into immediately, though, was that the cursor movement keys (h/j/k/l) wouldn't repeat themselves when I kept them pressed. At first I thought maybe it's one of those things that I'd have to live with, but quickly it became rather uncomfortable having to repeatedly pressing j/k keys to go up and down. 
+
+Turns out all I had to do was to change system reference (on my Mac) as explained in this [support page](https://support.rstudio.com/hc/en-us/articles/204896737). 
+
+I feel like there must be some more (unexpected) additional features that come with Vim mode in RStudio (not sure if it's intended or not), such as file save by cmd-s, which I find really helpful, because I don't have to do esc-:-w just to save file :)

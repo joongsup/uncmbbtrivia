@@ -6,10 +6,29 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Random Forest Revisited</title>
+      <link>/post/2018/05/11/random-forest-revisited/</link>
+      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/11/random-forest-revisited/</guid>
+      <description>Hypothetical setting  Objective: binary classification N = 5M observations p = 10 variables (5 categorical and 5 continuous variables) ntree = 100 (model will not be adversely affected if ntree is too big) mtry = number of predictors to consider at each split (fixed or determined by resampling (10-fold cv)   Bootstrap samples for each tree  Bootstrap samples (sampling with replacement) of same size as the original data (N) is taken at each tree.</description>
+    </item>
+    
+    <item>
+      <title>Vim mode in RStudio</title>
+      <link>/post/2018/05/11/vim-mode-in-rstudio/</link>
+      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/11/vim-mode-in-rstudio/</guid>
+      <description>I heard about Vim mode in RStudio but haven’t really given it a try. While working on a new blog post (not this one), I decided to give it a try, as I had to keep switching between non-Vim mode on my local Mac and Vim mode in my remote server (Linux). I’m not a Vim expert by any measure, but for some reason, I like working in Vim.
+So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started using Vim in RStudio.</description>
+    </item>
     
     <item>
       <title>rJava and Mac OS</title>
@@ -50,16 +69,6 @@ Various categorical variable encoding methods and related concepts  Reference ce
     </item>
     
     <item>
-      <title>Random Forest Revisited</title>
-      <link>/post/2018/03/23/random-forest-revisited/</link>
-      <pubDate>Fri, 23 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/03/23/random-forest-revisited/</guid>
-      <description>I’m revisiting some nitty gritty details of a popular classification/regression method, random forest that I’ve put aside for whatever reasons.
-Example setting  Objective: binary classification N = 5M observations p = 10 variables (5 categorical and 5 continuous variables) ntree = 100 mtry = determined by resampling (10-fold cv)   Bootstrap samples for each tree  Bootstrap samples of same size as the original data (N) is taken for each tree.</description>
-    </item>
-    
-    <item>
       <title>RSS feed and rbind github repo</title>
       <link>/post/2018/02/06/rss-feed/</link>
       <pubDate>Tue, 06 Feb 2018 00:00:00 +0000</pubDate>
@@ -96,17 +105,6 @@ It took some googling/reading/tweaking, but I ended up with Yihui’s XMin theme
       
       <guid>/post/2018/02/01/quiz-from-work/</guid>
       <description>There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1) if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar.</description>
-    </item>
-    
-    <item>
-      <title>3 game losing streak</title>
-      <link>/post/2018/01/30/3-game-losing-streak/</link>
-      <pubDate>Tue, 30 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/01/30/3-game-losing-streak/</guid>
-      <description>Here we go again. 3 Ls in a row. When was the last time we had this kind of losing skid?
-So the last time there was a 3-game losing streak was back in 2014, and to my surprise,
-I got curious as to what the worst losing streak was since 1950 season. To do that I’m looking at the number of seasons with losing streaks up to certain nuber.</description>
     </item>
     
   </channel>

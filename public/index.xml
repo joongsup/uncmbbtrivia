@@ -6,8 +6,157 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 May 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Random Forest Revisited</title>
+      <link>/post/2018/05/11/random-forest-revisited/</link>
+      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/11/random-forest-revisited/</guid>
+      <description>
+        &lt;div id=&#34;hypothetical-setting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Hypothetical setting&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Objective: binary classification&lt;/li&gt;
+&lt;li&gt;N = 5M observations&lt;/li&gt;
+&lt;li&gt;p = 10 variables (5 categorical and 5 continuous variables)&lt;/li&gt;
+&lt;li&gt;ntree = 100 (model will not be adversely affected if ntree is too big)&lt;/li&gt;
+&lt;li&gt;mtry = number of predictors to consider at each split (fixed or determined by resampling (10-fold cv)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;bootstrap-samples-for-each-tree&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Bootstrap samples for each tree&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Bootstrap samples (sampling with replacement) of same size as the original data (N) is taken at each tree.&lt;/li&gt;
+&lt;li&gt;This results in about 1/3 of N (hence approx. 1.6M) samples never being chosen for each tree. This is called out of bag (OOB) samples.&lt;/li&gt;
+&lt;li&gt;This OOB samples are used for:
+&lt;ul&gt;
+&lt;li&gt;Unbiased estimate of test set error
+&lt;ul&gt;
+&lt;li&gt;Theoretically, there’s no need for cv or a separate test set to get an unbiased estimate of the test set error, as it’s estimated internally during tree constructions.&lt;/li&gt;
+&lt;li&gt;OOB error estimate is the proportion of times (over all x_is in overall OOB samples) that predicted class is different from the true class for sample x&lt;sub&gt;i&lt;/sub&gt;. Note the prediction for x&lt;sub&gt;i&lt;/sub&gt; is obtained using only the trees that did not have x&lt;sub&gt;i&lt;/sub&gt; in bootstrap sample.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Estimate of variable importance: see variablem importance section below.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;split-criteria&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Split criteria&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;At each split, the mtry number of predictors are randomly selected (to de-correlate the trees), and a splitting variable is obtained.
+&lt;ul&gt;
+&lt;li&gt;The spliting variable is the one that results in the most homogeneous descendents (nodes).&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Once the best mtry is fixed (or obtained via resampling, such as cv), caret (randomForest too?) fits the final model using the best mtry and save to finalModel.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;categorical-variable-treatment-various-encoding-methods&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Categorical variable treatment (various encoding methods)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Has implications in variable importance!
+&lt;ul&gt;
+&lt;li&gt;How to “aggregate” one-hot encoded feature importance!?&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Has implications in grid search step!
+&lt;ul&gt;
+&lt;li&gt;Grid search for best mtry (in k-fold cv) might result in different result for mtry&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Various encoding methods
+&lt;ul&gt;
+&lt;li&gt;Label encoding (integer encoding/string indexing)
+&lt;ul&gt;
+&lt;li&gt;Simple hashing/lookup (dog –&amp;gt; 0, cat –&amp;gt; 1, etc.)&lt;/li&gt;
+&lt;li&gt;If not the categorical variable is not ordinal, arbitrary indexing can be problematic (e.g., why dog (=0) &amp;lt; cat (=1)).
+&lt;ul&gt;
+&lt;li&gt;Python/Pyspark solves this issue by providing an ordering structure (i.e., 0 to the most frequent item, 1 to the second frequent, and so on).&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;One-hot encoding (dummy variable)
+&lt;ul&gt;
+&lt;li&gt;Default method in caret (seems for both character and factor variables)
+&lt;ul&gt;
+&lt;li&gt;Default method in R maybe?&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Is one-hot encoding bad? See [&lt;a href=&#34;http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/&#34; class=&#34;uri&#34;&gt;http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/&lt;/a&gt;]&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Binary encoding
+&lt;ul&gt;
+&lt;li&gt;Seems interesting, but see this:&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;continuous-variable-treatment-binning-vs.raw&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Continuous variable treatment (binning vs. raw)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For customers subscription based analyses, it seems customary to bin some continuous variables such as tenures into bins, instead of using raw numbers.
+&lt;ul&gt;
+&lt;li&gt;Does this make your model rather robust?&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;variable-importance-interpretations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Variable importance interpretations&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;From the original randomForest package (and not from caret)
+&lt;ul&gt;
+&lt;li&gt;Mean decrease in accuracy (by permutation test, type = 1)
+&lt;ul&gt;
+&lt;li&gt;How’s permutation done?&lt;/li&gt;
+&lt;li&gt;Randomly permuting the values of each predictor for the OOB sample of one predictor at a time for each tree.&lt;/li&gt;
+&lt;li&gt;The difference in predictive performance between the non-permted sample and the permuted sample for each preditor is recorded and aggregated acoross the entire forest.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Mean decrease in impurity (no need for additional test, type = 2): total decrease in impurities resulting from using variable k as a splitter, averaged over all trees.
+&lt;ul&gt;
+&lt;li&gt;“… is often very consistent with the permutation importance measure”, from [&lt;a href=&#34;https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#varimp&#34; class=&#34;uri&#34;&gt;https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#varimp&lt;/a&gt;]&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;What am I getting from caret::varImp vs. randomForest::importance?
+&lt;ul&gt;
+&lt;li&gt;By default, it seems both caret::varImp and randomForest::importance gives the impurity measure (type = 2)&lt;/li&gt;
+&lt;li&gt;randomForest::importance(caret_model_object&lt;span class=&#34;math inline&#34;&gt;\(fit\)&lt;/span&gt;finalModel) gives the MeanDescreaseGini importance values, and so does caret::varImp(caret_model_object$fit, scale = FALSE)!!&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Variable selection/importance quality?
+&lt;ul&gt;
+&lt;li&gt;Relevant to different categorical encoding method (e.g., one-hot encoding results in individual level vs. label encoding just one)&lt;/li&gt;
+&lt;li&gt;See Strobl et al. [&lt;a href=&#34;https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25&#34; class=&#34;uri&#34;&gt;https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25&lt;/a&gt;]
+&lt;ul&gt;
+&lt;li&gt;RF favors continuous variables and categoricals with many levels
+&lt;ul&gt;
+&lt;li&gt;So if all variables are categoricals with relatively small number of levels, prob ok for now&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;class-imbalance&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Class imbalance&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;See &lt;a href=&#34;https://dpmartin42.github.io/posts/r/imbalanced-classes-part-1&#34; class=&#34;uri&#34;&gt;https://dpmartin42.github.io/posts/r/imbalanced-classes-part-1&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Vim mode in RStudio</title>
+      <link>/post/2018/05/11/vim-mode-in-rstudio/</link>
+      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/11/vim-mode-in-rstudio/</guid>
+      <description>
+        &lt;p&gt;I heard about Vim mode in RStudio but haven’t really given it a try. While working on a new blog post (not this one), I decided to give it a try, as I had to keep switching between non-Vim mode on my local Mac and Vim mode in my remote server (Linux). I’m not a Vim expert by any measure, but for some reason, I like working in Vim.&lt;/p&gt;
+&lt;p&gt;So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started using Vim in RStudio. One thing I ran into immediately, though, was that the cursor movement keys (h/j/k/l) wouldn’t repeat themselves when I kept them pressed. At first I thought maybe it’s one of those things that I’d have to live with, but quickly it became rather uncomfortable having to repeatedly pressing j/k keys to go up and down.&lt;/p&gt;
+&lt;p&gt;Turns out all I had to do was to change system reference (on my Mac) as explained in this &lt;a href=&#34;https://support.rstudio.com/hc/en-us/articles/204896737&#34;&gt;support page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I feel like there must be some more (unexpected) additional features that come with Vim mode in RStudio (not sure if it’s intended or not), such as file save by cmd-s, which I find really helpful, because I don’t have to do esc-:-w just to save file :)&lt;/p&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>rJava and Mac OS</title>
@@ -330,119 +479,6 @@ head(df)&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
-      <title>Random Forest Revisited</title>
-      <link>/post/2018/03/23/random-forest-revisited/</link>
-      <pubDate>Fri, 23 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/03/23/random-forest-revisited/</guid>
-      <description>
-        &lt;p&gt;I’m revisiting some nitty gritty details of a popular classification/regression method, random forest that I’ve put aside for whatever reasons.&lt;/p&gt;
-&lt;div id=&#34;example-setting&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Example setting&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Objective: binary classification&lt;/li&gt;
-&lt;li&gt;N = 5M observations&lt;/li&gt;
-&lt;li&gt;p = 10 variables (5 categorical and 5 continuous variables)&lt;/li&gt;
-&lt;li&gt;ntree = 100&lt;/li&gt;
-&lt;li&gt;mtry = determined by resampling (10-fold cv)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;bootstrap-samples-for-each-tree&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Bootstrap samples for each tree&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Bootstrap samples of same size as the original data (N) is taken for each tree.&lt;/li&gt;
-&lt;li&gt;This results in about 1/3 of N (hence approx. 1.5M) samples never being chosen for each tree. This is called out of bag (OOB) samples.&lt;/li&gt;
-&lt;li&gt;This OOB samples are used for:
-&lt;ul&gt;
-&lt;li&gt;Unbiased estimate of test set error&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;split-criteria&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Split criteria&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;At each split, the mtry number of features are randomly selected to be consdiered as the splitting variable.&lt;/li&gt;
-&lt;li&gt;The best feature is the one that reduces the impurity of the resulting descendents. (exactly how?)&lt;/li&gt;
-&lt;li&gt;Come scoring/prediction time, once the best mtry is fixed (via resampling, such as cv), is the final model using the same features selected in training phase, or are they selected at random?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;categorical-variable-treatment-various-encoding-methods&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Categorical variable treatment (various encoding methods)&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Has implications in variable importance!
-&lt;ul&gt;
-&lt;li&gt;How to “aggregate” one-hot encoded feature importance!?&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Has implications in grid search step!
-&lt;ul&gt;
-&lt;li&gt;Grid search for best mtry (in k-fold cv) might result in different result for mtry&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Various encoding methods [&lt;a href=&#34;https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931&#34; class=&#34;uri&#34;&gt;https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931&lt;/a&gt;]
-&lt;ul&gt;
-&lt;li&gt;Label encoding (integer encoding)
-&lt;ul&gt;
-&lt;li&gt;One-liner custom function available&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;One-hot encoding (dummy variable)
-&lt;ul&gt;
-&lt;li&gt;Default method in caret (seems for both character and factor variables)&lt;/li&gt;
-&lt;li&gt;Is one-hot encoding bad? See [&lt;a href=&#34;http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/&#34; class=&#34;uri&#34;&gt;http://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/&lt;/a&gt;]&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Binary encoding
-&lt;ul&gt;
-&lt;li&gt;Seems interesting, but see this:&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;continuous-variable-treatment-binning-vs.raw&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Continuous variable treatment (binning vs. raw)&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;For customers subscription based analyses, it seems customary to bin some continuous variables such as tenures into bins, instead of using raw numbers.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;variable-importance-interpretations&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Variable importance interpretations&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;From the original randomForest package (and not from caret)
-&lt;ul&gt;
-&lt;li&gt;Mean decrease in accuracy (by permutatino test, type = 1)
-&lt;ul&gt;
-&lt;li&gt;How’s permutation done?&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Mean decrease in impurity (no need for additional test, type = 2): total decrease in impurities resulting from using variable k as a splitter, averaged over all trees.
-&lt;ul&gt;
-&lt;li&gt;“… is often very consistent with the permutation importance measure”, from [&lt;a href=&#34;https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#varimp&#34; class=&#34;uri&#34;&gt;https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm#varimp&lt;/a&gt;]&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;What am I getting from caret::varImp vs. randomForest::importance?
-&lt;ul&gt;
-&lt;li&gt;By default, it seems both caret::varImp and randomForest::importance gives the impurity measure (type = 2)&lt;/li&gt;
-&lt;li&gt;randomForest::importance(caret_model_object&lt;span class=&#34;math inline&#34;&gt;\(fit\)&lt;/span&gt;finalModel) gives the MeanDescreaseGini importance values, and so does caret::varImp(caret_model_object$fit, scale = FALSE)!!&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Variable selection/importance quality?
-&lt;ul&gt;
-&lt;li&gt;Relevant to different categorical encoding method (e.g., one-hot encoding results in individual level vs. label encoding just one)&lt;/li&gt;
-&lt;li&gt;See Strobl et al. [&lt;a href=&#34;https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25&#34; class=&#34;uri&#34;&gt;https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25&lt;/a&gt;]
-&lt;ul&gt;
-&lt;li&gt;RF favors continuous variables and categoricals with many levels&lt;/li&gt;
-&lt;li&gt;So if all variables are categoricals with relatively small number of levels, prob ok for now&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;class-imbalance&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Class imbalance&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;See &lt;a href=&#34;https://dpmartin42.github.io/posts/r/imbalanced-classes-part-1&#34; class=&#34;uri&#34;&gt;https://dpmartin42.github.io/posts/r/imbalanced-classes-part-1&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
       <title>RSS feed and rbind github repo</title>
       <link>/post/2018/02/06/rss-feed/</link>
       <pubDate>Tue, 06 Feb 2018 00:00:00 +0000</pubDate>
@@ -666,22 +702,6 @@ sum(unlist(results))/N&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For different values of N, the results were the same, depending on whether the number of white balls was odd or even. So the immediate answer to the quiz seems to be that we always win, since we started the game with 25 white balls.&lt;/p&gt;
 &lt;p&gt;Seeing such pattern, I thought about state space of white and black balls in terms of them being odd or even, and after tinkering with different transition cases, it confirmed my simulation experiment.&lt;/p&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>3 game losing streak</title>
-      <link>/post/2018/01/30/3-game-losing-streak/</link>
-      <pubDate>Tue, 30 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/01/30/3-game-losing-streak/</guid>
-      <description>
-        &lt;p&gt;Here we go again. 3 Ls in a row. When was the last time we had this kind of losing skid?&lt;/p&gt;
-&lt;p&gt;So the last time there was a 3-game losing streak was back in 2014, and to my surprise,&lt;/p&gt;
-&lt;p&gt;I got curious as to what the worst losing streak was since 1950 season. To do that I’m looking at the number of seasons with losing streaks up to certain nuber.&lt;/p&gt;
-&lt;p&gt;So as seen earlier, one in every four seasons, we’ve seen at least one occasion of 3-game losing streaks. What gets me is that there’s been seasons in which we had 4+ game losing streaks! Let’s see what those seasons were and what were those games for those seasons with at least one 6-game losing streaks.&lt;/p&gt;
 
         
       </description>
