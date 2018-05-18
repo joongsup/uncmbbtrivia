@@ -1,0 +1,77 @@
+---
+title: R package development walk-thru
+author: Jay
+date: '2018-05-11'
+slug: r-package-development-walk-thru
+categories: []
+tags: []
+draft: true
+---
+
+
+
+<div id="create-a-new-rstudio-project." class="section level2">
+<h2>Create a new RStudio project.</h2>
+<p><img src="/img/new_project.png" alt="project" />
+<img src="/img/new_directory.png" alt="directory" />
+<img src="/img/new_r_pkg.png" alt="pkg" />
+Next the best part so far: we have to give the new package a name!
+<img src="/img/new_pkg_name.png" alt="name" />
+<img src="/img/new_pkg_name_ready.png" alt="name ready" />
+Once new project is created, this is the default contents.
+<img src="/img/hello_world.png" alt="hello world" />
+We’ll go to project options menu and check roxygen option for documentation.
+<img src="/img/project_option.png" alt="project option" />
+<img src="/img/roxygen.png" alt="roxygen" />
+<img src="/img/roxygen_options.png" alt="roxygen options" />
+<img src="/img/roxygen_ready.png" alt="roxygen ready" /></p>
+<p>Now let’s create our own function.
+<img src="/img/new_r_script.png" alt="r script" />
+<img src="/img/r_script_name.png" alt="r script name" />
+<img src="/img/load_all.png" alt="load all" />
+Let’s test the new function by loading the functions. No need for sourcing anymore!
+<img src="/img/load_all_done.png" alt="loaded" /></p>
+<p>Now that the function is working as intended, let’s document the function for others, including future us.
+<img src="/img/insert_doc.png" alt="insert roxygen" />
+<img src="/img/doc_done.png" alt="document done" /></p>
+<p>Keyboard shortcut: cmd-shift-D generates the documents.
+<img src="/img/generate_doc.png" alt="generate document" />
+<img src="/img/check_doc.png" alt="check document" />
+Let’s remove the default contents.
+<img src="/img/rm_hello.png" alt="delete hello" />
+Now that we have working functions and associated documents, let’s finish up writing functions/docs, and install the R package we just wrote.</p>
+<p>Keyboard shortcut: cmd-shift-B
+<img src="/img/install.png" alt="install and restart" />
+Let’s check if the package is without any issues.</p>
+<p>Keyboard shortcut: cmd-shift-E
+<img src="/img/check_pkg.png" alt="check package" />
+<img src="/img/check_progress.png" alt="check progress" />
+Check result is not clean. There is a warning and a note. We’ll need to address them.
+<img src="/img/check_warning.png" alt="check warning" />
+Let’s fix importFrom.
+<img src="/img/check_warning_fixed1.png" alt="check import fixed" />
+Then let’s fix DESCRIPTION.
+<img src="/img/check_warning_fixed2.png" alt="check description fixed" />
+Once all issues are addressed, we see the check result is clean.</p>
+<p>Let’s build the source package (no shortcut)
+<img src="/img/build_src.png" alt="build source package" />
+<img src="/img/build_src_progress.png" alt="build source progress" /></p>
+</div>
+<div id="share" class="section level2">
+<h2>Share</h2>
+<p>Three different ways to share our new R package.</p>
+<ol style="list-style-type: decimal">
+<li><p>If you are the only user of the R package, then no additional action is required. cmd-shift-B (install step) installed the development version of the package already.</p></li>
+<li><p>If you want to share your R package with co-workers, you can (sftp) copy the zipped/built source file to a common location and have you co-workers them install the package in their R session by install.packages(“/path/to/pkg”, repos = NULL)</p></li>
+</ol>
+<div class="figure">
+<img src="/img/build_src_progress.png" alt="Setup git" />
+<p class="caption">Setup git</p>
+</div>
+<p><img src="/img/restart_after_git.png" alt="Restart after git" />
+<img src="/img/git_pane.png" alt="Git pane" />
+<img src="/img/commit.png" alt="commit" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>If you want to share your R package with total strangers out there, you can share all source files in github (or any other version control systems) and have them install the package in their R session by devtools::install_github(“user/repo”)</li>
+</ol>
+</div>

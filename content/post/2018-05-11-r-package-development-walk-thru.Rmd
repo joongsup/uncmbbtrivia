@@ -1,0 +1,76 @@
+---
+title: R package development walk-thru
+author: Jay
+date: '2018-05-11'
+slug: r-package-development-walk-thru
+categories: []
+tags: []
+draft: true
+---
+
+## Create a new RStudio project. 
+![project](/img/new_project.png)
+![directory](/img/new_directory.png)
+![pkg](/img/new_r_pkg.png)
+Next the best part so far: we have to give the new package a name!
+![name](/img/new_pkg_name.png)
+![name ready](/img/new_pkg_name_ready.png)
+Once new project is created, this is the default contents.
+![hello world](/img/hello_world.png)
+We'll go to project options menu and check roxygen option for documentation. 
+![project option](/img/project_option.png)
+![roxygen](/img/roxygen.png)
+![roxygen options](/img/roxygen_options.png)
+![roxygen ready](/img/roxygen_ready.png)
+
+Now let's create our own function. 
+![r script](/img/new_r_script.png)
+![r script name](/img/r_script_name.png)
+![load all](/img/load_all.png)
+Let's test the new function by loading the functions. No need for sourcing anymore!
+![loaded](/img/load_all_done.png)
+
+Now that the function is working as intended, let's document the function for others, including future us. 
+![insert roxygen](/img/insert_doc.png)
+![document done](/img/doc_done.png)
+
+Keyboard shortcut: cmd-shift-D generates the documents. 
+![generate document](/img/generate_doc.png)
+![check document](/img/check_doc.png)
+Let's remove the default contents. 
+![delete hello](/img/rm_hello.png)
+Now that we have working functions and associated documents, let's finish up writing functions/docs, and install the R package we just wrote.
+
+Keyboard shortcut: cmd-shift-B
+![install and restart](/img/install.png)
+Let's check if the package is without any issues. 
+
+Keyboard shortcut: cmd-shift-E
+![check package](/img/check_pkg.png)
+![check progress](/img/check_progress.png)
+Check result is not clean. There is a warning and a note. We'll need to address them. 
+![check warning](/img/check_warning.png)
+Let's fix importFrom. 
+![check import fixed](/img/check_warning_fixed1.png)
+Then let's fix DESCRIPTION. 
+![check description fixed](/img/check_warning_fixed2.png)
+Once all issues are addressed, we see the check result is clean. 
+
+Let's build the source package (no shortcut)
+![build source package](/img/build_src.png)
+![build source progress](/img/build_src_progress.png)
+
+## Share
+Three different ways to share our new R package.
+
+1. If you are the only user of the R package, then no additional action is required. cmd-shift-B (install step) installed the development version of the package already. 
+
+2. If you want to share your R package with co-workers, you can (sftp) copy the zipped/built source file to a common location and have you co-workers them install the package in their R session by install.packages("/path/to/pkg", repos = NULL) 
+
+![Setup git](/img/build_src_progress.png)
+
+![Restart after git](/img/restart_after_git.png)
+![Git pane](/img/git_pane.png)
+![commit](/img/commit.png)
+
+3. If you want to share your R package with total strangers out there, you can share all source files in github (or any other version control systems) and have them install the package in their R session by devtools::install_github("user/repo")
