@@ -1,0 +1,156 @@
+---
+title: "R Package Development"
+subtitle: "(testing static/slides)"
+author: "Jay"
+date: "2018/05/18"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    mathjax: null
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+```
+
+class: center, middle
+
+# R Package Development Screenshots
+
+---
+
+## Create a new R project
+.center[![project](../img/new_project.png)]
+
+---
+## New Directory
+.center[![directory](../img/new_directory.png)]
+
+---
+## New R Package
+.center[![pkg](../img/new_r_pkg.png)]
+
+---
+## Naming is hard but fun!
+.center[![pkg](../img/new_pkg_name.png)]
+
+---
+## Naming is hard but fun!
+.center[![pkg](../img/new_pkg_name_ready.png)]
+
+---
+## Hello World!
+.center[![pkg](../img/hello_world.png)]
+
+---
+## Change Project Options
+.center[![pkg](../img/project_option.png)]
+
+---
+## Check Roxygen
+.center[![pkg](../img/roxygen.png)]
+
+---
+## Check Roxygen
+.center[![pkg](../img/roxygen_options.png)]
+
+---
+## Check Roxygen
+.center[![pkg](../img/roxygen_ready.png)]
+
+---
+## Write R Functions
+.center[![pkg](../img/new_r_script.png)]
+
+---
+## Write R Functions
+.center[![pkg](../img/r_script_name.png)]
+
+---
+
+## Load All Functions (cmd-shift-L)
+.center[![pkg](../img/load_all.png)]
+
+---
+## Load All Functions (cmd-shift-L)
+.center[![pkg](../img/load_all_done.png)]
+
+---
+## Document
+.center[![pkg](../img/insert_doc.png)]
+
+---
+## Document
+.center[![pkg](../img/doc_done.png)]
+
+---
+## Generate Documents (cmd-shift-D)
+.center[![pkg](../img/generate_doc.png)]
+
+---
+## Generate Documents (cmd-shift-D)
+.center[![pkg](../img/check_doc.png)]
+
+---
+## Bye World!
+.center[![pkg](../img/rm_hello.png)]
+
+---
+## Install and Restart (cmd-shift-B)
+.center[![pkg](../img/install.png)]
+
+---
+## Check (cmd-shift-E)
+.center[![pkg](../img/check_pkg.png)]
+
+---
+## Check Progress
+.center[![pkg](../img/check_progress.png)]
+
+---
+## Check Warnings
+.center[![pkg](../img/check_warning.png)]
+
+---
+## Check Warning Fixed
+.center[![pkg](../img/check_warning_fixed1.png)]
+
+---
+## Check Warning Fixed
+.center[![pkg](../img/check_warning_fixed2.png)]
+
+---
+## Build Source
+.center[![pkg](../img/build_src.png)]
+
+---
+## Build Source
+.center[![pkg](../img/build_src_progress.png)]
+
+
+---
+## Set up Git
+.center[![pkg](../img/setup_git.png)]
+
+---
+## Git Set!
+.center[![pkg](../img/restart_after_git.png)]
+
+---
+## Git Pane
+.center[![pkg](../img/git_pane.png)]
+
+---
+## First Commit!
+.center[![pkg](../img/commit.png)]
+
+---
+class: center, middle
+
+# Thanks!
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).

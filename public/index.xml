@@ -6,8 +6,100 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 May 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Insert images in blogdown post, static directory, and xaringan</title>
+      <link>/post/2018/05/12/insert-images-in-blogdown-post/</link>
+      <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/12/insert-images-in-blogdown-post/</guid>
+      <description>
+        &lt;p&gt;While working on yet another separate blog post, I needed to insert images in the post. I knew from rmarkdown syntax that I can use: ![image name](path to file), but then I didn’t know where the image files need to be.&lt;/p&gt;
+&lt;p&gt;It turns out I can have the image files under the &lt;a href=&#34;https://bookdown.org/yihui/blogdown/static-files.html&#34;&gt;static/&lt;/a&gt; directory, everything under which will be copied to public directory.&lt;/p&gt;
+&lt;p&gt;Moreover, static/ directory can also be used to build Rmd documents (e.g., pdf and HTML5), and I decided to try generating an xaringan slide.&lt;/p&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>R package development walk-thru</title>
+      <link>/post/2018/05/11/r-package-development-walk-thru/</link>
+      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/11/r-package-development-walk-thru/</guid>
+      <description>
+        &lt;div id=&#34;create-a-new-rstudio-project.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Create a new RStudio project.&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/img/new_project.png&#34; alt=&#34;project&#34; /&gt;
+&lt;img src=&#34;/img/new_directory.png&#34; alt=&#34;directory&#34; /&gt;
+&lt;img src=&#34;/img/new_r_pkg.png&#34; alt=&#34;pkg&#34; /&gt;
+Next the best part so far: we have to give the new package a name!
+&lt;img src=&#34;/img/new_pkg_name.png&#34; alt=&#34;name&#34; /&gt;
+&lt;img src=&#34;/img/new_pkg_name_ready.png&#34; alt=&#34;name ready&#34; /&gt;
+Once new project is created, this is the default contents.
+&lt;img src=&#34;/img/hello_world.png&#34; alt=&#34;hello world&#34; /&gt;
+We’ll go to project options menu and check roxygen option for documentation.
+&lt;img src=&#34;/img/project_option.png&#34; alt=&#34;project option&#34; /&gt;
+&lt;img src=&#34;/img/roxygen.png&#34; alt=&#34;roxygen&#34; /&gt;
+&lt;img src=&#34;/img/roxygen_options.png&#34; alt=&#34;roxygen options&#34; /&gt;
+&lt;img src=&#34;/img/roxygen_ready.png&#34; alt=&#34;roxygen ready&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now let’s create our own function.
+&lt;img src=&#34;/img/new_r_script.png&#34; alt=&#34;r script&#34; /&gt;
+&lt;img src=&#34;/img/r_script_name.png&#34; alt=&#34;r script name&#34; /&gt;
+&lt;img src=&#34;/img/load_all.png&#34; alt=&#34;load all&#34; /&gt;
+Let’s test the new function by loading the functions. No need for sourcing anymore!
+&lt;img src=&#34;/img/load_all_done.png&#34; alt=&#34;loaded&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now that the function is working as intended, let’s document the function for others, including future us.
+&lt;img src=&#34;/img/insert_doc.png&#34; alt=&#34;insert roxygen&#34; /&gt;
+&lt;img src=&#34;/img/doc_done.png&#34; alt=&#34;document done&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Keyboard shortcut: cmd-shift-D generates the documents.
+&lt;img src=&#34;/img/generate_doc.png&#34; alt=&#34;generate document&#34; /&gt;
+&lt;img src=&#34;/img/check_doc.png&#34; alt=&#34;check document&#34; /&gt;
+Let’s remove the default contents.
+&lt;img src=&#34;/img/rm_hello.png&#34; alt=&#34;delete hello&#34; /&gt;
+Now that we have working functions and associated documents, let’s finish up writing functions/docs, and install the R package we just wrote.&lt;/p&gt;
+&lt;p&gt;Keyboard shortcut: cmd-shift-B
+&lt;img src=&#34;/img/install.png&#34; alt=&#34;install and restart&#34; /&gt;
+Let’s check if the package is without any issues.&lt;/p&gt;
+&lt;p&gt;Keyboard shortcut: cmd-shift-E
+&lt;img src=&#34;/img/check_pkg.png&#34; alt=&#34;check package&#34; /&gt;
+&lt;img src=&#34;/img/check_progress.png&#34; alt=&#34;check progress&#34; /&gt;
+Check result is not clean. There is a warning and a note. We’ll need to address them.
+&lt;img src=&#34;/img/check_warning.png&#34; alt=&#34;check warning&#34; /&gt;
+Let’s fix importFrom.
+&lt;img src=&#34;/img/check_warning_fixed1.png&#34; alt=&#34;check import fixed&#34; /&gt;
+Then let’s fix DESCRIPTION.
+&lt;img src=&#34;/img/check_warning_fixed2.png&#34; alt=&#34;check description fixed&#34; /&gt;
+Once all issues are addressed, we see the check result is clean.&lt;/p&gt;
+&lt;p&gt;Let’s build the source package (no shortcut)
+&lt;img src=&#34;/img/build_src.png&#34; alt=&#34;build source package&#34; /&gt;
+&lt;img src=&#34;/img/build_src_progress.png&#34; alt=&#34;build source progress&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;share&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Share&lt;/h2&gt;
+&lt;p&gt;Three different ways to share our new R package.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;If you are the only user of the R package, then no additional action is required. cmd-shift-B (install step) installed the development version of the package already.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If you want to share your R package with co-workers, you can (sftp) copy the zipped/built source file to a common location and have you co-workers them install the package in their R session by install.packages(“/path/to/pkg”, repos = NULL)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/build_src_progress.png&#34; alt=&#34;Setup git&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Setup git&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/img/restart_after_git.png&#34; alt=&#34;Restart after git&#34; /&gt;
+&lt;img src=&#34;/img/git_pane.png&#34; alt=&#34;Git pane&#34; /&gt;
+&lt;img src=&#34;/img/commit.png&#34; alt=&#34;commit&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;If you want to share your R package with total strangers out there, you can share all source files in github (or any other version control systems) and have them install the package in their R session by devtools::install_github(“user/repo”)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>Random Forest Revisited</title>
@@ -574,134 +666,6 @@ fi&lt;/code&gt;&lt;/pre&gt;
 &lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;Note that source files in &lt;code&gt;/inst/sh&lt;/code&gt; are copied to &lt;code&gt;/sh&lt;/code&gt; when R package is installed.&lt;a href=&#34;#fnref4&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>New Hugo theme</title>
-      <link>/post/2018/02/03/new-hugo-theme/</link>
-      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/02/03/new-hugo-theme/</guid>
-      <description>
-        &lt;p&gt;Last time, I wrote about a &lt;a href=&#34;https://joongsup.rbind.io/post/2018/02/01/quiz-from-work/&#34;&gt;quiz&lt;/a&gt; from work, including the code solution. Unfortunately, I didn’t really like how the code block was printed in the &lt;a href=&#34;https://themes.gohugo.io/minimal/&#34;&gt;minimal&lt;/a&gt; theme. I’m pretty sure there’s a quick and/or easy fix, but since I’m starting this blogging thing, I decided to try some other themes while at it.&lt;/p&gt;
-&lt;p&gt;It took some googling/reading/tweaking, but I ended up with Yihui’s &lt;a href=&#34;https://github.com/yihui/hugo-xmin&#34;&gt;XMin&lt;/a&gt; theme, and overall I’m satisfied with what I ended up with at the moment. It could’ve been helpful to record each and every step I took and write a blog post about it, but unfortunately, I didn’t record each and every step that I ended up taking. Nonetheless, I’ll try to summarize what I went through later for my own record, if anything.&lt;/p&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Quiz from work</title>
-      <link>/post/2018/02/01/quiz-from-work/</link>
-      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/02/01/quiz-from-work/</guid>
-      <description>
-        &lt;blockquote&gt;
-&lt;p&gt;There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1) if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar. Can we win the game, and if yes, what’s the probability that we win the game?&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Since this quiz was asked in a “coding challenge” session at work, I went ahead and wrote the following to see what happens, even though I suspected this could be solved with pen/paper, especially because the quiz was introduced as a question that had been asked at a job interview.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;draw_balls &amp;lt;- function(balls){ # balls = list(begin_w, begin_b)
-  w &amp;lt;- balls[[1]]
-  b &amp;lt;- balls[[2]]
-  #print(paste0(&amp;quot;Beginning balls (w, b): &amp;quot;, w, &amp;quot;, &amp;quot;, b))
-  
-  # note I&amp;#39;m assuming two balls are drawn one at a time, not together
-  # other drawing rules are possible
-  # drawing rule for first ball
-  if (runif(1) &amp;lt; w/(w + b)) {
-    wtmp1 &amp;lt;- 1 # draw white
-    btmp1 &amp;lt;- 0
-  } else {
-    wtmp1 &amp;lt;- 0
-    btmp1 &amp;lt;- 1 # draw black
-  }
-      
-  # drawing rule for second ball
-  if (runif(1) &amp;lt; (w - wtmp1)/(w - wtmp1 + b - btmp1)){
-    wtmp2 &amp;lt;- 1 # draw white
-    btmp2 &amp;lt;- 0
-  } else {
-    wtmp2 &amp;lt;- 0
-    btmp2 &amp;lt;- 1 # draw black
-  } 
-      
-  # post-draw actions
- 
-  if (wtmp1 == 1 &amp;amp; wtmp2 == 1) {
-    #print(&amp;quot;Balls drawn: 2 W&amp;quot;)
-    w &amp;lt;- w - (wtmp1 + wtmp2)
-    b &amp;lt;- b
-  } else if (btmp1 == 1 &amp;amp; btmp2 == 1){
-    #print(&amp;quot;Balls drawn: 2 B&amp;quot;)
-    w &amp;lt;- w
-    b &amp;lt;- b
-  } else { # if mixed
-    #print(&amp;quot;Balls drawn: mixed&amp;quot;)
-    w &amp;lt;- w
-    b &amp;lt;- b - 1
-  }
-
-  #print(paste0(&amp;quot;Ending balls (w, b): &amp;quot;, w, &amp;quot;, &amp;quot;, b))
-  balls &amp;lt;- list(ending_w = w, ending_b = b)
-}
-
-# stopping rule1: if whilte ball = 0, black balls &amp;gt;= 1; then white loses
-# stopping rule2: if black ball = 0, white ball odd numbers are left; then white wins
-# stopping rule3: if black ball = 0, white ball even numbers are left; then white loses
-
-iterate_draw_balls &amp;lt;- function(count = 0, begin_w, begin_b){
-
-  while(begin_w * begin_b &amp;gt; 0){
-    #print(&amp;quot;==============================&amp;quot;)
-    count &amp;lt;- count + 1
-    #print(paste0(&amp;quot;Count: &amp;quot;, count))
-    
-    a &amp;lt;- draw_balls(list(begin_w, begin_b))
-    begin_w &amp;lt;- a$ending_w
-    begin_b &amp;lt;- a$ending_b
-  }
-
-  
-  if (begin_w == 0){ # stopping rule 1
-    win &amp;lt;- 0
-    #print(&amp;quot;The last ball was a black one&amp;quot;)
-    win
-  } else if (begin_w %% 2 == 1) { # stopping rule 2
-    win &amp;lt;- 1
-    #print(&amp;quot;The last ball was a white one.&amp;quot;)
-    win
-  } else if (begin_w %% 2 == 0) { # stopping rule 3
-    win &amp;lt;- 0
-    #print(&amp;quot;There is no ball left.&amp;quot;)
-    win
-  } else {
-    #print(&amp;quot;Shouldn&amp;#39;t see this!&amp;quot;)
-    win &amp;lt;- -9999999999
-  }
-}
-
-#--------------------------------
-# run the monte carlo simulation
-#--------------------------------
-
-set.seed(1234)
-N &amp;lt;- 100
-begin_w &amp;lt;- 25
-begin_b &amp;lt;- 25
-results &amp;lt;- vector(&amp;quot;list&amp;quot;, length = N)
-for (sim in 1:N){
-  #print(paste0(&amp;quot;Simulation iteration: &amp;quot;, sim))
-  results[[sim]] &amp;lt;- iterate_draw_balls(count = 0, begin_w = begin_w, begin_b = begin_b)
-  #print(paste0(&amp;quot;Simulation result: &amp;quot;, results[[sim]]))
-}
-sum(unlist(results))/N&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For different values of N, the results were the same, depending on whether the number of white balls was odd or even. So the immediate answer to the quiz seems to be that we always win, since we started the game with 25 white balls.&lt;/p&gt;
-&lt;p&gt;Seeing such pattern, I thought about state space of white and black balls in terms of them being odd or even, and after tinkering with different transition cases, it confirmed my simulation experiment.&lt;/p&gt;
 
         
       </description>
