@@ -1,0 +1,17 @@
+---
+title: Insert images in blogdown post, static directory, and xaringan
+author: Jay
+date: '2018-05-17'
+slug: insert-images-in-blogdown-post
+categories: []
+tags: []
+draft: false
+---
+
+While working on yet another separate blog post, I needed to insert images in the post. I knew from rmarkdown syntax that I can use: !\[image name](path to file), but then I didn't know where the image files need to be. 
+
+It turns out I can have the image files under the [static/](https://bookdown.org/yihui/blogdown/static-files.html) directory, everything under which will be copied to public directory. 
+
+Moreover, static/ directory can also be used to build Rmd documents (e.g., pdf and HTML5), and I decided to try generating an HTML5 slide using [xaringan](https://slides.yihui.name/xaringan/#1) package. It took some trial-and-error but eventually I got it working and here's the [slide](https://joongsup.rbind.io/slides/r_pkg_devel.html)! 
+
+(Next, maybe I should consider breaking out posts and slides.)

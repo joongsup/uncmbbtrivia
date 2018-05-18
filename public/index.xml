@@ -6,19 +6,20 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 May 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Insert images in blogdown post, static directory, and xaringan</title>
-      <link>/post/2018/05/12/insert-images-in-blogdown-post/</link>
-      <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
+      <link>/post/2018/05/17/insert-images-in-blogdown-post/</link>
+      <pubDate>Thu, 17 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018/05/12/insert-images-in-blogdown-post/</guid>
+      <guid>/post/2018/05/17/insert-images-in-blogdown-post/</guid>
       <description>
         &lt;p&gt;While working on yet another separate blog post, I needed to insert images in the post. I knew from rmarkdown syntax that I can use: ![image name](path to file), but then I didn’t know where the image files need to be.&lt;/p&gt;
 &lt;p&gt;It turns out I can have the image files under the &lt;a href=&#34;https://bookdown.org/yihui/blogdown/static-files.html&#34;&gt;static/&lt;/a&gt; directory, everything under which will be copied to public directory.&lt;/p&gt;
-&lt;p&gt;Moreover, static/ directory can also be used to build Rmd documents (e.g., pdf and HTML5), and I decided to try generating an xaringan slide.&lt;/p&gt;
+&lt;p&gt;Moreover, static/ directory can also be used to build Rmd documents (e.g., pdf and HTML5), and I decided to try generating an HTML5 slide using &lt;a href=&#34;https://slides.yihui.name/xaringan/#1&#34;&gt;xaringan&lt;/a&gt; package. It took some trial-and-error but eventually I got it working and here’s the &lt;a href=&#34;https://joongsup.rbind.io/slides/r_pkg_devel.html&#34;&gt;slide&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;(Next, maybe I should consider breaking out posts and slides.)&lt;/p&gt;
 
         
       </description>

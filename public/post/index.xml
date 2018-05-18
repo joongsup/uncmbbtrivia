@@ -6,17 +6,17 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Insert images in blogdown post, static directory, and xaringan</title>
-      <link>/post/2018/05/12/insert-images-in-blogdown-post/</link>
-      <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
+      <link>/post/2018/05/17/insert-images-in-blogdown-post/</link>
+      <pubDate>Thu, 17 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018/05/12/insert-images-in-blogdown-post/</guid>
+      <guid>/post/2018/05/17/insert-images-in-blogdown-post/</guid>
       <description>While working on yet another separate blog post, I needed to insert images in the post. I knew from rmarkdown syntax that I can use: ![image name](path to file), but then I didn’t know where the image files need to be.
 It turns out I can have the image files under the static/ directory, everything under which will be copied to public directory.
 Moreover, static/ directory can also be used to build Rmd documents (e.</description>
