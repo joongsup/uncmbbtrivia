@@ -18,6 +18,20 @@ library(knitr)
 ```
 
 
+# Motivation
+
+```{r, fig.width = 6, fig.height = 4}
+library(ggplot2)
+ggplot(data = mtcars) +
+    geom_bar(aes(x = factor(cyl), fill = factor(gear)))
+
+```
+
+
+---
+
+
+
 # Code/Function Reuse
 
 --
@@ -76,8 +90,18 @@ class: center, middle
 .center[![pkg](../img/roxygen.png)]
 
 ---
+## Roxygen Option Not Available?
+
+- install.packages("roxygen2")
+
+- Save and restart RStudio project
+
+- Return to Project Option
+
+---
 ## Check Roxygen
 .center[![pkg](../img/roxygen_options.png)]
+
 
 ---
 ## Check Roxygen
@@ -141,6 +165,17 @@ class: center, middle
 .center[![pkg](../img/check_warning_fixed1.png)]
 
 ---
+## Nitpicky Warnings/Notes
+
+- Title Case
+
+- Description period.
+
+- Fix license
+
+- Etc.
+
+---
 ## Check Warning Fixed
 .center[![pkg](../img/check_warning_fixed2.png)]
 
@@ -152,9 +187,15 @@ class: center, middle
 ## Build Source
 .center[![pkg](../img/build_src_progress.png)]
 
+---
+## Share with coworkers
+
+- Copy zipped source file to a common location
+
+- install.packages("path/to/source", repos = NULL) 
 
 ---
-## Set up Git
+## Share with Strangers
 .center[![pkg](../img/setup_git.png)]
 
 ---
