@@ -40,19 +40,12 @@ ggplot(data = mtcars) +
 
 # Code/Function Reuse
 
---
 
 - Copy and paste from existinig code snippets
 
---
-
 - source("path/to/commonly/used/functions.R")
 
---
-
 - .Rprofile
-
---
 
 - library(my_awesome_pkg)
 
@@ -131,6 +124,15 @@ class: center, middle
 .center[![pkg](../img/load_all_done.png)]
 
 ---
+## Load All Not Available?
+
+- install.packages("devtools")
+
+- Save and restart RStudio project
+
+- Return to Build menu
+
+---
 ## Document
 .center[![pkg](../img/insert_doc.png)]
 
@@ -149,6 +151,11 @@ class: center, middle
 ---
 ## Bye World!
 .center[![pkg](../img/rm_hello.png)]
+
+---
+## Delete NAMESPACE
+.center[![namespace](../img/default_namespace_warning.png)]
+
 
 ---
 ## Install and Restart (cmd-shift-B)
@@ -213,10 +220,28 @@ class: center, middle
 .center[![pkg](../img/git_pane.png)]
 
 ---
+## Create Github Repo
+.center[![repo](../img/create_github_repo.png)]
+
+---
+## Initiate Github Repo
+.center[![init](../img/init_remote.png)]
+---
 ## First Commit!
 .center[![pkg](../img/commit.png)]
 
 ---
+## devtools::install_github
+
+```r
+library(devtools)
+devtools::install_github("joongsup/demo4")
+library(demo4)
+ht(mtcars)
+```
+
+---
+
 class: center, middle
 
 # Thanks!
