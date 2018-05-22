@@ -1,8 +1,8 @@
 ---
 title: "R Package Development"
 subtitle: "(testing static/slides)"
-author: "Jay"
-date: "2018/05/18"
+author: "Jay Lee"
+date: "2018/05/22"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -87,7 +87,7 @@ class: center, middle
 
 - install.packages("roxygen2")
 
-- Save and restart RStudio project
+- Save and restart RStudio project (optional)
 
 - Return to Project Option
 
@@ -231,7 +231,7 @@ class: center, middle
 library(devtools)
 devtools::install_github("joongsup/demor")
 library(demor)
-ht(mtcars)
+demor_ht(mtcars)
 
 ```
 
