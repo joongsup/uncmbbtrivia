@@ -8,11 +8,11 @@ tags: []
 draft: false
 ---
 
-Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year^[Amazingly, he's successfully written a book a year for the last couple of years as far as I know], I have a similar personal goal that I started last year. While I'd love to write a book a year, it's too ambitious a goal for me (and many people in general, I'd thinkw) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker. 
+Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year^[Amazingly, he's successfully written a book a year for the last couple of years as far as I know.], I have a similar personal goal that I started last year. While I'd love to write a book a year, it's too ambitious a goal for me (and many people in general, I'd thinkw) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker. 
 
-Back in May, I did a presentation on R package development for the ATL R User group, successfully completing the mission for the year :) The presentation has two decks: (1) main deck ([here](../pdf/r_pkg_devel_final.pdf)) containing the introduction and overall agenda, and (2) reference deck ([here](../slides/r_pkg_devel.html)) containing the screenshots of each step of the R package development that I covered during the presentation.
+Back in May, I did a presentation on R package development for the ATL R User group, successfully completing the mission for the year :) The presentation has two decks: (1) main deck ([here](https://joongsup.rbind.io/pdf/r_pkg_devel_final.pdf)) containing the introduction and overall agenda, and (2) reference deck ([here](https://joongsup.rbind.io/slides/r_pkg_devel.html)) containing the screenshots of each step of the R package development that I covered during the presentation.
 
-
+I should probably add to my personal goal list something about blog posting^[Yihui's frequent blog posting is also amazing.]. I'm just happy still that blogging is this easy (again thanks to Yihui!), and so there should be no excuse why I can't write a post more frequently. Well, I won't make it an official personal goal just yet, but for now, I will have to keep writing posts whenever I can, sometimes multiple posts at one sitting, just like today! :)
 
 
 
