@@ -6,8 +6,28 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Jul 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>External presentation goal</title>
+      <link>/post/2018/07/22/external-presentation-goal/</link>
+      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/07/22/external-presentation-goal/</guid>
+      <description>
+        &lt;p&gt;Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;, I have a similar personal goal that I started last year. While I’d love to write a book a year, it’s too ambitious a goal for me (and many people in general, I’d thinkw) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker.&lt;/p&gt;
+&lt;p&gt;Back in May, I did a presentation on R package development for the ATL R User group, successfully completing the mission for the year :) The presentation has two decks: (1) main deck (&lt;embed src=&#34;../pdf/r_pkg_devel_final.pdf&#34; /&gt;) containing the introduction and overall agenda, and (2) reference deck (&lt;embed src=&#34;../slides/r_pkg_devel.html&#34; /&gt;) containing the screenshots of each step of the R package development that I covered during the presentation.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Amazingly, he’s successfully written a book a year for the last couple of years as far as I know&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>Insert images in blogdown post, static directory, and xaringan</title>
@@ -594,77 +614,6 @@ head(df)&lt;/code&gt;&lt;/pre&gt;
 &lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;Maybe it was not needed, and I could’ve turned on RSS feed somehow differently?&lt;a href=&#34;#fnref4&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li id=&#34;fn5&#34;&gt;&lt;p&gt;When I validated the RSS link, it gave me some recommendations, and I haven’t spent time to address them yet, but they don’t seem to be errors.&lt;a href=&#34;#fnref5&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li id=&#34;fn6&#34;&gt;&lt;p&gt;Besides the new name, my other attraction to rbind.io is that rbind.io address automatically tells the world that the blogger cares for R.&lt;a href=&#34;#fnref6&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Run system commands or shell scripts from an interactive R session</title>
-      <link>/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/</link>
-      <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/</guid>
-      <description>
-        &lt;p&gt;When you are working in an interactive R shell and need to run some system commands, you can use a base R function &lt;a href=&#34;https://stat.ethz.ch/R-manual/R-devel/library/base/html/system.html&#34;&gt;&lt;code&gt;system&lt;/code&gt;&lt;/a&gt;&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# toy example
-system(&amp;quot;ls&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The &lt;code&gt;system&lt;/code&gt; funtion can also be used to run custom shell scripts, like so,&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;system(&amp;quot;custom_script.sh arg1 arg2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;where &lt;code&gt;custom_script.sh&lt;/code&gt; is a shell script that does some custom operations with &lt;code&gt;arg1&lt;/code&gt; and &lt;code&gt;arg2&lt;/code&gt;. For example, let’s say I want to extract all the lines in a source file that contains the word “NOTE”. Below&lt;a href=&#34;#fn2&#34; class=&#34;footnoteRef&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; is one such shell script, &lt;code&gt;show_notes.sh&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;#!/bin/sh
-
-if [ -z &amp;quot;$1&amp;quot; ]; then
-        echo &amp;quot;Usage: ./show_notes.sh file_with_notes marker&amp;quot;
-else
-
-rm $1.$2 2&amp;gt; /dev/null
-
-echo &amp;quot;#-----------------------------------------------------&amp;quot; &amp;gt;&amp;gt; $1.$2
-echo &amp;quot;# $2 from&amp;quot; $1 &amp;gt;&amp;gt; $1.$2
-echo &amp;quot;#-----------------------------------------------------&amp;quot; &amp;gt;&amp;gt; $1.$2
-
-less $1 | grep $2 &amp;gt;&amp;gt; $1.$2
-
-echo &amp;quot;$2 are saved to file: $1.$2&amp;quot;
-fi&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The shell script extracts all the lines from the “file_with_notes” (&lt;code&gt;arg1&lt;/code&gt;) that contains a word “marker” (&lt;code&gt;arg2&lt;/code&gt;) and save it to a new file (with a specific file name). Then, from within an open interactive R shell, I can call the shell script like so:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;system(&amp;quot;show_notes.sh explore.R NOTE&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This will extracts all lines with “NOTE” in them from &lt;code&gt;explore.R&lt;/code&gt; file and save it to &lt;code&gt;explore.R.NOTE&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;There are several comments to be made about this approach:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Unless &lt;code&gt;show_notes.sh&lt;/code&gt; file is already executable from anywhere (i.e., the directory that contains the show_notes.sh file is in the PATH), you might have to provide the absolute paths for both files. For example, above snippet won’t work, unless the two files (&lt;code&gt;show_notes.sh&lt;/code&gt; and &lt;code&gt;explore.R&lt;/code&gt;) are in the same directory.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;In order for this shell script to be useful, the source file (&lt;code&gt;explore.R&lt;/code&gt;) is assumed to have many lines that contain the marker “NOTE”. The user must have put in conscious efforts to leave “NOTE” marker in &lt;code&gt;explore.R&lt;/code&gt; file.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;For the most part, once above two limitations are understood and resolved, the shell script can be useful.&lt;/p&gt;
-&lt;p&gt;Going one step further, if you find yourself using this particular shell script quite often in your data analysis workflow, you can include this shell script as well as the corresponding R wrapper function that calls the shell script (much like &lt;code&gt;system(&amp;quot;ls&amp;quot;)&lt;/code&gt; above) in an R package&lt;a href=&#34;#fn3&#34; class=&#34;footnoteRef&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;The two main files (custom shell script and R wrapper function) need to be in a specific directory, respectively.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;The custom shell script needs to be in a subdirectory under &lt;code&gt;/inst&lt;/code&gt; &lt;a href=&#34;http://r-pkgs.had.co.nz/inst.html&#34;&gt;directory&lt;/a&gt; under the package’s root. Let’s say for this example, the &lt;code&gt;show_notes.sh&lt;/code&gt; file is in &lt;code&gt;/inst/sh&lt;/code&gt; directory.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The R wrapper function needs to be in the usual &lt;code&gt;/R&lt;/code&gt; directory under the package’s root directory. For this example, the corresponding R wrapper function is called &lt;code&gt;show_notes()&lt;/code&gt; and looks like so:&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;show_notes &amp;lt;- function(src, marker = &amp;quot;NOTE&amp;quot;){
-
-  main_sh &amp;lt;- system.file(&amp;quot;sh&amp;quot;, &amp;quot;show_notes.sh&amp;quot;, package = &amp;quot;my_awesome_R_pkg&amp;quot;)
-  cmd &amp;lt;- paste0(main_sh, &amp;quot; &amp;quot;, src, &amp;quot; &amp;quot;, marker)
-  print(cmd)
-  system(cmd)
-
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Note that R’s base &lt;code&gt;system.file()&lt;/code&gt; function is used here to search for the &lt;code&gt;show_notes.sh&lt;/code&gt; file in a subdirectory &lt;code&gt;/sh&lt;/code&gt; under the root directory of installed package, &lt;code&gt;my_awesome_R_pkg&lt;/code&gt;.&lt;a href=&#34;#fn4&#34; class=&#34;footnoteRef&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Once &lt;code&gt;my_awesome_R_pkg&lt;/code&gt; is installed and loaded, you can call this R wrapper function from your open interactive R shell, like so (assuming &lt;code&gt;explore.R&lt;/code&gt; file is in the current working directory of the open interactive R session):&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;show_notes(&amp;quot;explore.R&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This function call will extract all the lines from &lt;code&gt;explore.R&lt;/code&gt; file that contains “NOTE” in them and save it to &lt;code&gt;explore.R.NOTE&lt;/code&gt; in the same directory as the &lt;code&gt;explore.R&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;This approach can be useful, for example, if you want to keep track of intermediate narratives of your data analysis, which is done interactively in an R session with codes from a source file.&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Both a newer version function &lt;a href=&#34;https://stat.ethz.ch/R-manual/R-devel/library/base/html/system2.html&#34;&gt;&lt;code&gt;system2&lt;/code&gt;&lt;/a&gt; and a relatively new file system operations opackage &lt;a href=&#34;http://fs.r-lib.org&#34;&gt;fs&lt;/a&gt; seem great alternatives, but I haven’t tried them yet.&lt;a href=&#34;#fnref1&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Note that in addition to familiar R code chunks, you can also execute code chunks in other lanauges by calling the target language engine in place of r. For options, see &lt;a href=&#34;http://rmarkdown.rstudio.com/authoring_knitr_engines.html&#34;&gt;here&lt;/a&gt;.&lt;a href=&#34;#fnref2&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;Check out Jim Hester’s 2018 rstudio conference presentation &lt;a href=&#34;https://github.com/jimhester/presentations/tree/master/2018_02_03-You-can-make-a-package-in-20-minutes&#34;&gt;here&lt;/a&gt; for motivations and minimal package file structure.&lt;a href=&#34;#fnref3&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;Note that source files in &lt;code&gt;/inst/sh&lt;/code&gt; are copied to &lt;code&gt;/sh&lt;/code&gt; when R package is installed.&lt;a href=&#34;#fnref4&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 

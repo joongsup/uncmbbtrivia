@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>External presentation goal</title>
+      <link>/post/2018/07/22/external-presentation-goal/</link>
+      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/07/22/external-presentation-goal/</guid>
+      <description>Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year1, I have a similar personal goal that I started last year. While I’d love to write a book a year, it’s too ambitious a goal for me (and many people in general, I’d thinkw) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker.</description>
+    </item>
     
     <item>
       <title>Insert images in blogdown post, static directory, and xaringan</title>
@@ -95,17 +104,6 @@ Various categorical variable encoding methods and related concepts  Reference ce
       
       <guid>/post/2018/02/06/rss-feed/</guid>
       <description>Maëlle Salmon reminded me to submit posts/blog RSS feed to R weekly on my tweet, and I set out to do just that. I didn’t have much understanding as to how to though, and googling things like “how to generate rss feed in xmin blogdown” didn’t really turn up anything useful for new bloggers like me. Maybe it’s a quite straighforward knowledge that my full blog url is not a valid RSS feed address, but I got to know that only after checking my blog url from the R weekly submit page.</description>
-    </item>
-    
-    <item>
-      <title>Run system commands or shell scripts from an interactive R session</title>
-      <link>/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/</link>
-      <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/</guid>
-      <description>When you are working in an interactive R shell and need to run some system commands, you can use a base R function system1.
-# toy example system(&amp;quot;ls&amp;quot;) The system funtion can also be used to run custom shell scripts, like so,
-system(&amp;quot;custom_script.sh arg1 arg2&amp;quot;) where custom_script.sh is a shell script that does some custom operations with arg1 and arg2. For example, let’s say I want to extract all the lines in a source file that contains the word “NOTE”.</description>
     </item>
     
   </channel>
