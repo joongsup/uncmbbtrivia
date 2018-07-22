@@ -1,0 +1,194 @@
+---
+title: Comments on data analysis workflow
+author: Jay
+date: '2018-07-22'
+slug: comments-on-data-analysis-workflow
+categories: []
+tags: []
+draft: false
+---
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>There are several benefits of establishing a good and routine data analysis workflow that you follow on a daily basis. At least two benefits come to mind immediately.</p>
+<ol style="list-style-type: decimal">
+<li><p>Having a good data analysis workflow is beneficial and needed to do reproducible research/work (RR). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break. For example, after spending 2-3 days on project A, I might go off to do something else for the next 2-3 days, and when I come back to project A, I want to know exactly what’s been done and what I need to do. There are many components of data analysis workflow that can be helpful for one to do RR, and I try to outline them below.</p></li>
+<li><p>A routine workflow helps us avoid mental fatigue. This may be from one of the books by Hadley, but to me, this means knowing what, where, why, and how to do things right off the bat when starting a new project. Slowly but surely, I’m settling down to a specific approach that I’ll touch upon later, but to get to this point, I tried several different alternatives, and many times ended up failing, for example, to keep track of how to do things (e.g., refresh data with new source data) all over again when needed. Typical challenges have been, but are not limited to, (1) keeping track of data generation, preparation, and movement steps, (2) having to switch between several environments to do specific tasks (e.g., visual inspection), and (3) saving analysis summary and results in a place that’s as close to the scripts as possible.</p></li>
+</ol>
+</div>
+<div id="history" class="section level2">
+<h2>History</h2>
+<p>Next, I outline what I have tried so far with a quick rundown of pros and cons for each, beginning with the earliest approach I tried at my current work.</p>
+<ol style="list-style-type: decimal">
+<li><p>Local RStudio: suitable for most of my personal needs, I’ve been using RStudio on my local computer for a while before joining current work. And even at current work, RStudio was my first tool of choice.</p>
+<ul>
+<li>Pros
+<ul>
+<li>Quick and easy start: fire up an RStudio session (preferably at a Rproj level) and you’re ready for work.</li>
+<li>One stop shop: everything you need, you can do it in RStudio pretty much, such as visuals, Rmarkdown reports, blogging, version control (git), etc.</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Privacy and security: the biggest drawback of using RStudio at work is that many times we’re not allowed to download the data to local computer due to privacy and security reasons. This is one single biggest roadblock that ultimately kept me from using it as a tool of choice at work.</li>
+</ul></li>
+</ul></li>
+<li><p>Remote RCloud: an in-house analytics and visualization platform, it allows visual inspections, collaboration among data folks, and many other things, such as shiny app. Once RStudio turned out to be no-go for most tasks at work, I turned to RCloud for everything from data loading and summary, back when it was relatively early (yet still stable) in the development stage.</p>
+<ul>
+<li>Pros
+<ul>
+<li>Work with company data (small and big): since it’s built in-house, it’s capable of consuming company data.</li>
+<li>Visualization: unlike a remote R shell, visuals in RCloud is just like that in RStudio.</li>
+<li>Cells with not just R, but shell, python, shiny, etc.: RCloud can be used to do work not just in R, but also in python and shell.</li>
+<li>Notebooks: data generation, preparation, plots, and reports can be all saved in a sensible manner.</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Connection sometimes lost (usually for long running jobs): mostly in its early days, I experienced RCloud hanging from time to time especially for long running jobs, typically big data ingestion, complex tasks (modeling), etc.</li>
+<li>Need internet/browser: not a biggie, but sometimes need to log in too, and it’s not as quick and easy as starting up a local RStudio session, for example.</li>
+</ul></li>
+</ul></li>
+<li><p>Remote R shell: log on to work server, and start up R session!</p>
+<ul>
+<li>Pros
+<ul>
+<li>Quick and easy start: just like starting up a local RStudio, starting up a remote R shell is quick and easy, once sshed into remote servers.</li>
+<li>Can work with company data (usually small, but sometimes big too): it’s safe to work with company data in the remote servers, and depending on the need, rather big data can be explored in a remote R session too.</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Can’t do visual inspections: one biggest hurdle with this option is its lack of graphic support.</li>
+<li>Many times data come from various sources and need to be prepared in a separate environment (e.g., hive)</li>
+</ul></li>
+</ul></li>
+<li><p>Pyspark in remote python shell</p>
+<ul>
+<li>Pros
+<ul>
+<li>Scalable solutions for production deliverables</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Spark environment in general fails with error messages that are not easy to back track (i.e., I don’t know what I’m doing wrong)</li>
+</ul></li>
+</ul></li>
+<li><p>Sparklyr in remote R shell</p>
+<ul>
+<li>Pros
+<ul>
+<li>Scalable solutions in familiar R environment</li>
+<li>Familiar environment (basically R shell)</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Unstable? Connection lost frequently (probably because I’m doing something wrong)</li>
+<li>No visualization (same problem as in remote R shell)</li>
+<li>Set up time is “long” compared to non spark R shell</li>
+</ul></li>
+</ul></li>
+<li><p>Sparklyr in RCloud</p>
+<ul>
+<li>Pros
+<ul>
+<li>Scalable solutions in familiar R environment</li>
+<li>Visualization</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Big data visualization is not too common (e.g., many times need aggregation/summarization for plotting anyway, which doesn’t need to happen in spark, but in hive)</li>
+<li>Internet/browser</li>
+</ul></li>
+</ul></li>
+</ol>
+</div>
+<div id="current" class="section level2">
+<h2>Current</h2>
+<p>Before starting to settle down on a particular workflow, I realized that first thing I needed to do was to identify my day-to-day needs. Not exhaustively, answers to below questions may provide better insights to what we do on a daily basis.</p>
+<ul>
+<li>What kind of data do I work with the most?</li>
+<li>Where do the data come from?</li>
+<li>What do I do with the data?</li>
+<li>Do I need interactive environment or batch jobs?</li>
+<li>How about ML? Is production ML an important part of my job?</li>
+</ul>
+<p>It turns out that more often than not, majority of my day-to-day needs are:</p>
+<ul>
+<li>Explore data stored in hive tables</li>
+<li>Visualize data stored in hive tables</li>
+<li>Summarize/document analysis results</li>
+<li>Train ML models and deliver scores in production</li>
+</ul>
+<p>So it became apparent that the integration of R and hive is rather important in my day-to-day work, and that I still rely much on an interactive environment especially during early stages of a project (aka exploration), which takes indeed the majority of the project time.</p>
+<p>Hence, I needed to come up with a better way to use data stored in hive tables in an interactive R session. After several trials-and-errors, I came to the conclusion that the combination of bash shell scripts, remote R shell, and RCloud should do for majority of what I do during this stage. This workflow uses bash shell scripts and remote R shell for quick data exploration and additional data prep, typically followed by RCloud for visualization and summary/documentation.</p>
+<p>Below, I describe how this workflow typically works.</p>
+<ol style="list-style-type: decimal">
+<li><p>Create a project directory and start up remote R shell from there</p>
+<ul>
+<li>One screen session and one R shell per project (hence don’t be afraid to have multiple screen sessions running)</li>
+</ul></li>
+<li><p>Quick/iterative exploration in remote R shell</p>
+<ul>
+<li>Data generation and preparation
+<ul>
+<li>Typically involves (intermediate) hive table generations and loading them in R (hive sql, bash, R shell)</li>
+<li>Use custom bash scripts and internal R packages for common tasks</li>
+</ul></li>
+<li>Descriptive
+<ul>
+<li>Typical R operations without visuals</li>
+</ul></li>
+<li>Additional data prep needed for further actions
+<ul>
+<li>Typically for visual inspection in RCloud</li>
+</ul></li>
+<li>Intermediate data saving
+<ul>
+<li>Typically in RDS format for visual inspections in RCloud</li>
+</ul></li>
+<li>Iterate above steps as needed</li>
+</ul></li>
+<li><p>Visual inspection and summary in RCloud</p>
+<ul>
+<li>Create a new notebook in RCloud (under a proper higher level directory)</li>
+<li>Start documenting findings from the exploration step</li>
+<li>Visual inspection
+<ul>
+<li>Using RDS files saved from quick explore step</li>
+</ul></li>
+<li>Reports and summary
+<ul>
+<li>Quick notes on findings according to the visuals</li>
+<li>Also quick notes on further actions, if needed</li>
+</ul></li>
+</ul></li>
+<li><p>Further actions typically involve ML</p>
+<ul>
+<li>Remote R shell for POC</li>
+<li>Remote R/python programming</li>
+<li>Scalable solution if needed (Spark)</li>
+</ul></li>
+</ol>
+<p>This workflow is not free of pitfalls of course. Some pros and cons are:</p>
+<ul>
+<li><p>Pros</p>
+<ul>
+<li>It allows a quick project start-up and exploration.</li>
+<li>Data generation, prep, movement, and analysis steps are all stored in once file (explore.R).</li>
+<li>Visual inspection and progress/insights summary are all in one place (RCloud).</li>
+</ul></li>
+<li><p>Cons</p>
+<ul>
+<li>It involves many data writes, which can be costly in terms of time and disk space.</li>
+</ul></li>
+</ul>
+</div>
+<div id="links" class="section level2">
+<h2>Links</h2>
+<ul>
+<li><a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/" class="uri">https://www.tidyverse.org/articles/2017/12/workflow-vs-script/</a></li>
+<li><a href="http://r4ds.had.co.nz/explore-intro.html" class="uri">http://r4ds.had.co.nz/explore-intro.html</a></li>
+<li><a href="https://edwinth.github.io/blog/workflow/" class="uri">https://edwinth.github.io/blog/workflow/</a></li>
+<li><a href="https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext" class="uri">https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext</a></li>
+</ul>
+</div>

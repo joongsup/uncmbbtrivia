@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Comments on data analysis workflow</title>
+      <link>/post/2018/07/22/comments-on-data-analysis-workflow/</link>
+      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/07/22/comments-on-data-analysis-workflow/</guid>
+      <description>Introduction There are several benefits of establishing a good and routine data analysis workflow that you follow on a daily basis. At least two benefits come to mind immediately.
+Having a good data analysis workflow is beneficial and needed to do reproducible research/work (RR). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break.</description>
+    </item>
+    
+    <item>
       <title>External presentation goal</title>
       <link>/post/2018/07/22/external-presentation-goal/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
@@ -95,15 +105,6 @@ I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN f
       <guid>/post/2018/03/24/categorical-variable-treatment/</guid>
       <description>In reviewing details of random forest, I came upon several concepts that I thought were both interesting and important enough to be highlighted in a separate post. Mainly for my own reference, but if it helps others, that’d be great too!
 Various categorical variable encoding methods and related concepts  Reference cell coding (dummy encoding/one-hot encoding)  How categorical variables are treated (by default?) in regressions in R Appreciating R’s way of doing things (behind the scence) Turns out same thing as dummy coding!</description>
-    </item>
-    
-    <item>
-      <title>RSS feed and rbind github repo</title>
-      <link>/post/2018/02/06/rss-feed/</link>
-      <pubDate>Tue, 06 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/02/06/rss-feed/</guid>
-      <description>Maëlle Salmon reminded me to submit posts/blog RSS feed to R weekly on my tweet, and I set out to do just that. I didn’t have much understanding as to how to though, and googling things like “how to generate rss feed in xmin blogdown” didn’t really turn up anything useful for new bloggers like me. Maybe it’s a quite straighforward knowledge that my full blog url is not a valid RSS feed address, but I got to know that only after checking my blog url from the R weekly submit page.</description>
     </item>
     
   </channel>
