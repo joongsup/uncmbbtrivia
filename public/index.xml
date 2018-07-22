@@ -17,7 +17,7 @@
       <guid>/post/2018/07/22/external-presentation-goal/</guid>
       <description>
         &lt;p&gt;Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;, I have a similar personal goal that I started last year. While I’d love to write a book a year, it’s too ambitious a goal for me (and many people in general, I’d thinkw) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker.&lt;/p&gt;
-&lt;p&gt;Back in May, I did a presentation on R package development for the ATL R User group, successfully completing the mission for the year :) The presentation has two decks: (1) main deck (&lt;embed src=&#34;../pdf/r_pkg_devel_final.pdf&#34; /&gt;) containing the introduction and overall agenda, and (2) reference deck (&lt;embed src=&#34;../slides/r_pkg_devel.html&#34; /&gt;) containing the screenshots of each step of the R package development that I covered during the presentation.&lt;/p&gt;
+&lt;p&gt;Back in May, I did a presentation on R package development for the ATL R User group, successfully completing the mission for the year :) The presentation has two decks: (1) main deck (&lt;a href=&#34;../pdf/r_pkg_devel_final.pdf&#34;&gt;here&lt;/a&gt;) containing the introduction and overall agenda, and (2) reference deck (&lt;a href=&#34;../slides/r_pkg_devel.html&#34;&gt;here&lt;/a&gt;) containing the screenshots of each step of the R package development that I covered during the presentation.&lt;/p&gt;
 &lt;div class=&#34;footnotes&#34;&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
