@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>My old coding products</title>
+      <link>/post/2018/07/27/my-old-coding-products/</link>
+      <pubDate>Fri, 27 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/07/27/my-old-coding-products/</guid>
+      <description>Lately I’ve been thinking about why I care much about everything R and sharing the joy of using R, which deserves its own post. Much of it has to do with how I did and did not get a proper training in coding suitable for data analysis in the past, but as I looked back on my personal coding history, I came across hundreds of code files that I wrote in the past1.</description>
+    </item>
     
     <item>
       <title>Comments on data analysis workflow</title>
@@ -95,16 +104,6 @@ So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started 
       <guid>/post/2018/04/17/package-update/</guid>
       <description>Ever since UNCMBB team’s season ended about a month ago, I’ve been meaning to update the data in uncmbb package, and I finally got to it. Obviously the new version includes 2017-2018 season match results for both UNC and Duke MBB teams, but it also includes new features in wrapper functions that are useful when working with uncmbb package.
 I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN for the first time last year, and this time I remembered to do so and take some screenshots too.</description>
-    </item>
-    
-    <item>
-      <title>Categorical variable treatment</title>
-      <link>/post/2018/03/24/categorical-variable-treatment/</link>
-      <pubDate>Sat, 24 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/03/24/categorical-variable-treatment/</guid>
-      <description>In reviewing details of random forest, I came upon several concepts that I thought were both interesting and important enough to be highlighted in a separate post. Mainly for my own reference, but if it helps others, that’d be great too!
-Various categorical variable encoding methods and related concepts  Reference cell coding (dummy encoding/one-hot encoding)  How categorical variables are treated (by default?) in regressions in R Appreciating R’s way of doing things (behind the scence) Turns out same thing as dummy coding!</description>
     </item>
     
   </channel>

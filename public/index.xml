@@ -6,8 +6,42 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Jul 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>My old coding products</title>
+      <link>/post/2018/07/27/my-old-coding-products/</link>
+      <pubDate>Fri, 27 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/07/27/my-old-coding-products/</guid>
+      <description>
+        &lt;p&gt;Lately I’ve been thinking about why I care much about everything R and sharing the joy of using R, which deserves its own post. Much of it has to do with how I did and did not get a proper training in coding suitable for data analysis in the past, but as I looked back on my personal coding history, I came across hundreds of code files that I wrote in the past&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. Suffice to say, they were pretty important files in my education history, but I have totally forgotten about them until now.&lt;/p&gt;
+&lt;p&gt;They are .m files, meant to be used in Matlab. As I started opening and reading a couple of those files, I had mixed feelings, ranging from agony (“omg, this code was from that stressful point in time”) and embarrassment (“omg, look at the logic and style I was using there”), to delight (“wow I’m defining several functions to be used in main script!”) and motivation (“Yup, I was this bad, and that’s exactly why I care about education in coding (especially R) for data analysis!”).&lt;/p&gt;
+&lt;p&gt;It was quite refreshing to see how I used to code in Matlab, which had some similarities with R, hence giving me some perspectives on how my data analysis coding skills might have changed. Here are some observations of the past, in conjunction with present whenever applicable:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Since the purpose of the code files (“program”) was to show my particular engineering method works as intended, the codes were relatively simple having simluated data as its input data. There was no cleaning/exploring step, whereas now, where almost always, there’s no clean data, thus always having to write cleaning/exploring scripts, which is usually done in interactive mode.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Since no cleaning/exploring was needed, my codes seem to be run in batch, not interactively. This is particularly refreshing to me, because I’ve been trying to do more in batch mode at work nowadays, and seems like I was already doing that even back then! But again, that’s because there was no need for heavy use of interactive exploration for simulated data. Also I’m sure I did quite extensive typing in interactive mode back then just to make sure my commands work.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There was one main script that consists of many lines of codes, in which I used multiple for loops for various combinations of “parameters”. Now that I know a little bit about functional programming and bash programming, I can’t help but wonder how much the codes could have been rewritten (refactored).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I defined several functions, which are called in the main script&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;. What was interesting though was that each function was defined and stored in its own file! At first I wondered why I had saved a one liner function in its own file, but seems like that was how it needed to be done back then.&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I had one README type file that explains what each file is in that particular “program” (directory). I’m actually quite impressed by this file, because even though the file contains less than 20 lines of texts, it showed I tried to document something for potential users of the codes (probably was for future me!).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For each function, on the otherhand, I didn’t do a good job of describing what each input is supposed to be and do, let alone output. This is somewhat different for me nowadays, especially when I’m working on an R package. Documenting is actually quite enjoyable there, but the problem still occurs when I’m coding for data analysis. There is this tension between keeping scripts vs. writing codes and how much comments to provide, etc.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;In some cases, there were hundreds of code files that seemingly differ only by certain part of their file names, indicating I could have benefited from version control and/or better parameterized/modular codes. Again, this seems to be an on-going struggle as to how to write better parameterized/modular codes.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;I didn’t really have a detailed directory structure. Pretty much everything was under one main “project” directory, and it was hard to distinguish which files were for which setting under the project. This is still relevant, because sometimes I find it hard to decide where to put each “project”: on its own, or under some existing projects?&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It was quite a pleasant surprise running into my past code prouducts. I don’t think I’ll ever code in Matlab again, but it was still quite refreshing to learn how I used to do it, especially from the current point of view. I wonder how I’d feel about my current coding in say next 5-10 years!?&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Fortunately, I’ve kept those files in a portable device, which I’m not usually good at doing.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Interestingly, it seems I didn’t have to “source” the files to use the functions. Matlab must have known where to look for the function names.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;E.g., see &lt;a href=&#34;http://www.mathworks.com/help/matlab/matlab_prog/create-functions-in-files.html&#34;&gt;here.&lt;/a&gt;&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>Comments on data analysis workflow</title>
@@ -666,122 +700,6 @@ tail(unc)&lt;/code&gt;&lt;/pre&gt;
 &lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;The badges ended up giving me some headache during CRAN submission.&lt;a href=&#34;#fnref4&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li id=&#34;fn5&#34;&gt;&lt;p&gt;I didn’t do this after receiving the confirmation email first time (after devtools::release() was completed), and kept wondering why there was no more update coming from CRAN.&lt;a href=&#34;#fnref5&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Categorical variable treatment</title>
-      <link>/post/2018/03/24/categorical-variable-treatment/</link>
-      <pubDate>Sat, 24 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/03/24/categorical-variable-treatment/</guid>
-      <description>
-        &lt;p&gt;In reviewing details of random forest, I came upon several concepts that I thought were both interesting and important enough to be highlighted in a separate post. Mainly for my own reference, but if it helps others, that’d be great too!&lt;/p&gt;
-&lt;div id=&#34;various-categorical-variable-encoding-methods-and-related-concepts&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Various categorical variable encoding methods and related concepts&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Reference cell coding (dummy encoding/one-hot encoding)
-&lt;ul&gt;
-&lt;li&gt;How categorical variables are treated (by default?) in regressions in R&lt;/li&gt;
-&lt;li&gt;Appreciating R’s way of doing things (behind the scence)&lt;/li&gt;
-&lt;li&gt;Turns out same thing as dummy coding!&lt;/li&gt;
-&lt;li&gt;Default method in caret (seems for both character and factor variables)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Label encoding (integer encoding)
-&lt;ul&gt;
-&lt;li&gt;Replace each level with a numeric value&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Links
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://medium.com/data-design/visiting-categorical-features-and-encoding-in-decision-trees-53400fa65931&#34;&gt;Categorical features and encoding in decision trees&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;%5Bhttp://roamanalytics.com/2016/10/28/are-categorical-variables-getting-lost-in-your-random-forests/%5D&#34;&gt;Is one-hot encoding bad?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stats.stackexchange.com/questions/21282/regression-based-for-example-on-days-of-week#21292&#34;&gt;Interpreting linear model output&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stats.idre.ucla.edu/r/modules/coding-for-categorical-variables-in-regression-models/&#34;&gt;UCLA&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stats.stackexchange.com/questions/70699/qualitative-variable-coding-in-regression-leads-to-singularities/70708?utm_medium=organic&amp;amp;utm_source=google_rich_qa&amp;amp;utm_campaign=google_rich_qa&#34;&gt;SE&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stats.stackexchange.com/questions/120030/interpretation-of-betas-when-there-are-multiple-categorical-variables?utm_medium=organic&amp;amp;utm_source=google_rich_qa&amp;amp;utm_campaign=google_rich_qa&#34;&gt;SE&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;when-to-use-label-encoding-vs.dummy-encoding&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;When to use label encoding vs. dummy encoding&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Correlation plot
-&lt;ul&gt;
-&lt;li&gt;Winner: dummy encoding, because unless the categorical variable is ordinal, labeled value doesn’t mean anything.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Regression
-&lt;ul&gt;
-&lt;li&gt;Winner: dummy encoding, because of the same reason as above.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Tree-based models
-&lt;ul&gt;
-&lt;li&gt;Winner: label encoding, because
-&lt;ul&gt;
-&lt;li&gt;Variable importance interpretation&lt;/li&gt;
-&lt;li&gt;Grid search for best mtry (in k-fold cv) might result in different result for mtry&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Conflicts with tidy packages ----------------------------------------------&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## filter(): dplyr, stats
-## lag():    dplyr, stats&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;headers &amp;lt;- c(&amp;quot;age&amp;quot;, &amp;quot;workclass&amp;quot;, &amp;quot;fnlwgt&amp;quot;, &amp;quot;education&amp;quot;, &amp;quot;education_num&amp;quot;, &amp;quot;marital_status&amp;quot;, &amp;quot;occupation&amp;quot;, &amp;quot;relationship&amp;quot;, &amp;quot;race&amp;quot;, &amp;quot;sex&amp;quot;, &amp;quot;capital_gain&amp;quot;, &amp;quot;capital_loss&amp;quot;, &amp;quot;hours_per_week&amp;quot;,  &amp;quot;native_country&amp;quot;, &amp;quot;response&amp;quot;)
-adult &amp;lt;- read_csv(&amp;quot;http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data&amp;quot;, col_names = headers)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Parsed with column specification:
-## cols(
-##   age = col_character(),
-##   workclass = col_character(),
-##   fnlwgt = col_character(),
-##   education = col_character(),
-##   education_num = col_character(),
-##   marital_status = col_character(),
-##   occupation = col_character(),
-##   relationship = col_character(),
-##   race = col_character(),
-##   sex = col_character(),
-##   capital_gain = col_character(),
-##   capital_loss = col_character(),
-##   hours_per_week = col_character(),
-##   native_country = col_character(),
-##   response = col_character()
-## )&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Warning in rbind(names(probs), probs_f): number of columns of result is not
-## a multiple of vector length (arg 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Warning: 231 parsing failures.
-## row # A tibble: 5 x 5 col     row   col   expected    actual expected   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt; actual 1     1  &amp;lt;NA&amp;gt; 15 columns 1 columns file 2     2  &amp;lt;NA&amp;gt; 15 columns 1 columns row 3     3  &amp;lt;NA&amp;gt; 15 columns 1 columns col 4     4  &amp;lt;NA&amp;gt; 15 columns 1 columns expected 5     5  &amp;lt;NA&amp;gt; 15 columns 1 columns actual # ... with 1 more variables: file &amp;lt;chr&amp;gt;
-## ... ................. ... .................................. ........ .................................. ...... .................................. .... .................................. ... .................................. ... .................................. ........ .................................. ...... .......................................
-## See problems(...) for more details.&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#head(adult)
-
-vars &amp;lt;- c(&amp;quot;age&amp;quot;, &amp;quot;education&amp;quot;, &amp;quot;response&amp;quot;)
-df &amp;lt;- adult[, vars]
-head(df)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 3
-##                                                           age
-##                                                         &amp;lt;chr&amp;gt;
-## 1                                             &amp;lt;!doctype html&amp;gt;
-## 2                                        &amp;quot;&amp;lt;html lang=\&amp;quot;en\&amp;quot;&amp;gt;&amp;quot;
-## 3                                                      &amp;lt;head&amp;gt;
-## 4                                  &amp;quot;&amp;lt;meta charset=\&amp;quot;utf-8\&amp;quot;&amp;gt;&amp;quot;
-## 5 &amp;quot;&amp;lt;meta http-equiv=\&amp;quot;X-UA-Compatible\&amp;quot; content=\&amp;quot;IE=edge\&amp;quot;&amp;gt;&amp;quot;
-## 6      &amp;quot;&amp;lt;meta name=\&amp;quot;viewport\&amp;quot; content=\&amp;quot;width=device-width&amp;quot;
-## # ... with 2 more variables: education &amp;lt;chr&amp;gt;, response &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;% group_by(education, response) %&amp;gt;% summarize(n = n())&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 3
-## # Groups:   education [?]
-##   education response     n
-##       &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
-## 1      &amp;lt;NA&amp;gt;     &amp;lt;NA&amp;gt;   231&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
         

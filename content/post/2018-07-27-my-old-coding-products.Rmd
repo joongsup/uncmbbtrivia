@@ -1,0 +1,34 @@
+---
+title: My old coding products
+author: Jay
+date: '2018-07-27'
+slug: my-old-coding-products
+categories: []
+tags: []
+draft: false
+---
+
+Lately I've been thinking about why I care much about everything R and sharing the joy of using R, which deserves its own post. Much of it has to do with how I did and did not get a proper training in coding suitable for data analysis in the past, but as I looked back on my personal coding history, I came across hundreds of code files that I wrote in the past^[Fortunately, I've kept those files in a portable device, which I'm not usually good at doing.]. Suffice to say, they were pretty important files in my education history, but I have totally forgotten about them until now. 
+
+They are .m files, meant to be used in Matlab. As I started opening and reading a couple of those files, I had mixed feelings, ranging from agony ("omg, this code was from that stressful point in time") and embarrassment ("omg, look at the logic and style I was using there"), to delight ("wow I'm defining several functions to be used in main script!") and motivation ("Yup, I was this bad, and that's exactly why I care about education in coding (especially R) for data analysis!").  
+
+It was quite refreshing to see how I used to code in Matlab, which had some similarities with R, hence giving me some perspectives on how my data analysis coding skills might have changed. Here are some observations of the past, in conjunction with present whenever applicable: 
+
+* Since the purpose of the code files ("program") was to show my particular engineering method works as intended, the codes were relatively simple having simluated data as its input data. There was no cleaning/exploring step, whereas now, where almost always, there's no clean data, thus always having to write cleaning/exploring scripts, which is usually done in interactive mode.
+
+* Since no cleaning/exploring was needed, my codes seem to be run in batch, not interactively. This is particularly refreshing to me, because I've been trying to do more in batch mode at work nowadays, and seems like I was already doing that even back then! But again, that's because there was no need for heavy use of interactive exploration for simulated data. Also I'm sure I did quite extensive typing in interactive mode back then just to make sure my commands work.
+
+* There was one main script that consists of many lines of codes, in which I used multiple for loops for various combinations of "parameters". Now that I know a little bit about functional programming and bash programming, I can't help but wonder how much the codes could have been rewritten (refactored). 
+
+* I defined several functions, which are called in the main script^[Interestingly, it seems I didn't have to "source" the files to use the functions. Matlab must have known where to look for the function names.]. What was interesting though was that each function was defined and stored in its own file! At first I wondered why I had saved a one liner function in its own file, but seems like that was how it needed to be done back then.^[E.g., see [here.](http://www.mathworks.com/help/matlab/matlab_prog/create-functions-in-files.html)] 
+
+* I had one README type file that explains what each file is in that particular "program" (directory). I'm actually quite impressed by this file, because even though the file contains less than 20 lines of texts, it showed I tried to document something for potential users of the codes (probably was for future me!). 
+
+* For each function, on the otherhand, I didn't do a good job of describing what each input is supposed to be and do, let alone output. This is somewhat different for me nowadays, especially when I'm working on an R package. Documenting is actually quite enjoyable there, but the problem still occurs when I'm coding for data analysis. There is this tension between keeping scripts vs. writing codes and how much comments to provide, etc.  
+
+* In some cases, there were hundreds of code files that seemingly differ only by certain part of their file names, indicating I could have benefited from version control and/or better parameterized/modular codes. Again, this seems to be an on-going struggle as to how to write better parameterized/modular codes. 
+
+* I didn't really have a detailed directory structure. Pretty much everything was under one main "project" directory, and it was hard to distinguish which files were for which setting under the project. This is still relevant, because sometimes I find it hard to decide where to put each "project": on its own, or under some existing projects? 
+
+It was quite a pleasant surprise running into my past code prouducts. I don't think I'll ever code in Matlab again, but it was still quite refreshing to learn how I used to do it, especially from the current point of view. I wonder how I'd feel about my current coding in say next 5-10 years!?
+
