@@ -67,7 +67,7 @@ unc %>% filter(Season >= max(as.numeric(Season)) - 2) %>%
 
 So it seems my count and their count matches. Then I was curious if this last 3 years have been the best there is, in terms of fewest losses, and for that matter, most wins, and best winning percentage at home. In below charts, season is the starting season of the 3 years. E.g., for season = 2016, value = 4 means, rolling 3 years loss count for 2016, 2017, and 2018 seasons. Championship seasons are represented with larger dots, and the latest 3 year statistics (wins, losses, and winning percentages) with coloured horizontal lines. 
 
-```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+```{r, echo = FALSE, fig.width = 12}
 n <- 3
 u <- season %>% filter(School == "UNC") %>% 
                 season_by_where("H") %>%
@@ -132,7 +132,7 @@ unc %>% filter(Season %in% c("1977", "1978", "1979", "1980")) %>%
 
 Nothing stands out at me right away about Carolina's 1977 - 1980 teams^[Just a casual fan here :)], let alone 1977 Wake Forest and 1980 Maryland, but it must have been fantastic home court winning streaks for the Tar Heels. Below shows the 3-yr rolling win counts. 
 
-```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+```{r, echo = FALSE, fig.width = 12}
 n <- 3
 uint <- u %>% filter(type == "wins", yr == n) %>%
               filter(Season == "2016") %>% 
@@ -167,7 +167,7 @@ p_u + p_d
 
 Sure, 1977 to 1979 seasons show great home winning trends at the time (e.g., 35 home wins during 3 seasons starting from 1978 season was the most in UNC history^[Since 1949-1950 season to be exact.] at the time), but the number of games played are somewhat different year after year, so let's look at the winning percentage instead. 
 
-```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+```{r, echo = FALSE, fig.width = 12}
 n <- 3
 uint <- u %>% filter(type == "pct", yr == n) %>%
               filter(Season == "2016") %>% 
@@ -204,7 +204,7 @@ Yet again, 3 years following 1977 and 1978 seasons showed the highest rolling 3-
 
 Now that I've looked at a couple of statistics for rolling 3 years, I became curious which freshman class has the bragging rights in terms of fewest losses, most wins, and highest winning percentage over their college carrers at home court. This should be pretty straightforward since a typical college career lasts for 4 years, which means all I have to change is the number of rolling years from 3 to 4. Below charts show the rolling 4-yr losses, wins, and win percentages, respectively. 
 
-```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+```{r, echo = FALSE, fig.width = 12}
 
 n <- 4
 uint <- u %>% filter(type == "losses", yr == n) %>%
@@ -238,7 +238,7 @@ p_d <- d %>% filter(type == "losses", yr == n) %>%
 p_u + p_d
 ```
 
-```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+```{r, echo = FALSE, fig.width = 12}
 uint <- u %>% filter(type == "wins", yr == n) %>%
               filter(Season == "2015") %>% 
               select(value)
@@ -270,7 +270,7 @@ p_d <- d %>% filter(type == "wins", yr == n) %>%
 p_u + p_d
 ```
 
-```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+```{r, echo = FALSE, fig.width = 12}
 uint <- u %>% filter(type == "pct", yr == n) %>%
               filter(Season == "2015") %>% 
               select(value)
