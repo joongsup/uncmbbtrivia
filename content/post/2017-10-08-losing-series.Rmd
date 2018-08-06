@@ -3,7 +3,7 @@ title: Losing Series
 author: uncmbbtrivia
 date: '2017-10-08'
 slug: losing-series
-categories: []
+categories: [UNC]
 tags: []
 draft: false
 ---
@@ -32,7 +32,7 @@ get_series_history <- function(records, min_games){
 
   opponents <- records %>% 
                     count(Opponent_School, sort = TRUE) %>% 
-                    add_percent(var = n)
+                    add_percent(var = "n")
   
   schools <- opponents %>% filter(n >= min_games)
 

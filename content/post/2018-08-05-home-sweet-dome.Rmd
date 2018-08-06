@@ -2,8 +2,10 @@
 title: Home sweet dome
 author: Jay
 date: '2018-08-05'
+categories:
+  - UNC
 slug: home-sweet-dome
-draft: false
+draft: no
 ---
 
 I ran into a [post](https://www.tarheelblog.com/2018/8/4/17644436/unc-basketball-tar-heels-dean-dome-advantage) on the Tar Heel Blog (THB) that talks about the Tar Heel's home court advantage in recent years. Since it's been a while since I wrote anything about UNCMBB, I thought it'd be a great topic to write on here too, looking at how great the teams have played on home court^[Which, by the way, is deservingly going to be named after Coach Roy Williams.] in recent years. And maybe I'll look at how Duke has played on their home court too during the same time period just because. 

@@ -3,7 +3,7 @@ title: Average points difference through first 10 games
 author: uncmbbtrivia
 date: '2017-12-09'
 slug: average-points-difference-through-first-10-games
-categories: []
+categories: [UNC]
 tags: []
 draft: false
 ---

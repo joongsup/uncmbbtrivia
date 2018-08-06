@@ -3,7 +3,7 @@ title: Season’s first game
 author: uncmbbtrivia
 date: '2017-10-29'
 slug: season-s-first-game
-categories: []
+categories: [UNC]
 tags: []
 draft: false
 ---
@@ -29,7 +29,7 @@ firsts <- unc %>% group_by(Season) %>%
 
 firsts %>% ungroup() %>% 
         count(Result) %>% 
-        add_percent(var = n) %>%
+        add_percent(var = "n") %>%
         kable("html") %>%
         kable_styling()
 

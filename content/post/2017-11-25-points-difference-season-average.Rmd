@@ -3,7 +3,7 @@ title: Average points difference through first N games
 author: uncmbbtrivia
 date: '2017-11-25'
 slug: points-difference-season-average
-categories: []
+categories: [UNC]
 tags: []
 draft: false
 ---
