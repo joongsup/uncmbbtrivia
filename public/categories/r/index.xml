@@ -1,25 +1,111 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R on UNC MBB TRIVIA</title>
+    <title>R on Jay&#39;s Notes</title>
     <link>/categories/r/</link>
-    <description>Recent content in R on UNC MBB TRIVIA</description>
+    <description>Recent content in R on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 27 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <title>My old coding products</title>
+      <link>/post/2018/07/27/my-old-coding-products/</link>
+      <pubDate>Fri, 27 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+      <guid>/post/2018/07/27/my-old-coding-products/</guid>
+      <description>Lately I’ve been thinking about why I care much about everything R and sharing the joy of using R, which deserves its own post. Much of it has to do with how I did and did not get a proper training in coding suitable for data analysis in the past, but as I looked back on my personal coding history, I came across hundreds of code files that I wrote in the past1.</description>
+    </item>
+    
+    <item>
+      <title>External presentation goal</title>
+      <link>/post/2018/07/22/external-presentation-goal/</link>
+      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/07/22/external-presentation-goal/</guid>
+      <description>Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year1, I have a similar personal goal that I started last year. While I’d love to write a book a year, it’s too ambitious a goal for me (and many people in general, I’d think) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker.</description>
+    </item>
+    
+    <item>
+      <title>Insert images in blogdown post, static directory, and xaringan</title>
+      <link>/post/2018/05/17/insert-images-in-blogdown-post/</link>
+      <pubDate>Thu, 17 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/17/insert-images-in-blogdown-post/</guid>
+      <description>While working on yet another separate blog post, I needed to insert images in the post. I knew from rmarkdown syntax that I can use: ![image name](path to file), but then I didn’t know where the image files need to be.
+It turns out I can have the image files under the static/ directory, everything under which will be copied to public directory.
+Moreover, static/ directory can also be used to build Rmd documents (e.</description>
+    </item>
+    
+    <item>
+      <title>Vim mode in RStudio</title>
+      <link>/post/2018/05/11/vim-mode-in-rstudio/</link>
+      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/11/vim-mode-in-rstudio/</guid>
+      <description>I heard about Vim mode in RStudio but haven’t really given it a try. While working on a new blog post (not this one), I decided to give it a try, as I had to keep switching between non-Vim mode on my local Mac and Vim mode in my remote server (Linux). I’m not a Vim expert by any measure, but for some reason, I like working in Vim.
+So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started using Vim in RStudio.</description>
+    </item>
+    
+    <item>
+      <title>rJava and Mac OS</title>
+      <link>/post/2018/05/03/rjava-and-mac-os/</link>
+      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/05/03/rjava-and-mac-os/</guid>
+      <description>For the past couple of days, I needed to install rJava package on my Mac, and boy did I know how complicated the process would turn out to be! I vaguely knew about the mess that is java and Mac OS, but I didn’t care that much until now, because (1) most of my development work has been done in my company environment (Linux) which I ssh into and is pretty well managed by folks more qualified to do so than me and (2) for my personal work (i.</description>
+    </item>
+    
+    <item>
+      <title>Package uncmbb updated!</title>
+      <link>/post/2018/04/17/package-update/</link>
+      <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/04/17/package-update/</guid>
+      <description>Ever since UNCMBB team’s season ended about a month ago, I’ve been meaning to update the data in uncmbb package, and I finally got to it. Obviously the new version includes 2017-2018 season match results for both UNC and Duke MBB teams, but it also includes new features in wrapper functions that are useful when working with uncmbb package.
+I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN for the first time last year, and this time I remembered to do so and take some screenshots too.</description>
+    </item>
+    
+    <item>
+      <title>RSS feed and rbind github repo</title>
+      <link>/post/2018/02/06/rss-feed/</link>
+      <pubDate>Tue, 06 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/02/06/rss-feed/</guid>
+      <description>Maëlle Salmon reminded me to submit posts/blog RSS feed to R weekly on my tweet, and I set out to do just that. I didn’t have much understanding as to how to though, and googling things like “how to generate rss feed in xmin blogdown” didn’t really turn up anything useful for new bloggers like me. Maybe it’s a quite straighforward knowledge that my full blog url is not a valid RSS feed address, but I got to know that only after checking my blog url from the R weekly submit page.</description>
+    </item>
+    
+    <item>
+      <title>Run system commands or shell scripts from an interactive R session</title>
+      <link>/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/</link>
+      <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/</guid>
+      <description>When you are working in an interactive R shell and need to run some system commands, you can use a base R function system1.
+# toy example system(&amp;quot;ls&amp;quot;) The system funtion can also be used to run custom shell scripts, like so,
+system(&amp;quot;custom_script.sh arg1 arg2&amp;quot;) where custom_script.sh is a shell script that does some custom operations with arg1 and arg2. For example, let’s say I want to extract all the lines in a source file that contains the word “NOTE”.</description>
+    </item>
+    
+    <item>
+      <title>New Hugo theme</title>
+      <link>/post/2018/02/03/new-hugo-theme/</link>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/02/03/new-hugo-theme/</guid>
+      <description>Last time, I wrote about a quiz from work, including the code solution. Unfortunately, I didn’t really like how the code block was printed in the minimal theme. I’m pretty sure there’s a quick and/or easy fix, but since I’m starting this blogging thing, I decided to try some other themes while at it.
+It took some googling/reading/tweaking, but I ended up with Yihui’s XMin theme, and overall I’m satisfied with what I ended up with at the moment.</description>
+    </item>
+    
+    <item>
+      <title>Quiz from work</title>
+      <link>/post/2018/02/01/quiz-from-work/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/02/01/quiz-from-work/</guid>
+      <description>There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1) if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar.</description>
     </item>
     
   </channel>

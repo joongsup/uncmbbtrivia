@@ -41,9 +41,14 @@ rssLimit = 10
     weight = 3
 
 [[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 4
+
+[[menu.main]]
     name = "Twitter"
     url = "https://twitter.com/uncmbbtrivia"
-    weght = 4
+    weght = 5
 
 #[[menu.main]]
 #    name = "Feed"

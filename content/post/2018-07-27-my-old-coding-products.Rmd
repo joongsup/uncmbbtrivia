@@ -3,8 +3,8 @@ title: My old coding products
 author: Jay
 date: '2018-07-27'
 slug: my-old-coding-products
-categories: []
-tags: []
+categories: [R]
+tags: [workflow, coding, matlab]
 draft: false
 ---
 

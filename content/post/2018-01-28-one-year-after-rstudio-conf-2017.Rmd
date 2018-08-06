@@ -3,6 +3,8 @@ title: One year after rstudio::conf 2017
 author: Jay
 date: '2018-01-29'
 slug: one-year-after-rstudio-conf-2017
+categories: [R]
+tags: [rstudio, conference]
 draft: false
 ---
 

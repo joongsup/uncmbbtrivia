@@ -3,6 +3,8 @@ title: Run system commands or shell scripts from an interactive R session
 author: Jay
 date: '2018-02-05'
 slug: run-system-commands-or-shell-sripts-from-an-interactive-r-session
+categories: [R]
+tags: [system, shell, workflow]
 draft: false
 ---
 

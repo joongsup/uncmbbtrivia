@@ -3,8 +3,8 @@ title: RSS feed and rbind github repo
 author: Jay
 date: '2018-02-06'
 slug: rss-feed
-categories: []
-tags: []
+categories: [R]
+tags: [blog, rss, feed, r weekly]
 draft: false
 ---
 

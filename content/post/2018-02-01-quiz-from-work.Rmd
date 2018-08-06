@@ -3,8 +3,8 @@ title: Quiz from work
 author: Jay
 date: '2018-02-01'
 slug: quiz-from-work
-categories: []
-tags: []
+categories: [R]
+tags: [quiz]
 draft: false
 ---
 

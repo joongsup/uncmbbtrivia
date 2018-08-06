@@ -3,8 +3,8 @@ title: Vim mode in RStudio
 author: Jay
 date: '2018-05-11'
 slug: vim-mode-in-rstudio
-categories: []
-tags: []
+categories: [R]
+tags: [rstudio, vim]
 draft: false
 ---
 
