@@ -21,6 +21,16 @@
     </item>
     
     <item>
+      <title>Comments on data analysis workflow</title>
+      <link>/post/2018/07/22/comments-on-data-analysis-workflow/</link>
+      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/07/22/comments-on-data-analysis-workflow/</guid>
+      <description>Introduction There are several benefits of establishing a good and routine data analysis workflow that you follow on a daily basis. At least two benefits come to mind immediately.
+Having a good data analysis workflow is beneficial and needed to do reproducible research/work (RR). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break.</description>
+    </item>
+    
+    <item>
       <title>External presentation goal</title>
       <link>/post/2018/07/22/external-presentation-goal/</link>
       <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
@@ -97,15 +107,6 @@ system(&amp;quot;custom_script.sh arg1 arg2&amp;quot;) where custom_script.sh is
       <guid>/post/2018/02/03/new-hugo-theme/</guid>
       <description>Last time, I wrote about a quiz from work, including the code solution. Unfortunately, I didn’t really like how the code block was printed in the minimal theme. I’m pretty sure there’s a quick and/or easy fix, but since I’m starting this blogging thing, I decided to try some other themes while at it.
 It took some googling/reading/tweaking, but I ended up with Yihui’s XMin theme, and overall I’m satisfied with what I ended up with at the moment.</description>
-    </item>
-    
-    <item>
-      <title>Quiz from work</title>
-      <link>/post/2018/02/01/quiz-from-work/</link>
-      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/02/01/quiz-from-work/</guid>
-      <description>There are 25 black balls and 25 white balls in a jar. We take two balls at random from the jar, and the one of the three: (1) if two black balls are drawn, put them back in to the jar; (2) if two white balls are drawn, throw them away; (3) if mixed, put a white ball back in, and throw away the black ball. We win this game when a white ball is the only ball remaining in the jar.</description>
     </item>
     
   </channel>
