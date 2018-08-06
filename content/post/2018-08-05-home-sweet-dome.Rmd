@@ -1,0 +1,303 @@
+---
+title: Home sweet dome
+author: Jay
+date: '2018-08-05'
+slug: home-sweet-dome
+draft: false
+---
+
+I ran into a [post](https://www.tarheelblog.com/2018/8/4/17644436/unc-basketball-tar-heels-dean-dome-advantage) on the Tar Heel Blog (THB) that talks about the Tar Heel's home court advantage in recent years. Since it's been a while since I wrote anything about UNCMBB, I thought it'd be a great topic to write on here too, looking at how great the teams have played on home court^[Which, by the way, is deservingly going to be named after Coach Roy Williams.] in recent years. And maybe I'll look at how Duke has played on their home court too during the same time period just because. 
+
+```{r, echo = FALSE}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(jutilr))
+suppressPackageStartupMessages(library(patchwork)) #dev
+
+options(warn = -1)
+
+games <- rbind(unc %>% mutate(School = "UNC"), duke %>% mutate(School = "Duke"))
+season <- games %>% 
+            group_by(School, Season, Where) %>% 
+            summarize(wins = sum(Result == "W"), losses = sum(Result == "L"))
+  
+season_by_where <- function(df, where){
+  df <- df %>% filter(Where == where)
+  
+  df <- df %>% ungroup() %>%
+                mutate(wins2 = lead(wins, 1), losses2 = lead(losses, 1)) %>%
+                mutate(wins3 = lead(wins, 2), losses3 = lead(losses, 2)) %>%
+                mutate(wins4 = lead(wins, 3), losses4 = lead(losses, 3)) %>%
+                mutate(wins_1 = wins, wins_2 = wins + wins2, wins_3 = wins + wins2 + wins3, wins_4 = wins + wins2 + wins3 + wins4, losses_1 = losses, losses_2 = losses + losses2, losses_3 = losses + losses2 + losses3, losses_4 = losses + losses2 + losses3 + losses4) %>%
+                select(-wins, -wins2, -wins3, -wins4, -losses, -losses2, -losses3, -losses4)
+ 
+  df <- df %>% mutate(pct_1 = round(wins_1/(wins_1 + losses_1), 4), pct_2 = round(wins_2/(wins_2 + losses_2), 4), pct_3 = round(wins_3/(wins_3 + losses_3), 4), pct_4 = round(wins_4/(wins_4 + losses_4), 4)) 
+
+  df
+  
+  }
+
+```
+
+THB counted the wins and losses in the past 3 years in particular, and that gave me a starting point. 
+
+```{r, echo = FALSE}
+
+unc %>% filter(Season >= max(as.numeric(Season)) - 2) %>%
+          group_by(Season, Where) %>%
+          summarize(wins = sum(Result == "W"), losses = sum(Result == "L")) %>%
+#          mutate(pct_wins = round(wins/(wins + losses), 4)) %>%
+          filter(Where == "H") %>%
+          kable("html") %>% #, caption = "Carolina's last 3 yrs at home") %>%
+          kable_styling() 
+
+
+#duke %>% filter(Season >= max(as.numeric(Season)) - 2) %>%
+#          group_by(Season, Where) %>%
+#          summarize(wins = sum(Result == "W"), losses = sum(Result == "L")) %>%
+##          mutate(pct_wins = round(wins/(wins + losses), 4)) %>%
+#          filter(Where == "H") %>%
+#          kable("html", caption = "Duke's last 3 yrs at home") %>%
+#          kable_styling()
+```
+
+So it seems my count and their count matches. Then I was curious if this last 3 years have been the best there is, in terms of fewest losses, and for that matter, most wins, and best winning percentage at home. In below charts, season is the starting season of the 3 years. E.g., for season = 2016, value = 4 means, rolling 3 years loss count for 2016, 2017, and 2018 seasons. Championship seasons are represented with larger dots, and the latest 3 year statistics (wins, losses, and winning percentages) with coloured horizontal lines. 
+
+```{r, echo = FALSE, fig.width = 12, fig.heigth = 8}
+n <- 3
+u <- season %>% filter(School == "UNC") %>% 
+                season_by_where("H") %>%
+                select(-School)
+
+u <- u %>% gather(type, value, -Season, -Where) %>%
+            separate(type, c("type", "yr"))
+u <- u %>% mutate(champ = Season %in% mbb_champ_season(unc)$Season)
+
+
+uint <- u %>% filter(type == "losses", yr == n) %>%
+              filter(Season == "2016") %>% 
+              select(value)
+
+p_u <- u %>% filter(type == "losses", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = uint$value), colour = "#99badd") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 20, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr loss count for Carolina"), y = "Losses")
+
+d <- season %>% filter(School == "Duke") %>% 
+                season_by_where("H") %>%
+                select(-School)
+d <- d %>% gather(type, value, -Season, -Where) %>%
+            separate(type, c("type", "yr"))
+d <- d %>% mutate(champ = Season %in% mbb_champ_season(duke)$Season)
+
+dint <- d %>% filter(type == "losses", yr == n) %>%
+              filter(Season == "2016") %>% 
+              select(value)
+
+p_d <- d %>% filter(type == "losses", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = dint$value), colour = "#235F9C") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 20, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr loss count for Duke"), y = "Losses")
+
+p_u + p_d
+
+```
+  
+Although this past 3 years loss count (4) is a great feat, it's not the best there is, it turns out, and there's been 18 instances with fewer than 4 loss count. Three early championship seasons (1957, 1982, and 1983) stand out with 3 or fewer losses each (again, as the starting season of the next 3 seasons), with the next two championship seasons (2005 and 2009) not so superb loss counts at 6 apiece^[Most recent championship season (2017) does not have 3-yr rolling counts yet.].
+
+The fewest 3-yr rolling home loss counts came in two separate instances, with a single lose apiece: 1977/1978/1979 seasons and 1978/1979/1980 seasons. Let's see what those losses were. 
+
+```{r, echo = FALSE}
+
+unc %>% filter(Season %in% c("1977", "1978", "1979", "1980")) %>%
+        filter(Where == "H", Result == "L") %>%
+        kable("html") %>%
+        kable_styling()
+
+```
+
+Nothing stands out at me right away about Carolina's 1977 - 1980 teams^[Just a casual fan here :)], let alone 1977 Wake Forest and 1980 Maryland, but it must have been fantastic home court winning streaks for the Tar Heels. Below shows the 3-yr rolling win counts. 
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+n <- 3
+uint <- u %>% filter(type == "wins", yr == n) %>%
+              filter(Season == "2016") %>% 
+              select(value)
+
+p_u <- u %>% filter(type == "wins", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = uint$value), colour = "#99badd") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 80, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr win count for Carolina"), y = "Wins")
+
+dint <- d %>% filter(type == "wins", yr == n) %>%
+              filter(Season == "2016") %>% 
+              select(value)
+
+p_d <- d %>% filter(type == "wins", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = dint$value), colour = "#235F9C") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 80, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr win count for Duke"), y = "Wins")
+
+p_u + p_d
+```
+
+Sure, 1977 to 1979 seasons show great home winning trends at the time (e.g., 35 home wins during 3 seasons starting from 1978 season was the most in UNC history^[Since 1949-1950 season to be exact.] at the time), but the number of games played are somewhat different year after year, so let's look at the winning percentage instead. 
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+n <- 3
+uint <- u %>% filter(type == "pct", yr == n) %>%
+              filter(Season == "2016") %>% 
+              select(value)
+
+p_u <- u %>% filter(type == "pct", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = uint$value), colour = "#99badd") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 1, 0.02)) +
+      labs(title = paste0("Rolling ", n, "-yr win percentage for Carolina"), y = "Win%")
+
+dint <- d %>% filter(type == "pct", yr == n) %>%
+              filter(Season == "2016") %>% 
+              select(value)
+
+p_d <- d %>% filter(type == "pct", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = dint$value), colour = "#235F9C") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 1, 0.02)) +
+      labs(title = paste0("Rolling ", n, "-yr win percentage for Duke"), y = "Win%")
+
+p_u + p_d
+```
+
+Yet again, 3 years following 1977 and 1978 seasons showed the highest rolling 3-yr home winning percentages, so it must have been really fun watching Carolina playing and winning at home those days. I feel like I have some homework to do, getting to know them a little better. 
+
+Now that I've looked at a couple of statistics for rolling 3 years, I became curious which freshman class has the bragging rights in terms of fewest losses, most wins, and highest winning percentage over their college carrers at home court. This should be pretty straightforward since a typical college career lasts for 4 years, which means all I have to change is the number of rolling years from 3 to 4. Below charts show the rolling 4-yr losses, wins, and win percentages, respectively. 
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+
+n <- 4
+uint <- u %>% filter(type == "losses", yr == n) %>%
+              filter(Season == "2015") %>% 
+              select(value)
+
+p_u <- u %>% filter(type == "losses", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = uint$value), colour = "#99badd") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 40, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr losses for Carolina"), y = "Losses")
+
+dint <- d %>% filter(type == "losses", yr == n) %>%
+              filter(Season == "2015") %>% 
+              select(value)
+
+p_d <- d %>% filter(type == "losses", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = dint$value), colour = "#235F9C") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 40, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr losses for Duke"), y = "Losses")
+
+p_u + p_d
+```
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+uint <- u %>% filter(type == "wins", yr == n) %>%
+              filter(Season == "2015") %>% 
+              select(value)
+
+p_u <- u %>% filter(type == "wins", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = uint$value), colour = "#99badd") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 80, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr wins for Carolina"), y = "Wins")
+
+dint <- u %>% filter(type == "wins", yr == n) %>%
+              filter(Season == "2015") %>% 
+              select(value)
+
+p_d <- d %>% filter(type == "wins", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = dint$value), colour = "#235F9C") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 80, 2)) +
+      labs(title = paste0("Rolling ", n, "-yr wins for Duke"), y = "Wins")
+
+p_u + p_d
+```
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+uint <- u %>% filter(type == "pct", yr == n) %>%
+              filter(Season == "2015") %>% 
+              select(value)
+
+p_u <- u %>% filter(type == "pct", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = uint$value), colour = "#99badd") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 1, 0.02)) +
+      labs(title = paste0("Rolling ", n, "-yr win percentage for Carolina"), y = "Win%")
+
+dint <- d %>% filter(type == "pct", yr == n) %>%
+              filter(Season == "2015") %>% 
+              select(value)
+
+p_d <- d %>% filter(type == "pct", yr == n) %>%
+      ggplot(aes(x = Season, y = value)) + 
+      geom_point(aes(size = champ)) + 
+      geom_line(group = 1) +
+      geom_hline(aes(yintercept = dint$value), colour = "#235F9C") +
+      theme_bw() +
+      theme(axis.text.x  = element_text(angle = 90, vjust = 0.5), legend.position = "none") +
+      scale_y_continuous(breaks = seq(0, 1, 0.02)) +
+      labs(title = paste0("Rolling ", n, "-yr win percentage for Duke"), y = "Win%")
+
+p_u + p_d
+```
+
+For Carolina, it seems the bragging rights go to the freshman classes in the late 70s whereas for Duke, they could go to any of the teams in the late 80s, early and late 2000s. I had expected  Psycho-T's 2005 freshman class to stand out in any of the three numbers, but to my surprise the class wasn't the top although they were close especially in terms of rolling 4-yr wins. That got me thinking, maybe they did much better in away games (after all, that class never lost to Duke on their home court during their college careers), and that's what I'll be looking at next time. 

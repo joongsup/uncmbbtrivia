@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Aug 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Home sweet dome</title>
+      <link>/post/2018/08/05/home-sweet-dome/</link>
+      <pubDate>Sun, 05 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/08/05/home-sweet-dome/</guid>
+      <description>I ran into a post on the Tar Heel Blog (THB) that talks about the Tar Heel’s home court advantage in recent years. Since it’s been a while since I wrote anything about UNCMBB, I thought it’d be a great topic to write on here too, looking at how great the teams have played on home court1 in recent years. And maybe I’ll look at how Duke has played on their home court too during the same time period just because.</description>
+    </item>
     
     <item>
       <title>My old coding products</title>
@@ -94,16 +103,6 @@ So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started 
       
       <guid>/post/2018/04/20/use-of-quos/</guid>
       <description>suppressPackageStartupMessages(library(uncmbb)) suppressPackageStartupMessages(library(tidyverse)) suppressPackageStartupMessages(library(jutilr)) head(unc)  ## Season Game_Date Game_Day Type Where Opponent_School Result Tm Opp ## 1 1950 1949-12-01 Thu REG H Elon W 57 39 ## 2 1950 1949-12-03 Sat REG A Richmond W 58 50 ## 3 1950 1949-12-05 Mon REG A Virginia Tech L 48 62 ## 4 1950 1949-12-07 Wed REG A Lenoir-Rhyne L 78 79 ## 5 1950 1949-12-09 Fri REG H George Washington L 44 54 ## 6 1950 1949-12-28 Wed REG N West Virginia L 50 58 ## OT ## 1 &amp;lt;NA&amp;gt; ## 2 &amp;lt;NA&amp;gt; ## 3 &amp;lt;NA&amp;gt; ## 4 OT ## 5 &amp;lt;NA&amp;gt; ## 6 &amp;lt;NA&amp;gt; plot1 &amp;lt;- function(lst, x, y){ x &amp;lt;- enquo(x) y &amp;lt;- enquo(y) x_name &amp;lt;- quo_name(x) y_name &amp;lt;- quo_name(y) lst %&amp;gt;% map(function(df) df %&amp;gt;% ggplot(aes_string(x = paste0(&amp;quot;reorder(&amp;quot;, x_name, &amp;quot;, -&amp;quot;, y_name, &amp;quot;)&amp;quot;), y = y_name)) + geom_bar(stat = &amp;quot;identity&amp;quot;) + geom_text(aes(label = n), vjust = -0.</description>
-    </item>
-    
-    <item>
-      <title>Package uncmbb updated!</title>
-      <link>/post/2018/04/17/package-update/</link>
-      <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/04/17/package-update/</guid>
-      <description>Ever since UNCMBB team’s season ended about a month ago, I’ve been meaning to update the data in uncmbb package, and I finally got to it. Obviously the new version includes 2017-2018 season match results for both UNC and Duke MBB teams, but it also includes new features in wrapper functions that are useful when working with uncmbb package.
-I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN for the first time last year, and this time I remembered to do so and take some screenshots too.</description>
     </item>
     
   </channel>
