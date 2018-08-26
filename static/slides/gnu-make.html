@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GNU Make for Workflow Manager</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Jay Lee" />
+    <meta name="date" content="2018-08-19" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# GNU Make for Workflow Manager
+### Jay Lee
+### 2018-08-19
+
+---
+
+
+
+
+# GNU Make
+
+&gt; GNU Make is a tool which controls the generation of executables and **other non-source files** of a program from the program's source files.
+
+- Build manager
+
+- Data science workflow/pipeline manager
+
+---
+
+# Example Scenario
+
+1. Generate ml train mastertable in hive 
+
+2. Train a ml model and calculate (new) scores using the table from #1 in pyspark (and upload new scores to hive)
+
+3. Generate current mastertable (old score and results) in hive
+
+4. Join tables from #2 and #3 in hive
+
+5. Compare performance for both types of scores using table in #4 in pyspark
+
+---
+
+# Example Scenario
+
+
+.pull-left[
+![workflow](../img/makefile_workflow.png)
+]
+
+.pull-right[
+- Overall workflow
+
+- Each step has one or more scripts to run
+
+- Step 2 depends on step 1
+
+- Step 3 doesn't depend on steps 1 and 2
+
+- Step 4 depends on steps 1, 2, and 3
+
+- Step 5 depends on steps 1, 2, 3, and 4
+
+- make -f Makefile.train will run steps 1, 2, 3, 4, and 5
+]---
+
+# Example Workflows
+
+.pull-left[
+![workflow ex1](../img/makefile_ex_1.png)
+]
+
+.pull-right[
+- Case when source table A needs to be udpated and new model needs to be trained on it
+
+- make -f Makefile.train will run steps 1, 2, 4, and 5
+
+]
+
+---
+
+# Example Workflows
+
+.pull-left[
+![workflow ex2](../img/makefile_ex_2.png)
+]
+
+.pull-right[
+
+- Case when new model needs to be trained (and hence table B needs to be updated)
+
+- make -f Makefile.train will run steps 2, 4, and 5
+
+]
+---
+
+# Example Workflows
+.pull-left[
+![workflow ex3](../img/makefile_ex_3.png)
+]
+
+.pull-right[
+
+- Case when only table C needs to be updated
+
+- make -f Makefile.train will run steps 3, 4, and 5
+
+]
+
+---
+
+# Example Documentation
+
+```bash
+$ make -f Makefile.train help
+ 1_gen_ml_train_mastertable_latest: generate/refresh ml_train_mt_latest table
+ X_audit_data: need to check for quality and clean (NEED TO ADD)
+ 2_train_model: train ml model using refreshed ml_mt_latest table from above
+ 3_create_rb_scores: create join of production (old) mastertable, scores, and sales results. 
+ 4_join_old_and_new: join old and new scores tables
+ 5_compare_scores: rule-based score vs. ml-based score by creating lift tables
+```
+
+---
+
+# Example Dryrun
+
+
+```bash
+
+$ make -nf Makefile.train 
+hive --hiveconf mt_latest=sandbox142.jl_ihx_ml_train_mastertable_latest \
+	     -f hql/jl_ihx_ml_train_mastertable_latest.hql &gt; logs/1_gen_train_mastertable_latest.log 2&gt;&amp;1 
+bin/spark_submit_train.sh &gt; logs/2_train_model.log
+hive --hiveconf analy_mt=sandbox142.jl_ihx_analytics_mastertable -f hql/jl_ihx_analytics_mastertable.hql  &gt; logs/3a_gen_analy_vis.log 2&gt;&amp;1
+hive --hiveconf analy_vis=sandbox142.jl_ihx_analytics_visualization -f hql/jl_ihx_analytics_visualization.hql  &gt; logs/3b_gen_analy_mt.log 2&gt;&amp;1
+hive --hiveconf old_score_tbl=sandbox142.jl_ihx_analytics_visualization --hiveconf new_score_tbl=sandbox142.jl_score_test_pyspark --hiveconf old_and_new_tbl=sandbox142.jl_score_comparison_rule_vs_ml \
+	     -f hql/jl_score_comparison_rule_vs_ml.hql &gt; logs/4_join_old_and_new_scores.log 2&gt;&amp;1
+bin/spark_submit_compare.sh &gt; logs/5_compare_old_and_new_scores.log	
+```
+---
+
+# Basics
+
+```bash
+## 5_compare_scores: rule-based score vs. ml-based score by creating lift tables
+$(log_lift_compare): $(run_lift_compare) $(py_lift_compare) $(log_join_old_new)
+        $(run_lift_compare) &gt; $(log_lift_compare)       
+
+## Same rule using built-in variables
+## 5_compare_scores: rule-based score vs. ml-based score by creating lift tables
+$(log_lift_compare): $(run_lift_compare) $(py_lift_compare) $(log_join_old_new)
+        $&lt; &gt; $@ 
+
+```
+
+- A rule consists of a target, one or more dependencies, and one or more commands
+
+    - A target is the final output you want out of the rule
+    
+    - Dependencies are the files whose changes should trigger newer version of target
+    
+    - Commands are what need to be run to obtain (new) target
+
+- variables
+
+- aliases
+
+---
+
+# Pros and Cons (of GNU Make)
+
+.pull-left[
+
+- Helps keep track of workflow dependency and documentation in one place
+
+- Can fire up a single job ("target") at a time, if needed
+
+- Can assign alias for each target
+
+- Allows selective code runs without commenting on/off 
+
+- Helps put more effort in modularizing codes
+]
+
+.pull-right[
+
+- Local files only
+
+- No HDFS support
+
+- Makefile can get messy
+
+]
+
+---
+
+# Alternatives
+
+- R [drake](https://github.com/ropensci/drake) package
+
+- Factual [drake](https://github.com/Factual/drake)
+
+- Bash script
+
+---
+
+# References
+- GNU Make [Manual](https://www.gnu.org/software/make/)
+
+- Make [Intro](http://zmjones.com/make/)
+
+- [Snakemake](https://snakemake.readthedocs.io/en/stable/index.html)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+  </body>
+</html>
