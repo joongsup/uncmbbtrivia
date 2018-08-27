@@ -1,0 +1,84 @@
+---
+title: GNU Make for Data Analysis Workflow Management
+author: Jay
+date: '2018-08-26'
+slug: gnu-make-for-workflow-manager
+categories:
+  - Tools
+tags:
+  - workflow
+  - shell
+draft: false
+---
+
+
+
+<p>I’ve finally started using GNU <a href="https://www.gnu.org/software/make/">make</a> as a data analysis workflow management tool. I knew it existed as a software “build” tool, and although I always thought Makefile<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> sound pretty cool, I never actually had to use it, not just as a build tool, but also as a data analysis workflow management tool.</p>
+<p>It started with <span class="citation">@thosjleepr</span>’s <a href="https://twitter.com/thosjleeper/status/1030105885085970432?s=03">tweet</a> that showed up in my feed:</p>
+<blockquote>
+<p>Inspired by <span class="citation">@carlislerainey</span>, I’ve added some code to my intro #make tutorial that visualizes the makefile’s dependency graph natively in R using #ggraph.</p>
+</blockquote>
+<p>I never actually looked closely at what the author did in this nice tutorial, but rather ended up taking a detour and actually started looking more closely into using make as a workflow management tool. It so happened that at the time, I needed to keep running some set of scripts over and over depending on “refresh” status of each step, and so when I ran into this tweet, I decided to jump on using make finally, and now make is one of those topics that I wish I had learned and started using while at school<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>It’s been less than 2 weeks since I started using make, and I’m not a make expert by no means. Nonetheless, <a href="https://joongsup.rbind.io/about/">I like talking about data anlaysis workflow</a>, so here’s my thoughts on using make as a data analysis workflow management tool as a reference. Since it’s my thoughts as of today, I’m sure some of my takes will change over time.</p>
+<ol style="list-style-type: decimal">
+<li>It’s relevant to many data analysis projects.</li>
+</ol>
+<p>From the Wikipedia on <a href="https://en.wikipedia.org/wiki/Make_(software)">make (software)</a>:</p>
+<blockquote>
+<p>Besides building programs, Make can be used to manage any project where some files must be updated automatically from others whenever the others change.</p>
+</blockquote>
+<p>It makes sense many tutorials on make (especially in the context of using it together with R) that I encountered used generating some documents as a use case. E.g., use make to streamline updating plots and inserting newly refreshed plots in the final document output. My immediate need didn’t involve updating a report over and over, but rather looked something like Figure <a href="#fig:workflow">1</a>:</p>
+<div class="figure" style="text-align: center"><span id="fig:workflow"></span>
+<img src="/img/makefile_workflow.png" alt="Base Workflow" width="40%" />
+<p class="caption">
+Figure 1: Base Workflow
+</p>
+</div>
+<p>Basically this example workflow involves generating/refreshing several hive tables, training ML models, and joining hive tables. Sometimes all 5 steps need to be run in a proper sequence, other times only a subset of steps need to be run, like Figure <a href="#fig:scenarios">2</a>:</p>
+<div class="figure" style="text-align: center"><span id="fig:scenarios"></span>
+<img src="/img/makefile_ex_1.png" alt="Workflow Scenarios" width="40%" /><img src="/img/makefile_ex_3.png" alt="Workflow Scenarios" width="40%" />
+<p class="caption">
+Figure 2: Workflow Scenarios
+</p>
+</div>
+<p>So if there’s anyone out there who’s on the edge and haven’t started using a tool like make for workflow management, thinking such tool is not relevant in data analysis, I hope above figures (and this post) provide some convincing argument for using it.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>It helped me put more efforts in modularizing codes.</li>
+</ol>
+<p>A Makefile is a collection of one or more rules, with a single rule consisting of a target, dependencies, and commands. In order to use commands in a Makefile, it’s imperative that the codes can be run in command line, and not just in interactive environment (REPL).</p>
+<p>I don’t know what’s the best way to write a “program” for a data analysis project, and many of my codes are still mostly used in interactive mode. With the use of make, however, I’m putting more efforts to make sure my codes are run in command line, and REPL is used only for checking snippet of codes, not the entirety. So instead of working exclusively in a REPL shell (say R and/or hive shell), I now try to make sure the script files work by starting them in command line.</p>
+<p>This is an important shift, I think, that has more implications, and I’m sure I’ll have more to say about this shift in the future.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>It helps keep track of workflow dependency and documentation in one place.</li>
+</ol>
+<p>This is a nice little benefit of using make that I liked nonetheless. When I work on a project for 2-3 days, take a break from it, and come back in 2-3 weeks, I want to be able to recall what I have done and start picking up on things with minimal effort. With a combination of comments and a sed command in a Makefile, helpful documentation/notes can be extracted from command line like below.</p>
+<pre class="bash"><code>~$ make help
+ 1_gen_tbl_A: generate/refresh table A
+ 2_train_model: train ml model using table A and generate table B
+ 3_gen_tbl_C: generate/refresh table C (not dependent on steps 1 and 2!)
+ 4_join_B_and_C: join tables B and C as a prep for step 5
+ 5_compare_B_and_C: compare B and C by creating a performance table
+</code></pre>
+<p>Software carpentry’s <a href="https://swcarpentry.github.io/make-novice/08-self-doc/index.html">lesson</a> on automation and make provides a how-to.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>There are many alternatives to GNU make.</li>
+</ol>
+<p>The tool has been around for nearly 40 years now. Obviously, I like it for several reasons as a workflow management tool, but at the same time, there are some limitations that can make it less attractive nowadays. I have not done a thorough research on this, but there seem to be many alternatives, each one of which has its own strength and weakness.</p>
+<ul>
+<li><p>R <a href="https://github.com/ropensci/drake">drake</a> package is more R-focused than other pipeline tools, but more importantly, it has a very thorough and informative documentation on such tools in general.</p></li>
+<li><p>Apache <a href="https://airflow.apache.org/">airflow</a> is “a platform to programmatically author, schedule and monitor workflows.” I really like its ability to visualize dependencies.</p></li>
+<li><p>Bash script: many data engineers that I know seem to be using bash scripts to do everything, including workflow mangement. It’s certainly a viable option, even when dependencies are considered, especially when you know what you’re doing.</p></li>
+</ul>
+<p>There are some great tutorials and documentations on GNU make, and here are a couple more links as a reference.</p>
+<ul>
+<li><p>GNU Make <a href="https://www.gnu.org/software/make/manual/make.html">Manual</a></p></li>
+<li><p>Make Intro by <a href="http://kbroman.org/minimal_make/">Karl Broman</a>, <a href="https://bost.ocks.org/mike/make/">Mike Bostock</a>, <a href="http://zmjones.com/make/">Zachary Jones</a></p></li>
+<li><p>Software Carpentry’s <a href="https://swcarpentry.github.io/make-novice/">Lesson</a> on Automation and Make</p></li>
+</ul>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Make reads this Makefile (in the current directory) and works on the rules within it.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>I should prob start gathering these topics and write about them sometime in the future.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>

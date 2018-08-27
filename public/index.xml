@@ -6,8 +6,89 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Aug 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>GNU Make for Data Analysis Workflow Management</title>
+      <link>/post/2018/08/26/gnu-make-for-workflow-manager/</link>
+      <pubDate>Sun, 26 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/08/26/gnu-make-for-workflow-manager/</guid>
+      <description>
+        &lt;p&gt;I’ve finally started using GNU &lt;a href=&#34;https://www.gnu.org/software/make/&#34;&gt;make&lt;/a&gt; as a data analysis workflow management tool. I knew it existed as a software “build” tool, and although I always thought Makefile&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; sound pretty cool, I never actually had to use it, not just as a build tool, but also as a data analysis workflow management tool.&lt;/p&gt;
+&lt;p&gt;It started with &lt;span class=&#34;citation&#34;&gt;@thosjleepr&lt;/span&gt;’s &lt;a href=&#34;https://twitter.com/thosjleeper/status/1030105885085970432?s=03&#34;&gt;tweet&lt;/a&gt; that showed up in my feed:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Inspired by &lt;span class=&#34;citation&#34;&gt;@carlislerainey&lt;/span&gt;, I’ve added some code to my intro #make tutorial that visualizes the makefile’s dependency graph natively in R using #ggraph.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I never actually looked closely at what the author did in this nice tutorial, but rather ended up taking a detour and actually started looking more closely into using make as a workflow management tool. It so happened that at the time, I needed to keep running some set of scripts over and over depending on “refresh” status of each step, and so when I ran into this tweet, I decided to jump on using make finally, and now make is one of those topics that I wish I had learned and started using while at school&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It’s been less than 2 weeks since I started using make, and I’m not a make expert by no means. Nonetheless, &lt;a href=&#34;https://joongsup.rbind.io/about/&#34;&gt;I like talking about data anlaysis workflow&lt;/a&gt;, so here’s my thoughts on using make as a data analysis workflow management tool as a reference. Since it’s my thoughts as of today, I’m sure some of my takes will change over time.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;It’s relevant to many data analysis projects.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;From the Wikipedia on &lt;a href=&#34;https://en.wikipedia.org/wiki/Make_(software)&#34;&gt;make (software)&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Besides building programs, Make can be used to manage any project where some files must be updated automatically from others whenever the others change.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It makes sense many tutorials on make (especially in the context of using it together with R) that I encountered used generating some documents as a use case. E.g., use make to streamline updating plots and inserting newly refreshed plots in the final document output. My immediate need didn’t involve updating a report over and over, but rather looked something like Figure &lt;a href=&#34;#fig:workflow&#34;&gt;1&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:workflow&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/makefile_workflow.png&#34; alt=&#34;Base Workflow&#34; width=&#34;40%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Base Workflow
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Basically this example workflow involves generating/refreshing several hive tables, training ML models, and joining hive tables. Sometimes all 5 steps need to be run in a proper sequence, other times only a subset of steps need to be run, like Figure &lt;a href=&#34;#fig:scenarios&#34;&gt;2&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:scenarios&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/makefile_ex_1.png&#34; alt=&#34;Workflow Scenarios&#34; width=&#34;40%&#34; /&gt;&lt;img src=&#34;/img/makefile_ex_3.png&#34; alt=&#34;Workflow Scenarios&#34; width=&#34;40%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Workflow Scenarios
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;So if there’s anyone out there who’s on the edge and haven’t started using a tool like make for workflow management, thinking such tool is not relevant in data analysis, I hope above figures (and this post) provide some convincing argument for using it.&lt;/p&gt;
+&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;It helped me put more efforts in modularizing codes.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A Makefile is a collection of one or more rules, with a single rule consisting of a target, dependencies, and commands. In order to use commands in a Makefile, it’s imperative that the codes can be run in command line, and not just in interactive environment (REPL).&lt;/p&gt;
+&lt;p&gt;I don’t know what’s the best way to write a “program” for a data analysis project, and many of my codes are still mostly used in interactive mode. With the use of make, however, I’m putting more efforts to make sure my codes are run in command line, and REPL is used only for checking snippet of codes, not the entirety. So instead of working exclusively in a REPL shell (say R and/or hive shell), I now try to make sure the script files work by starting them in command line.&lt;/p&gt;
+&lt;p&gt;This is an important shift, I think, that has more implications, and I’m sure I’ll have more to say about this shift in the future.&lt;/p&gt;
+&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;It helps keep track of workflow dependency and documentation in one place.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is a nice little benefit of using make that I liked nonetheless. When I work on a project for 2-3 days, take a break from it, and come back in 2-3 weeks, I want to be able to recall what I have done and start picking up on things with minimal effort. With a combination of comments and a sed command in a Makefile, helpful documentation/notes can be extracted from command line like below.&lt;/p&gt;
+&lt;pre class=&#34;bash&#34;&gt;&lt;code&gt;~$ make help
+ 1_gen_tbl_A: generate/refresh table A
+ 2_train_model: train ml model using table A and generate table B
+ 3_gen_tbl_C: generate/refresh table C (not dependent on steps 1 and 2!)
+ 4_join_B_and_C: join tables B and C as a prep for step 5
+ 5_compare_B_and_C: compare B and C by creating a performance table
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Software carpentry’s &lt;a href=&#34;https://swcarpentry.github.io/make-novice/08-self-doc/index.html&#34;&gt;lesson&lt;/a&gt; on automation and make provides a how-to.&lt;/p&gt;
+&lt;ol start=&#34;4&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;There are many alternatives to GNU make.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The tool has been around for nearly 40 years now. Obviously, I like it for several reasons as a workflow management tool, but at the same time, there are some limitations that can make it less attractive nowadays. I have not done a thorough research on this, but there seem to be many alternatives, each one of which has its own strength and weakness.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;R &lt;a href=&#34;https://github.com/ropensci/drake&#34;&gt;drake&lt;/a&gt; package is more R-focused than other pipeline tools, but more importantly, it has a very thorough and informative documentation on such tools in general.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Apache &lt;a href=&#34;https://airflow.apache.org/&#34;&gt;airflow&lt;/a&gt; is “a platform to programmatically author, schedule and monitor workflows.” I really like its ability to visualize dependencies.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Bash script: many data engineers that I know seem to be using bash scripts to do everything, including workflow mangement. It’s certainly a viable option, even when dependencies are considered, especially when you know what you’re doing.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are some great tutorials and documentations on GNU make, and here are a couple more links as a reference.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;GNU Make &lt;a href=&#34;https://www.gnu.org/software/make/manual/make.html&#34;&gt;Manual&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Make Intro by &lt;a href=&#34;http://kbroman.org/minimal_make/&#34;&gt;Karl Broman&lt;/a&gt;, &lt;a href=&#34;https://bost.ocks.org/mike/make/&#34;&gt;Mike Bostock&lt;/a&gt;, &lt;a href=&#34;http://zmjones.com/make/&#34;&gt;Zachary Jones&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Software Carpentry’s &lt;a href=&#34;https://swcarpentry.github.io/make-novice/&#34;&gt;Lesson&lt;/a&gt; on Automation and Make&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Make reads this Makefile (in the current directory) and works on the rules within it.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;I should prob start gathering these topics and write about them sometime in the future.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>Home sweet dome</title>
@@ -722,85 +803,6 @@ Once all issues are addressed, we see the check result is clean.&lt;/p&gt;
 &lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Don’t even know what it is, but I’m ok with that for now.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Use of quos</title>
-      <link>/post/2018/04/20/use-of-quos/</link>
-      <pubDate>Fri, 20 Apr 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/04/20/use-of-quos/</guid>
-      <description>
-        &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;suppressPackageStartupMessages(library(uncmbb))
-suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(jutilr))
-
-head(unc) &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##   Season  Game_Date Game_Day Type Where   Opponent_School Result Tm Opp
-## 1   1950 1949-12-01      Thu  REG     H              Elon      W 57  39
-## 2   1950 1949-12-03      Sat  REG     A          Richmond      W 58  50
-## 3   1950 1949-12-05      Mon  REG     A     Virginia Tech      L 48  62
-## 4   1950 1949-12-07      Wed  REG     A      Lenoir-Rhyne      L 78  79
-## 5   1950 1949-12-09      Fri  REG     H George Washington      L 44  54
-## 6   1950 1949-12-28      Wed  REG     N     West Virginia      L 50  58
-##     OT
-## 1 &amp;lt;NA&amp;gt;
-## 2 &amp;lt;NA&amp;gt;
-## 3 &amp;lt;NA&amp;gt;
-## 4   OT
-## 5 &amp;lt;NA&amp;gt;
-## 6 &amp;lt;NA&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot1 &amp;lt;- function(lst, x, y){
-  
-  x &amp;lt;- enquo(x)
-  y &amp;lt;- enquo(y)
-  
-  x_name &amp;lt;- quo_name(x)
-  y_name &amp;lt;- quo_name(y)
-  
-  lst %&amp;gt;% map(function(df) df %&amp;gt;% 
-                ggplot(aes_string(x = paste0(&amp;quot;reorder(&amp;quot;, x_name, &amp;quot;, -&amp;quot;, y_name, &amp;quot;)&amp;quot;), y = y_name)) +
-                geom_bar(stat = &amp;quot;identity&amp;quot;) +
-                geom_text(aes(label = n), vjust = -0.2) +
-                theme_bw() +
-                scale_y_continuous(label = scales::percent) +
-                labs(title = paste0(&amp;quot;Frequency of &amp;quot;, x_name)))
-
-}
-
-teams &amp;lt;- list(unc, duke)
-
-get_freq &amp;lt;- function(df, var){
-  var &amp;lt;- enquo(var)
-  df %&amp;gt;% count(!!var) %&amp;gt;% 
-          arrange(desc(n)) %&amp;gt;%
-          add_percent(var = &amp;quot;n&amp;quot;)
-}
-teams %&amp;gt;% map(function(df) df %&amp;gt;% get_freq(Opponent_School) %&amp;gt;% head)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [[1]]
-## # A tibble: 6 x 3
-##   Opponent_School          n   perc
-##   &amp;lt;chr&amp;gt;                &amp;lt;int&amp;gt;  &amp;lt;dbl&amp;gt;
-## 1 Duke                   179 0.0817
-## 2 North Carolina State   167 0.0762
-## 3 Wake Forest            155 0.0707
-## 4 Maryland               142 0.0648
-## 5 Clemson                140 0.0639
-## 6 Virginia               140 0.0639
-## 
-## [[2]]
-## # A tibble: 6 x 3
-##   Opponent_School          n   perc
-##   &amp;lt;chr&amp;gt;                &amp;lt;int&amp;gt;  &amp;lt;dbl&amp;gt;
-## 1 North Carolina         179 0.0818
-## 2 Wake Forest            173 0.0790
-## 3 North Carolina State   163 0.0745
-## 4 Maryland               146 0.0667
-## 5 Virginia               138 0.0630
-## 6 Clemson                127 0.0580&lt;/code&gt;&lt;/pre&gt;
 
         
       </description>
