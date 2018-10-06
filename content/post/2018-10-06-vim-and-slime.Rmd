@@ -14,11 +14,11 @@ tags:
 draft: false
 ---
 
-As much as I love using RStudio for everything^[Especially for blogging, yeah!], there are times when I can't really use it, i.e., for some projects at work. When that happens, it means I usually need to log in to some servers and do work there (i.e., on the server side), and at the moment, there is no way I can use RStudio for my work^[Using RStudio server would do it, but it's not an option at the moment]. It's more than usual, in fact, and for a long time, I've been trying to establish a good/working data analysis workflow that I can follow in that setting.  
+As much as I love using RStudio for everything^[Especially for blogging, yeah!], there are times when I can't really use it, i.e., for some projects at work in which I need to log in to some servers and do work there (i.e., on the server side). Using RStudio server would do it, I think, but it's not an option at the moment. For a long time, I've been trying to establish a good working data analysis workflow that I can follow in that setting.  
 
-Vim is my server side editor of choice. I'm not a Vim expert by no means, but ever since I started using it (it's been almost 4 years), it fit me, and it's been my editor of choice, especially when working on some remote servers. I would open up several terminal window tabs, i.e. one for command line, one for R session, one for file editing (using Vim), one for hive shell, etc..Establishing a good/working data analysis workflow came down to being able to use Vim more seamlessly with those other tools that I use everyday.  
+Vim is my server side editor of choice. I'm not a Vim expert by no means, but ever since I started using it (it's been almost 4 years), it fit me, and it's been my editor of choice, especially when working on some remote servers. I would open up several terminal window tabs, i.e. one for command line, one for R session, one for file editing (using Vim), one for hive shell, etc..Establishing an effective data analysis workflow came down to being able to use Vim more seamlessly with those other tools that I use everyday.  
 
-After several days of browsing, reading, and trying out, I finally settled down with this particular set-up and so far I'm pretty happy with it. I'm writing this post as a reference for myself and potentially others who's facing a similar situation. This is one of those things that I wish I had perfected while I was still at school, just like many other things that I've written about before here. 
+After several days of browsing, reading, and trying out, I finally settled down with this particular set-up and so far I'm pretty happy with it. This post is a quick overview of the set-up as a reference for myself and potentially others who's facing a similar situation. This is one of those things that I wish I had perfected while I was still at school, just like many other things that I've written about before here. 
 
 1. Vim and .vimrc
 

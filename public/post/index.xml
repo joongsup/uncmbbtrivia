@@ -17,7 +17,7 @@
       <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018/10/06/vim-and-slime/</guid>
-      <description>As much as I love using RStudio for everything1, there are times when I can’t really use it, i.e., for some projects at work. When that happens, it means I usually need to log in to some servers and do work there (i.e., on the server side), and at the moment, there is no way I can use RStudio for my work2. It’s more than usual, in fact, and for a long time, I’ve been trying to establish a good/working data analysis workflow that I can follow in that setting.</description>
+      <description>As much as I love using RStudio for everything1, there are times when I can’t really use it, i.e., for some projects at work in which I need to log in to some servers and do work there (i.e., on the server side). Using RStudio server would do it, I think, but it’s not an option at the moment. For a long time, I’ve been trying to establish a good working data analysis workflow that I can follow in that setting.</description>
     </item>
     
     <item>
