@@ -1,0 +1,165 @@
+---
+title: Coping with worst loss at home
+author: Jay
+date: '2019-01-13'
+categories:
+  - UNC
+tags:
+  - uncmbb
+slug: worst-performance-at-home-sweet-dome
+draft: false
+---
+
+It's been a tough weekend, not least because Tar Heels lost at home. Sometimes I feel like I'm vested too much in the outcome of the Heel's basketball games, and if my emotional rollercoaster the rest of the weekend gives any clue, I probably am, just a litttle bit. I tried to shake it off, yet it wasn't particularly easy, not only because we lost at home, but because the loss was the worst one at home under Roy Williams. So I turn to blogging, after 100+ days of hiatus, as a last resort to restoring my inner peace and calm, before the new workday begins.
+
+First I look at a couple of worst of the worst losses at home (to make the last loss less painful).
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+# Load libraries for R
+
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(uncmbb)) # dataset
+suppressPackageStartupMessages(library(kableExtra))
+
+lost_games <- unc %>% filter(Type == "REG", Where == "H", Result == "L") %>%
+                      mutate(lost_by = Opp - Tm) %>%
+                      select(Season, Game_Date, Opponent_School, Tm, Opp, lost_by) %>%
+                      arrange(desc(lost_by)) 
+
+lost_games %>% head(10) %>%
+               kable("html", caption = "10 worst home loss since 1949-50 season") %>%
+               kable_styling()
+
+
+```
+
+Sure enough, 4 losses to Duke (gee, a loss by 35!) and a couple to State (a loss by 21, which matches the weekend's loss margin). At this point, I'm realizing this is not particularly going to help me feel better about the weekend's loss. Worse, it might exacerbate the wound, but I decide to keep going. What's all the home losses look like?
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+lost_games %>% group_by(lost_by) %>%
+                summarize(games = n()) %>%
+                ggplot(aes(x = lost_by, y = games)) +
+                geom_bar(stat = "identity") +
+                theme_bw() +
+                labs(title = "Frequency of Carolina's home loss by score margin since 1949-50 season", x = "lost by", y = "games") +
+                scale_x_continuous(breaks = 0:40) +
+                scale_y_continuous(breaks = seq(0,14,2))
+
+lost_games %>% group_by(Opponent_School) %>%
+            summarize(games = n()) %>%
+            arrange(desc(games)) %>%
+            ggplot(aes(x = reorder(Opponent_School, games), y = games)) +
+            geom_bar(stat = "identity") +
+            labs(title = "Schools with most wins at UNC since 1949-50 season", x = "Opponent") +
+            coord_flip() +
+            theme_bw()
+```
+
+Turns out, of the 122 total home losses (since 1949-50 season), loss by 4 is the most frequent (14 games), followed by loss by 1 (13 games). Sure, Duke won the most with 25 wins against UNC, followed by State (16), Wake Forest (15), and Maryland (13). Other than these 4 schools, no schools have won at UNC more than 6 times since 1949-50 season. I'm already starting to feel a little better. While at it, I decide to look at how Duke's home loss look like for the heck of it.
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+lost_games_duke <- duke %>% filter(Type == "REG", Where == "H", Result == "L") %>%
+                      mutate(lost_by = Opp - Tm) %>%
+                      select(Season, Game_Date, Opponent_School, Tm, Opp, lost_by) %>%
+                      arrange(desc(lost_by)) 
+
+lost_games_duke %>% head(10) %>%
+               kable("html", caption = "10 worst home loss since 1949-50 season") %>%
+               kable_styling()
+               
+lost_games_duke %>% group_by(lost_by) %>%
+                summarize(games = n()) %>%
+                ggplot(aes(x = lost_by, y = games)) +
+                geom_bar(stat = "identity") +
+                theme_bw() +
+                labs(title = "Frequency of Duke's home loss by score margin since 1949-50 season", x = "lost by", y = "games") +
+                scale_x_continuous(breaks = 0:40) +
+                scale_y_continuous(breaks = seq(0,20,2))
+
+lost_games_duke %>% group_by(Opponent_School) %>%
+            summarize(games = n()) %>%
+            arrange(desc(games)) %>%
+            ggplot(aes(x = reorder(Opponent_School, games), y = games)) +
+            geom_bar(stat = "identity") +
+            labs(title = "Schools with most wins at Duke since 1949-50 season", x = "Opponent") +
+            coord_flip() +
+            theme_bw()
+```
+
+Turns out, of the 135 Duke's home losses (since 1949-50 season), Carolina beat them 29 times, followed by State (21), Wake Forest (15), Maryland (14), and Virginia (9). Other than these 5 schools, no schools have beat Duke more than 6 times since 1949-50 season. 
+
+Another way to look at how [sweet](https://joongsup.rbind.io/post/2018/08/05/home-sweet-dome/) home games have been since Roy Williams came home might be to look at how rare the home losses have been. 
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+lost_rw <- lost_games %>% filter(Season >= 2004) 
+lost_rw %>% #mutate(game_no = row_number()) %>%
+            kable("html", caption = "Home loss since 2003-04 season") %>%
+            kable_styling()
+
+```
+
+Ok, a good start. There's been only 30 home losses since 2003-04 season, approximately 2 home losses per season. Only 2 down days over a 4 months period each season. Put it that way, I feel like I can survive this weekend's L.  
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+lost_rw %>% group_by(lost_by) %>%
+                summarize(games = n()) %>%
+                ggplot(aes(x = lost_by, y = games)) +
+                geom_bar(stat = "identity") +
+                theme_bw() +
+                labs(title = "Frequency of RW home loss by score margin", x = "lost by", y = "games") +
+                scale_x_continuous(breaks = 0:40) +
+                scale_y_continuous(breaks = seq(0,5,1))
+
+lost_rw %>% group_by(Opponent_School) %>%
+            summarize(games = n()) %>%
+            arrange(desc(games)) %>%
+            ggplot(aes(x = reorder(Opponent_School, games), y = games)) +
+            geom_bar(stat = "identity") +
+            labs(title = "Schools with most wins at UNC since 2003-04 season", x = "Opponent") +
+            coord_flip() +
+            theme_bw()
+```
+
+Since 2003-04 season, again loss by 1 and 4 were most frequent, each with 4 games. Not surprisingly, Duke has won 8 games at UNC, and somewhat surprisingly, Miami has second most wins at UNC since RW came home. This weekend's win gives Louisville its first win at Carolina, it looks like. 
+
+In addition to the worst home loss in 16 years, what made things worse for me personally was the fact that Duke won their game against Florida State later same day. Again, this is just me, but after the home loss, I was begging for Florida State to win their home game, so that I can have somewhat so-so weekend even with the home loss, even though I knew how [rare](https://joongsup.rbind.io/post/2018/01/07/same-day-match-results-unc-and-duke/) such event was. 
+
+```{r, echo = FALSE}
+
+# dates on which UNC and Duke played a game with other opponents
+target_dates <- unc %>% inner_join(duke, by = "Game_Date") %>%
+                        select(Game_Date)
+                        
+# UNC games played on same dates against non-Duke opponents
+a <- unc %>% filter(Game_Date %in% target_dates$Game_Date) %>%
+             filter(Opponent_School != "Duke")
+
+
+# Duke games played on same dates against non-UNC opponents
+b <- duke %>% filter(Game_Date %in% target_dates$Game_Date) %>%
+             filter(Opponent_School != "North Carolina")
+
+same_day_results <- a %>% select(Game_Date, Result) %>%
+                          inner_join(b %>% select(Game_Date, Result), by = "Game_Date") %>%
+                          rename(unc_result = Result.x, duke_result = Result.y)
+
+worst_day <- same_day_results %>% 
+              filter(unc_result == "L", duke_result == "W") %>%
+              select(Game_Date)
+
+worst_day_all <- lost_games %>% inner_join(worst_day, by = "Game_Date") %>%
+                 arrange(desc(Game_Date))
+
+worst_day_all %>% kable("html", caption = "Carolina L and Duke W on same day since 1949-50 season") %>%
+                 kable_styling()
+
+worst_day_rw <- lost_rw %>% inner_join(worst_day, by = "Game_Date") %>%
+                arrange(desc(Game_Date))
+
+#worst_day_rw %>% kable("html", caption = "Carolina L and Duke W on same day since 2003-04 season") %>%
+                # kable_styling()
+```
+
+Ok, 22 such days when Carolina lost at home while Duke won on the same day since 1949-50 season. And only 6 such days since 2003-04 season. Make it 7 with this weekend's case, but nevertheless at the end of the day, an L is an L, and we had two road Ws before this L, and I hope the team shook it off well over the weekend. Writing this post definitely helped me feel a whole lot better about this weekend and get ready for a new day tomorrow! Speaking of which, another same day games tomorrow, Notre Dame at UNC and Syracuse at Duke. Let's rebound from this weekend's L Heels, and go get your 2nd W Cuse at Duke! That'll be sweet indeed :)
+

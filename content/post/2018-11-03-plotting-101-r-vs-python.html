@@ -1,0 +1,209 @@
+---
+title: SQL, Visualization, R, and Python
+author: Jay
+date: '2018-11-03'
+categories:
+  - Python
+  - R
+  - Tools
+tags:
+  - Plotting
+  - R vs Python
+slug: plotting-101-r-vs-python
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#setup">Setup</a><ul>
+<li><a href="#load-libraries">Load libraries</a></li>
+<li><a href="#read-data">Read data</a></li>
+</ul></li>
+<li><a href="#bar-chart">Bar chart</a><ul>
+<li><a href="#simple-frequency">Simple frequency</a></li>
+<li><a href="#grouped-frequency">Grouped frequency</a></li>
+</ul></li>
+<li><a href="#line-chart">Line chart</a><ul>
+<li><a href="#simple-sequence">Simple sequence</a></li>
+<li><a href="#grouped-sequence">Grouped sequence</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>Not long ago, I saw a thread in my tweeter feed that was talking about what should be the first thing that a data scientist student learns. There were two answers that made sense to me: SQL and visualization.</p>
+<p>SQL, because, one needs to be able to get desired data from somewhere, and for the most part in an industry setting at least, that somewhere is typically some form of databases (e.g., relational database, hive, etc.), which can be accessed by SQL-like languages. As far as basics go, I think being able to select data (with conditions) and create/drop table should carry one surprisingly a long way in a data science journey.</p>
+<p>Visualizaton, because, one needs to be able to show acquired data and analyses done on them in some kind of non-text form, and that non-text form typically involves graphs. As far as basics go, I think being able to show data on a bar chart and a line chart should carry one surprisingly a long way in a data science journey.</p>
+<p>About the same time, I started using Python a bit more at work, and with the twitter thread fresh in mind, I thought this might be a good time to write a post that compares how to do frequently used plotting in both R and Python. By frequently used plotting, I mean bar charts and line charts based on personal experience. I’ve been using bar chart usually for frequency of categorical variables and line chart for sequence of numerical variables.</p>
+<p>In this post, I’ll try to provide as minimal codes as possible to draw two flavors in each: simple chart and grouped chart.</p>
+<pre><code>- Bar plot for frequency of categorical variable
+- line plot for sequence of numerical variable</code></pre>
+<p>R vs. Python
+- Similarities
+- Differences</p>
+<div id="setup" class="section level1">
+<h1>Setup</h1>
+<div id="load-libraries" class="section level2">
+<h2>Load libraries</h2>
+<div id="r" class="section level3">
+<h3>R</h3>
+<pre class="r"><code># Load libraries for R
+
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(uncmbb)) # dataset</code></pre>
+</div>
+<div id="python" class="section level3">
+<h3>Python</h3>
+<pre class="python"><code># Load libraries for Python
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt</code></pre>
+</div>
+</div>
+<div id="read-data" class="section level2">
+<h2>Read data</h2>
+<div id="r-1" class="section level3">
+<h3>R</h3>
+<pre class="r"><code># no need to add uncmbb::, but to clarify where object &#39;unc&#39; is coming from
+unc_r &lt;- uncmbb::unc 
+print(head(unc_r))</code></pre>
+<pre><code>##   Season  Game_Date Game_Day Type Where   Opponent_School Result Tm Opp
+## 1   1950 1949-12-01      Thu  REG     H              Elon      W 57  39
+## 2   1950 1949-12-03      Sat  REG     A          Richmond      W 58  50
+## 3   1950 1949-12-05      Mon  REG     A     Virginia Tech      L 48  62
+## 4   1950 1949-12-07      Wed  REG     A      Lenoir-Rhyne      L 78  79
+## 5   1950 1949-12-09      Fri  REG     H George Washington      L 44  54
+## 6   1950 1949-12-28      Wed  REG     N     West Virginia      L 50  58
+##     OT
+## 1 &lt;NA&gt;
+## 2 &lt;NA&gt;
+## 3 &lt;NA&gt;
+## 4   OT
+## 5 &lt;NA&gt;
+## 6 &lt;NA&gt;</code></pre>
+</div>
+<div id="python-1" class="section level3">
+<h3>Python</h3>
+<pre class="python"><code># read R data object (from UNCMBB package) in Python
+unc_py = r.unc
+print(unc_py.head())</code></pre>
+<pre><code>##   Season  Game_Date Game_Day Type ... Result    Tm   Opp  OT
+## 0   1950 1949-12-01      Thu  REG ...      W  57.0  39.0  NA
+## 1   1950 1949-12-03      Sat  REG ...      W  58.0  50.0  NA
+## 2   1950 1949-12-05      Mon  REG ...      L  48.0  62.0  NA
+## 3   1950 1949-12-07      Wed  REG ...      L  78.0  79.0  OT
+## 4   1950 1949-12-09      Fri  REG ...      L  44.0  54.0  NA
+## 
+## [5 rows x 10 columns]</code></pre>
+</div>
+</div>
+</div>
+<div id="bar-chart" class="section level1">
+<h1>Bar chart</h1>
+<div id="simple-frequency" class="section level2">
+<h2>Simple frequency</h2>
+<div id="r-2" class="section level3">
+<h3>R</h3>
+<pre class="r"><code># Option 1: no pre summarizing
+unc_r %&gt;% ggplot(aes(x = Type)) +
+          geom_bar()</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-5-1.png" width="1152" /></p>
+<pre class="r"><code># Option 2: summarize data before plotting
+unc_r %&gt;% group_by(Type) %&gt;%
+          summarize(n = n()) %&gt;% # see ?dplyr::count
+          ggplot(aes(x = Type, y = n)) +
+          geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-5-2.png" width="1152" /></p>
+</div>
+<div id="python-2" class="section level3">
+<h3>Python</h3>
+<pre class="python"><code># Option 1: no pre summarizing
+unc_py[&#39;Type&#39;].value_counts().plot(kind = &#39;bar&#39;)
+plt.show()
+# Option 2: summarize data before plotting</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
+<pre class="python"><code>unc_py.groupby(&#39;Type&#39;).size().plot(kind = &#39;bar&#39;)
+plt.show()</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-6-2.png" /><!-- --></p>
+</div>
+</div>
+<div id="grouped-frequency" class="section level2">
+<h2>Grouped frequency</h2>
+<div id="r-3" class="section level3">
+<h3>R</h3>
+<pre class="r"><code>unc_r %&gt;% group_by(Type, Result) %&gt;%
+          summarize(n = n()) %&gt;%
+          ggplot(aes(x = Type, y = n)) +
+          geom_bar(stat = &quot;identity&quot;, position = &quot;dodge&quot;, aes(fill = factor(Result)))</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-7-1.png" width="1152" /></p>
+</div>
+<div id="python-3" class="section level3">
+<h3>Python</h3>
+<pre class="python"><code>t = unc_py.groupby([&#39;Type&#39;, &#39;Result&#39;]).size().reset_index(name = &#39;games&#39;).pivot(&#39;Type&#39;, &#39;Result&#39;, &#39;games&#39;).reset_index()
+t.plot(kind = &#39;bar&#39;, x = &#39;Type&#39;)
+plt.show()</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
+</div>
+</div>
+</div>
+<div id="line-chart" class="section level1">
+<h1>Line chart</h1>
+<div id="simple-sequence" class="section level2">
+<h2>Simple sequence</h2>
+<div id="r-4" class="section level3">
+<h3>R</h3>
+<pre class="r"><code># Option 1: use join (to divide # of wins by # of games)
+t &lt;- unc_r %&gt;% count(Season)
+unc_r %&gt;% group_by(Season, Result) %&gt;%
+            summarize(games = n()) %&gt;%
+            inner_join(t, by = &quot;Season&quot;) %&gt;%
+            filter(Result == &quot;W&quot;) %&gt;%
+            mutate(perc = round(games/n, 4)) %&gt;%
+            ggplot(aes(x = Season, y = perc)) + 
+            geom_line(aes(group = 1))</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-9-1.png" width="1152" /></p>
+<pre class="r"><code># Option 2: using jutilr::add_percent
+unc_r %&gt;% group_by(Season, Result) %&gt;%
+            summarize(games = n()) %&gt;%
+            jutilr::add_percent(var = &quot;games&quot;) %&gt;% 
+            filter(Result == &quot;W&quot;) %&gt;%
+            ggplot(aes(x = Season, y = perc)) + 
+            geom_line(aes(group = 1))</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-9-2.png" width="1152" /></p>
+</div>
+<div id="python-4" class="section level3">
+<h3>Python</h3>
+<pre class="python"><code># Optioin 1: use join (to divide # of wins by # of games per season)
+t = unc_py.Season.value_counts().reset_index(name = &quot;total&quot;)
+t2 = unc_py.groupby([&#39;Season&#39;, &#39;Result&#39;]).size().reset_index(name = &#39;games&#39;)
+t3 = pd.merge(t, t2, left_on = &#39;index&#39;, right_on = &#39;Season&#39;).sort_values(&#39;Season&#39;)
+t3[&#39;perc&#39;] = t3.games/t3.total
+t3.loc[t3.Result == &#39;W&#39;, [&#39;Season&#39;, &#39;perc&#39;]].plot(kind = &#39;line&#39;, x = &#39;Season&#39;, y = &#39;perc&#39;)
+plt.show()</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-10-1.png" /><!-- --></p>
+</div>
+</div>
+<div id="grouped-sequence" class="section level2">
+<h2>Grouped sequence</h2>
+<div id="r-5" class="section level3">
+<h3>R</h3>
+<pre class="r"><code>unc_r %&gt;% group_by(Season, Result) %&gt;%
+            summarize(games = n()) %&gt;%
+            ggplot(aes(x = Season, y = games)) + 
+            geom_line(aes(group = Result, colour = Result))</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-11-1.png" width="1152" /></p>
+</div>
+<div id="python-5" class="section level3">
+<h3>Python</h3>
+<pre class="python"><code>t = unc_py.groupby([&#39;Season&#39;, &#39;Result&#39;]).size().reset_index(name = &#39;games&#39;).pivot(&#39;Season&#39;, &#39;Result&#39;, &#39;games&#39;).reset_index()
+t.plot(kind = &#39;line&#39;, x = &#39;Season&#39;)
+plt.show()</code></pre>
+<p><img src="/post/2018-11-03-plotting-101-r-vs-python_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
+</div>
+</div>
+</div>

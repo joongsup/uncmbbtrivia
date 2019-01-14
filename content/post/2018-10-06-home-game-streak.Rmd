@@ -1,0 +1,37 @@
+---
+title: Home game streak
+author: Jay
+date: '2018-10-06'
+slug: home-game-streak
+categories:
+  - UNC
+tags:
+  - uncmbb
+draft: true
+
+---
+
+The schedule for the 2018-2019 UNC MBB season has been out, and I ran into a blog post that said something about some teams getting preferable schedules than others, in that those lucky teams get to play three consecutive games at home and in some case, not having to face the same number of consecutive games on the road. I remembered UNC team had a touch streak last season, having to play 3 in a row on the road, and with the current 15 member system (since 2010), such imbalance in schedule is bound to happen eventually. 
+
+So I was curious in terms of playing consecutive home games and road games, who's been lucky all these years. Let's see. 
+
+```{r, echo = FALSE}
+suppressPackageStartupMessages(library(uncmbb))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(jutilr))
+suppressPackageStartupMessages(library(patchwork)) #dev
+
+options(warn = -1)
+
+df_where <- unc %>% filter(Type == "REG") %>%
+        group_by(Season) %>%
+        mutate(Where_next1 = lead(Where), Where_next2 = lead(Where, 2), Where_next3 = lead(Where, 3)) %>%
+        select(-Type, -OT) 
+
+df_away <- df_where %>% filter(Where == "A", Where_next1 == "A", Where_next2 == "A")
+df_home <- df_where %>% filter(Where == "H", Where_next1 == "H", Where_next2 == "H")
+df_neut <- df_where %>% filter(Where == "N", Where_next1 == "N", Where_next2 == "N")
+
+```

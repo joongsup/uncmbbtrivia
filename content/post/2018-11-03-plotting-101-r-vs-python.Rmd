@@ -1,0 +1,205 @@
+---
+title: SQL, Visualization, R, and Python
+author: Jay
+date: '2018-11-03'
+categories:
+  - Python
+  - R
+  - Tools
+tags:
+  - Plotting
+  - R vs Python
+slug: plotting-101-r-vs-python
+output:
+  blogdown::html_page:
+    toc: yes
+    toc_depth: 2
+draft: true
+---
+
+Not long ago, I saw a thread in my tweeter feed that was talking about what should be the first thing that a data scientist student learns. There were two answers that made sense to me: SQL and visualization. 
+
+SQL, because, one needs to be able to get desired data from somewhere, and for the most part in an industry setting at least, that somewhere is typically some form of databases (e.g., relational database, hive, etc.), which can be accessed by SQL-like languages. As far as basics go, I think being able to select data (with conditions) and create/drop table should carry one surprisingly a long way in a data science journey.
+
+Visualizaton, because, one needs to be able to show acquired data and analyses done on them in some kind of non-text form, and that non-text form typically involves graphs. As far as basics go, I think being able to show data on a bar chart and a line chart should carry one surprisingly a long way in a data science journey.
+
+About the same time, I started using Python a bit more at work, and with the twitter thread fresh in mind, I thought this might be a good time to write a post that compares how to do frequently used plotting in both R and Python. By frequently used plotting, I mean bar charts and line charts based on personal experience. I've been using bar chart usually for frequency of categorical variables and line chart for sequence of numerical variables.  
+
+
+In this post, I'll try to provide as minimal codes as possible to draw two flavors in each: simple chart and grouped chart. 
+
+    - Bar plot for frequency of categorical variable
+    - line plot for sequence of numerical variable
+
+R vs. Python
+    - Similarities
+    - Differences
+    
+```{r global_setup, include = FALSE}
+knitr::opts_chunk$set(fig.width = 12, fig.height = 8)
+
+library(reticulate)
+
+# need to specify python location (see https://cran.r-project.org/web/packages/reticulate/vignettes/r_markdown.html)
+use_python("../../../../../anaconda3/bin/python")
+
+```
+
+# Setup
+## Load libraries
+### R
+```{r}
+# Load libraries for R
+
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(uncmbb)) # dataset
+
+```
+
+### Python
+
+```{python}
+
+# Load libraries for Python
+
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+```
+
+## Read data
+
+### R
+
+```{r}
+# no need to add uncmbb::, but to clarify where object 'unc' is coming from
+unc_r <- uncmbb::unc 
+print(head(unc_r))
+
+```
+
+### Python
+
+```{python}
+
+# read R data object (from UNCMBB package) in Python
+unc_py = r.unc
+print(unc_py.head())
+
+```
+
+
+# Bar chart
+
+## Simple frequency
+### R
+```{r}
+
+# Option 1: no pre summarizing
+unc_r %>% ggplot(aes(x = Type)) +
+          geom_bar()
+
+# Option 2: summarize data before plotting
+unc_r %>% group_by(Type) %>%
+          summarize(n = n()) %>% # see ?dplyr::count
+          ggplot(aes(x = Type, y = n)) +
+          geom_bar(stat = "identity")
+
+
+```
+
+### Python
+
+```{python}
+# Option 1: no pre summarizing
+unc_py['Type'].value_counts().plot(kind = 'bar')
+plt.show()
+
+
+# Option 2: summarize data before plotting
+unc_py.groupby('Type').size().plot(kind = 'bar')
+plt.show()
+
+```
+
+## Grouped frequency
+### R
+```{r}
+unc_r %>% group_by(Type, Result) %>%
+          summarize(n = n()) %>%
+          ggplot(aes(x = Type, y = n)) +
+          geom_bar(stat = "identity", position = "dodge", aes(fill = factor(Result)))
+
+```
+
+### Python
+
+```{python}
+t = unc_py.groupby(['Type', 'Result']).size().reset_index(name = 'games').pivot('Type', 'Result', 'games').reset_index()
+t.plot(kind = 'bar', x = 'Type')
+plt.show()
+```
+
+
+# Line chart
+## Simple sequence
+### R
+```{r}
+# Option 1: use join (to divide # of wins by # of games)
+t <- unc_r %>% count(Season)
+unc_r %>% group_by(Season, Result) %>%
+            summarize(games = n()) %>%
+            inner_join(t, by = "Season") %>%
+            filter(Result == "W") %>%
+            mutate(perc = round(games/n, 4)) %>%
+            ggplot(aes(x = Season, y = perc)) + 
+            geom_line(aes(group = 1))
+    
+# Option 2: using jutilr::add_percent
+unc_r %>% group_by(Season, Result) %>%
+            summarize(games = n()) %>%
+            jutilr::add_percent(var = "games") %>% 
+            filter(Result == "W") %>%
+            ggplot(aes(x = Season, y = perc)) + 
+            geom_line(aes(group = 1))
+    
+```
+
+### Python
+
+```{python}
+
+# Optioin 1: use join (to divide # of wins by # of games per season)
+
+t = unc_py.Season.value_counts().reset_index(name = "total")
+t2 = unc_py.groupby(['Season', 'Result']).size().reset_index(name = 'games')
+t3 = pd.merge(t, t2, left_on = 'index', right_on = 'Season').sort_values('Season')
+t3['perc'] = t3.games/t3.total
+t3.loc[t3.Result == 'W', ['Season', 'perc']].plot(kind = 'line', x = 'Season', y = 'perc')
+plt.show()
+
+
+```
+
+
+## Grouped sequence 
+### R
+```{r}
+unc_r %>% group_by(Season, Result) %>%
+            summarize(games = n()) %>%
+            ggplot(aes(x = Season, y = games)) + 
+            geom_line(aes(group = Result, colour = Result))
+
+```
+
+### Python
+
+```{python}
+
+t = unc_py.groupby(['Season', 'Result']).size().reset_index(name = 'games').pivot('Season', 'Result', 'games').reset_index()
+t.plot(kind = 'line', x = 'Season')
+plt.show()
+
+
+```

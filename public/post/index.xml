@@ -6,10 +6,47 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Coping with worst loss at home</title>
+      <link>/post/2019/01/13/worst-performance-at-home-sweet-dome/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/01/13/worst-performance-at-home-sweet-dome/</guid>
+      <description>It’s been a tough weekend, not least because Tar Heels lost at home. Sometimes I feel like I’m vested too much in the outcome of the Heel’s basketball games, and if my emotional rollercoaster the rest of the weekend gives any clue, I probably am, just a litttle bit. I tried to shake it off, yet it wasn’t particularly easy, not only because we lost at home, but because the loss was the worst one at home under Roy Williams.</description>
+    </item>
+    
+    <item>
+      <title>First 8 games results</title>
+      <link>/post/2018/12/01/first-8-games-results/</link>
+      <pubDate>Sat, 01 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/12/01/first-8-games-results/</guid>
+      <description># Load libraries for R suppressPackageStartupMessages(library(ggplot2)) suppressPackageStartupMessages(library(dplyr)) suppressPackageStartupMessages(library(uncmbb)) # dataset n &amp;lt;- 8 df_n &amp;lt;- unc %&amp;gt;% group_by(Season) %&amp;gt;% arrange(Game_Date) %&amp;gt;% top_n(-n, Game_Date) a &amp;lt;- df_n %&amp;gt;% group_by(Season) %&amp;gt;% summarize(wins = sum(Result == &amp;quot;W&amp;quot;), losses = sum(Result == &amp;quot;L&amp;quot;)) %&amp;gt;% left_join(mbb_champ_season(unc), by = &amp;quot;Season&amp;quot;) b &amp;lt;- a %&amp;gt;% ggplot(aes(x = losses)) + geom_bar() df_pre12 &amp;lt;- unc %&amp;gt;% group_by(Season) %&amp;gt;% filter(as.numeric(substring(Game_Date, 6, 7)) %in% c(10, 11)) %&amp;gt;% summarize(games = n(), wins = sum(Result == &amp;quot;W&amp;quot;), losses = sum(Result == &amp;quot;L&amp;quot;)) b &amp;lt;- df_pre12 %&amp;gt;% ggplot(aes(x = losses)) + geom_bar() </description>
+    </item>
+    
+    <item>
+      <title>SQL, Visualization, R, and Python</title>
+      <link>/post/2018/11/03/plotting-101-r-vs-python/</link>
+      <pubDate>Sat, 03 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/11/03/plotting-101-r-vs-python/</guid>
+      <description>Setup Load libraries Read data  Bar chart Simple frequency Grouped frequency  Line chart Simple sequence Grouped sequence    Not long ago, I saw a thread in my tweeter feed that was talking about what should be the first thing that a data scientist student learns. There were two answers that made sense to me: SQL and visualization.
+SQL, because, one needs to be able to get desired data from somewhere, and for the most part in an industry setting at least, that somewhere is typically some form of databases (e.</description>
+    </item>
+    
+    <item>
+      <title>Home game streak</title>
+      <link>/post/2018/10/06/home-game-streak/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/10/06/home-game-streak/</guid>
+      <description>The schedule for the 2018-2019 UNC MBB season has been out, and I ran into a blog post that said something about some teams getting preferable schedules than others, in that those lucky teams get to play three consecutive games at home and in some case, not having to face the same number of consecutive games on the road. I remembered UNC team had a touch streak last season, having to play 3 in a row on the road, and with the current 15 member system (since 2010), such imbalance in schedule is bound to happen eventually.</description>
+    </item>
     
     <item>
       <title>Vim, vim-slime, and screen</title>
@@ -66,45 +103,6 @@ Having a good data analysis workflow is beneficial and needed to do reproducible
       
       <guid>/post/2018/07/22/external-presentation-goal/</guid>
       <description>Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year1, I have a similar personal goal that I started last year. While I’d love to write a book a year, it’s too ambitious a goal for me (and many people in general, I’d think) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker.</description>
-    </item>
-    
-    <item>
-      <title>Insert images in blogdown post, static directory, and xaringan</title>
-      <link>/post/2018/05/17/insert-images-in-blogdown-post/</link>
-      <pubDate>Thu, 17 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/05/17/insert-images-in-blogdown-post/</guid>
-      <description>While working on yet another separate blog post, I needed to insert images in the post. I knew from rmarkdown syntax that I can use: ![image name](path to file), but then I didn’t know where the image files need to be.
-It turns out I can have the image files under the static/ directory, everything under which will be copied to public directory.
-Moreover, static/ directory can also be used to build Rmd documents (e.</description>
-    </item>
-    
-    <item>
-      <title>R package development walk-thru</title>
-      <link>/post/2018/05/11/r-package-development-walk-thru/</link>
-      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/05/11/r-package-development-walk-thru/</guid>
-      <description>Create a new RStudio project. Next the best part so far: we have to give the new package a name! Once new project is created, this is the default contents. We’ll go to project options menu and check roxygen option for documentation. Now let’s create our own function. Let’s test the new function by loading the functions. No need for sourcing anymore! Now that the function is working as intended, let’s document the function for others, including future us.</description>
-    </item>
-    
-    <item>
-      <title>Random Forest Revisited</title>
-      <link>/post/2018/05/11/random-forest-revisited/</link>
-      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/05/11/random-forest-revisited/</guid>
-      <description>Hypothetical setting  Objective: binary classification N = 5M observations p = 10 variables (5 categorical and 5 continuous variables) ntree = 100 (model will not be adversely affected if ntree is too big) mtry = number of predictors to consider at each split (fixed or determined by resampling (10-fold cv)   Bootstrap samples for each tree  Bootstrap samples (sampling with replacement) of same size as the original data (N) is taken at each tree.</description>
-    </item>
-    
-    <item>
-      <title>Vim mode in RStudio</title>
-      <link>/post/2018/05/11/vim-mode-in-rstudio/</link>
-      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/05/11/vim-mode-in-rstudio/</guid>
-      <description>I heard about Vim mode in RStudio but haven’t really given it a try. While working on a new blog post (not this one), I decided to give it a try, as I had to keep switching between non-Vim mode on my local Mac and Vim mode in my remote server (Linux). I’m not a Vim expert by any measure, but for some reason, I like working in Vim.
-So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started using Vim in RStudio.</description>
     </item>
     
   </channel>

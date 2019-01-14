@@ -1,0 +1,44 @@
+---
+title: First 8 games results
+author: Jay
+date: '2018-12-01'
+slug: first-8-games-results
+categories:
+  - unc
+tags:
+  - uncmbb
+draft: true
+
+---
+
+
+```{r}
+# Load libraries for R
+
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(uncmbb)) # dataset
+n <- 8
+df_n <- unc %>% group_by(Season) %>% 
+             arrange(Game_Date) %>%
+             top_n(-n, Game_Date)
+
+
+a <- df_n %>% group_by(Season) %>%
+          summarize(wins = sum(Result == "W"), losses = sum(Result == "L")) %>%
+          left_join(mbb_champ_season(unc), by = "Season") 
+
+b <- a %>% ggplot(aes(x = losses)) +
+            geom_bar()
+
+
+```
+
+```{r}
+df_pre12 <- unc %>% group_by(Season) %>%
+                  filter(as.numeric(substring(Game_Date, 6, 7)) %in% c(10, 11)) %>%
+                  summarize(games = n(), wins = sum(Result == "W"), losses = sum(Result == "L"))
+
+b <- df_pre12 %>% ggplot(aes(x = losses)) + 
+              geom_bar()
+```
