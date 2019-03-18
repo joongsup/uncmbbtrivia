@@ -6,8 +6,52 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 13 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Home and home score difference</title>
+      <link>/post/2019/02/04/home-and-home-score-difference/</link>
+      <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/02/04/home-and-home-score-difference/</guid>
+      <description>
+        &lt;pre&gt;&lt;code&gt;## Adding missing grouping variables: `season_opp`&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# score diff between 1st and 2nd games
+# too many to show! move on to next 
+p &amp;lt;- df_hnh %&amp;gt;% ungroup() %&amp;gt;%
+                ggplot(aes(x = game_order, y = score_diff)) +
+                geom_point(aes(group = season_opp, colour = season_opp)) #+
+                #geom_line(aes(group = season_opp, colour = season_opp)) +
+print(p)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-02-04-home-and-home-score-difference_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# score change distribution
+df_hnh_wide &amp;lt;- df_hnh %&amp;gt;% ungroup() %&amp;gt;%
+                          select(Season, Opponent_School, game_order, score_diff) %&amp;gt;%
+                          spread(key = game_order, value = score_diff) %&amp;gt;%
+                          mutate(turnaround = game_2 - game_1)
+
+df_hnh_wide %&amp;gt;% arrange(desc(turnaround)) %&amp;gt;% head(10)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 10 x 5
+##    Season Opponent_School game_1 game_2 turnaround
+##    &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;            &amp;lt;dbl&amp;gt;  &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+##  1 2006   Virginia            -4     45         49
+##  2 1993   Wake Forest        -26     18         44
+##  3 1989   Virginia           -23     18         41
+##  4 1997   Florida State      -13     28         41
+##  5 1998   Florida State        8     48         40
+##  6 1970   Clemson              5     44         39
+##  7 2014   Wake Forest         -6     33         39
+##  8 1965   Wake Forest        -22     16         38
+##  9 1997   Wake Forest        -24     14         38
+## 10 1985   Clemson             -2     34         36&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p &amp;lt;- df_hnh_wide %&amp;gt;% mutate(RWera = ifelse(Season &amp;gt;= 2004, TRUE, FALSE)) %&amp;gt;%
+                      ggplot(aes(x = turnaround)) + 
+                      geom_density(aes(colour = factor(RWera)))&lt;/code&gt;&lt;/pre&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>Coping with worst loss at home</title>
@@ -2408,29 +2452,6 @@ NA
 &lt;li&gt;&lt;a href=&#34;https://edwinth.github.io/blog/workflow/&#34; class=&#34;uri&#34;&gt;https://edwinth.github.io/blog/workflow/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext&#34; class=&#34;uri&#34;&gt;https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>External presentation goal</title>
-      <link>/post/2018/07/22/external-presentation-goal/</link>
-      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/07/22/external-presentation-goal/</guid>
-      <description>
-        &lt;p&gt;Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;, I have a similar personal goal that I started last year. While I’d love to write a book a year, it’s too ambitious a goal for me (and many people in general, I’d think) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker.&lt;/p&gt;
-&lt;p&gt;Back in May, I did a presentation on R package development for the ATL R User group, successfully completing the mission for the year :) The presentation has two decks: (1) main deck (&lt;a href=&#34;https://joongsup.rbind.io/slides/r_pkg_devel_final.pdf&#34;&gt;here&lt;/a&gt;) containing the introduction and high level overview, and (2) reference deck&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; (&lt;a href=&#34;https://joongsup.rbind.io/slides/r_pkg_devel.html&#34;&gt;here&lt;/a&gt;) containing the screenshots of each step of the R package development that I covered during the presentation.&lt;/p&gt;
-&lt;p&gt;I should probably add to my personal goal list something about blog posting&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;. I’m just happy still that blogging is this easy (again thanks to Yihui!), and so there should be no excuse why I can’t write a post more frequently. Well, I won’t make it an official personal goal just yet, but for now, I will have to keep writing posts whenever I can, sometimes multiple posts at one sitting, just like today! :)&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Amazingly, he’s successfully written a book a year for the last couple of years as far as I know.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;which I talked about &lt;a href=&#34;https://joongsup.rbind.io/post/2018/05/17/insert-images-in-blogdown-post/&#34;&gt;here&lt;/a&gt;&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;Yihui’s frequent blog posting is also amazing.&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
 &lt;/div&gt;
 
         

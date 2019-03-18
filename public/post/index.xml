@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 13 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Home and home score difference</title>
+      <link>/post/2019/02/04/home-and-home-score-difference/</link>
+      <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/02/04/home-and-home-score-difference/</guid>
+      <description>## Adding missing grouping variables: `season_opp` # score diff between 1st and 2nd games # too many to show! move on to next p &amp;lt;- df_hnh %&amp;gt;% ungroup() %&amp;gt;% ggplot(aes(x = game_order, y = score_diff)) + geom_point(aes(group = season_opp, colour = season_opp)) #+ #geom_line(aes(group = season_opp, colour = season_opp)) + print(p) # score change distribution df_hnh_wide &amp;lt;- df_hnh %&amp;gt;% ungroup() %&amp;gt;% select(Season, Opponent_School, game_order, score_diff) %&amp;gt;% spread(key = game_order, value = score_diff) %&amp;gt;% mutate(turnaround = game_2 - game_1) df_hnh_wide %&amp;gt;% arrange(desc(turnaround)) %&amp;gt;% head(10) ## # A tibble: 10 x 5 ## Season Opponent_School game_1 game_2 turnaround ## &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 2006 Virginia -4 45 49 ## 2 1993 Wake Forest -26 18 44 ## 3 1989 Virginia -23 18 41 ## 4 1997 Florida State -13 28 41 ## 5 1998 Florida State 8 48 40 ## 6 1970 Clemson 5 44 39 ## 7 2014 Wake Forest -6 33 39 ## 8 1965 Wake Forest -22 16 38 ## 9 1997 Wake Forest -24 14 38 ## 10 1985 Clemson -2 34 36 p &amp;lt;- df_hnh_wide %&amp;gt;% mutate(RWera = ifelse(Season &amp;gt;= 2004, TRUE, FALSE)) %&amp;gt;% ggplot(aes(x = turnaround)) + geom_density(aes(colour = factor(RWera))) </description>
+    </item>
     
     <item>
       <title>Coping with worst loss at home</title>
@@ -94,15 +103,6 @@ It started with @thosjleepr’s tweet that showed up in my feed:
       <guid>/post/2018/07/22/comments-on-data-analysis-workflow/</guid>
       <description>Introduction There are several benefits of establishing a good and routine data analysis workflow that you follow on a daily basis. At least two benefits come to mind immediately.
 Having a good data analysis workflow is beneficial and needed to do reproducible research/work (RR). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break.</description>
-    </item>
-    
-    <item>
-      <title>External presentation goal</title>
-      <link>/post/2018/07/22/external-presentation-goal/</link>
-      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/07/22/external-presentation-goal/</guid>
-      <description>Like Yihui (of blogdown and many other awesome R packages) whose goal is to publish a book a year1, I have a similar personal goal that I started last year. While I’d love to write a book a year, it’s too ambitious a goal for me (and many people in general, I’d think) to pursue. Instead, my personal goal is to do an external presentation a year, be it for meetups, conferences, or nearby schools as a guest speaker.</description>
     </item>
     
   </channel>

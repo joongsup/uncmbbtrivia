@@ -1,8 +1,7 @@
 ---
 title: "R Package Development"
-subtitle: "(testing static/slides)"
 author: "Jay Lee"
-date: "2018/05/22"
+date: "2019/03/18"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -34,7 +33,6 @@ ggplot(data = mtcars) +
 
 # Code/Function Reuse
 
-
 - Copy and paste from existinig code snippets
 
 - source("path/to/commonly/used/functions.R")
@@ -44,6 +42,19 @@ ggplot(data = mtcars) +
 - library(my_awesome_pkg)
 
 ---
+# Cheet Sheet
+
+- Create an R package Project from RStudio
+
+- Change project options to use roxygen2
+
+- Delete R/hello.R, man/hello.Rd, and (default) NAMESPACE
+
+- Iterate through: write/load/document/check/install
+
+- Build source and share
+
+  ---
 
 class: center, middle
 
@@ -75,6 +86,30 @@ class: center, middle
 .center[![pkg](../img/hello_world.png)]
 
 ---
+## Bye World!
+.center[![pkg](../img/delete_hello_1.png)]
+
+---
+## Bye World!
+.center[![pkg](../img/delete_hello_2.png)]
+
+---
+## Bye World!
+.center[![pkg](../img/delete_hello_man_1.png)]
+
+---
+## Bye World!
+.center[![pkg](../img/delete_hello_man_2.png)]
+
+---
+## Bye (Default) NAMESPACE!
+.center[![pkg](../img/delete_namespace_1.png)]
+
+---
+## Bye (Default) NAMESPACE!
+.center[![pkg](../img/delete_namespace_2.png)]
+
+---
 ## Change Project Options
 .center[![pkg](../img/project_option.png)]
 
@@ -87,7 +122,7 @@ class: center, middle
 
 - install.packages("roxygen2")
 
-- Save and restart RStudio project (optional)
+- Save and restart RStudio Project (optional)
 
 - Return to Project Option
 
@@ -122,7 +157,7 @@ class: center, middle
 
 - install.packages("devtools")
 
-- Save and restart RStudio project
+- Save and restart RStudio Project
 
 - Return to Build menu
 
@@ -142,18 +177,6 @@ class: center, middle
 ## Generate Documents (cmd-shift-D)
 .center[![pkg](../img/check_doc.png)]
 
----
-## Bye World!
-.center[![pkg](../img/rm_hello.png)]
-
----
-## Delete NAMESPACE
-.center[![namespace](../img/default_namespace_warning.png)]
-
-
----
-## Install and Restart (cmd-shift-B)
-.center[![pkg](../img/install.png)]
 
 ---
 ## Check (cmd-shift-E)
@@ -187,6 +210,10 @@ class: center, middle
 .center[![pkg](../img/check_warning_fixed2.png)]
 
 ---
+## Install and Restart (cmd-shift-B)
+.center[![pkg](../img/install.png)]
+
+---
 ## Build Source
 .center[![pkg](../img/build_src.png)]
 
@@ -200,7 +227,7 @@ class: center, middle
 - Copy zipped source file to a common location
 
 - install.packages("path/to/source", repos = NULL) 
-
+    
 ---
 ## Share with Strangers
 .center[![pkg](../img/setup_git.png)]
@@ -240,5 +267,3 @@ demor_ht(mtcars)
 class: center, middle
 
 # Thanks!
-
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
