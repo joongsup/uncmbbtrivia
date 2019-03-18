@@ -54,7 +54,7 @@ ggplot(data = mtcars) +
 
 - Build source and share
 
-  ---
+---
 
 class: center, middle
 
