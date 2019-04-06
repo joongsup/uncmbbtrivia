@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R Markdown in Vim</title>
+      <link>/post/2019/04/05/r-markdown-revisited/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/04/05/r-markdown-revisited/</guid>
+      <description>Two ways to render R Markdown documents Render R Markdown from Vim (without opening R) Render R Markdown (and send email) from R    Two ways to render R Markdown documents I saw this tweet a couple of days ago and decided to look for ways to use R Markdown more at work.
+TIL you can embed a &amp;quot;code download&amp;quot; button in an HTML #rmarkdown doc so that users can click to download your source .</description>
+    </item>
     
     <item>
       <title>Home and home score difference</title>
@@ -93,16 +103,6 @@ It started with @thosjleepr’s tweet that showed up in my feed:
       
       <guid>/post/2018/07/27/my-old-coding-products/</guid>
       <description>Lately I’ve been thinking about why I care much about everything R and sharing the joy of using R, which deserves its own post. Much of it has to do with how I did and did not get a proper training in coding suitable for data analysis in the past, but as I looked back on my personal coding history, I came across hundreds of code files that I wrote in the past1.</description>
-    </item>
-    
-    <item>
-      <title>Comments on data analysis workflow</title>
-      <link>/post/2018/07/22/comments-on-data-analysis-workflow/</link>
-      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/07/22/comments-on-data-analysis-workflow/</guid>
-      <description>Introduction There are several benefits of establishing a good and routine data analysis workflow that you follow on a daily basis. At least two benefits come to mind immediately.
-Having a good data analysis workflow is beneficial and needed to do reproducible research/work (RR). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break.</description>
     </item>
     
   </channel>

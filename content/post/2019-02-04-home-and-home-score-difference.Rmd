@@ -1,0 +1,65 @@
+---
+title: Home and home score difference
+author: Jay
+date: '2019-02-04'
+slug: home-and-home-score-difference
+categories:
+  - UNC
+tags:
+  - uncmbb
+draft: true
+---
+
+```{r, echo = FALSE, fig.width = 12, fig.height = 8}
+# Load libraries for R
+
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(uncmbb)) # dataset
+suppressPackageStartupMessages(library(kableExtra))
+
+df_hnh_schools <- unc %>% filter(Type == "REG") %>%
+                  group_by(Season, Opponent_School) %>%
+                  summarize(games = n()) %>%
+                  filter(games == 2) %>%
+                  mutate(season_opp = paste0(Season, "_", Opponent_School))
+
+df_hnh <- unc %>% filter(Type == "REG") %>%
+                  mutate(season_opp = paste0(Season, "_", Opponent_School)) %>%
+                  filter(season_opp %in% df_hnh_schools$season_opp) %>%
+                  mutate(score_diff = Tm - Opp) %>% 
+                  arrange(season_opp, Game_Date) %>%
+                  group_by(Season, season_opp) %>%
+                  mutate(game_order = paste0("game_", row_number())) %>%
+                  select(Season, Game_Date, Opponent_School, score_diff, game_order)
+```
+
+
+
+```{r}
+# score diff between 1st and 2nd games
+# too many to show! move on to next 
+p <- df_hnh %>% ungroup() %>%
+                ggplot(aes(x = game_order, y = score_diff)) +
+                geom_point(aes(group = season_opp, colour = season_opp)) #+
+                #geom_line(aes(group = season_opp, colour = season_opp)) +
+print(p)
+
+
+```
+
+
+```{r}
+# score change distribution
+df_hnh_wide <- df_hnh %>% ungroup() %>%
+                          select(Season, Opponent_School, game_order, score_diff) %>%
+                          spread(key = game_order, value = score_diff) %>%
+                          mutate(turnaround = game_2 - game_1)
+
+df_hnh_wide %>% arrange(desc(turnaround)) %>% head(10)
+
+p <- df_hnh_wide %>% mutate(RWera = ifelse(Season >= 2004, TRUE, FALSE)) %>%
+                      ggplot(aes(x = turnaround)) + 
+                      geom_density(aes(colour = factor(RWera)))
+```

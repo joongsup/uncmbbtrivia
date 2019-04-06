@@ -1,0 +1,49 @@
+---
+title: R Markdown in Vim
+author: Jay
+date: '2019-04-05'
+categories:
+  - R
+  - Tools
+tags:
+  - coding
+  - Vim
+  - workflow
+slug: r-markdown-revisited
+output:
+  blogdown::html_page:
+    toc: yes
+draft: false
+---
+
+## Two ways to render R Markdown documents
+
+I saw this tweet a couple of days ago and decided to look for ways to use R Markdown more at work. 
+
+```{r, echo = FALSE}
+blogdown::shortcode('tweet', '1108925218850893832')
+```
+
+It's not like I haven't tried to use R Markdown before^[After all, I use R Markdown for all the posts in this blog :)], but at the time of this [post](https://joongsup.rbind.io/post/2018/07/22/comments-on-data-analysis-workflow/), I hadn't been able to find a way to effectively incorporate R Markdown at work for various reasons. Since then, however, I added a couple of new tools to my data analysis toolbox^[E.g., incorporating [Vim-slime](https://joongsup.rbind.io/post/2018/10/06/Vim-and-slime/) and GNU [Make](https://joongsup.rbind.io/post/2018/08/26/gnu-make-for-workflow-manager/)], which I felt might help make it work this time using R Markdown more at work. 
+
+### Render R Markdown from Vim (without opening R)
+And there was a Vim plug-in for R Markdown indeed! In fact, a quick online search led me to three relevant/required Vim plug-ins: [vim-rmarkdown](https://github.com/vim-pandoc/vim-rmarkdown), [vim-pandoc](https://github.com/vim-pandoc/vim-pandoc), and [vim-pandoc-syntax](https://github.com/vim-pandoc/vim-pandoc-syntax). 
+
+Following the plug-in instructions, as well as this helpful configuration [tip](https://stackoverflow.com/questions/34314214/vim-rmarkdown-plugin-configuration), I was up and running with vim-rmarkdown plug-in in no time. 
+
+```{r all, echo = FALSE, fig.cap = "Rendering R Markdown Document from within Vim", out.width = "100%", fig.pos = 'h', fig.align = 'center'}
+knitr::include_graphics("/img/vim_rmd_work.gif")
+```
+
+In addition to the syntax highlighting (from vim-pandoc/vim-pandoc-syntax plug-ins), the vim-rmarkdown plug-in provides a function to render a source R Markdown document into output types of interest (e.g., html) from within the source R Markdown document in Vim. **:RMarkdown** command does the job, and it displays successful run message once the rendering is complete^[Maybe I'm missing something, but it would be even better if it shows the rendering stage, e.g., completion %].
+
+### Render R Markdown (and send email) from R
+R Markdown documents can also be rendered from R too, by the usual **rmarkdown::render()** function. Generally one can review the rendered output by clicking the output file, but what if such clicking/reviewing is not an option? That's a challenge I'm facing at work. Ok, maybe there's a way to click/review a remote file, and if that's the case, then nobody hasn't told me how to just yet :)
+
+I'm sure there's a better way, but the workaround I came up with has two steps:
+
++ Render R Markdown document (rmarkdown::render())
++ Send an email to self with rendered output as attachment (sendmailR::sendmail()). 
+
+I didn't know about the sendmailR package before, but the package lets you send emails from within R. I ended up writing a couple of wrapper functions (saved in my personal package) so that rendering and sending email can be done all at once by a single function call. Yes there are some drawbacks^[One main drawback I found, ironically, is that I have yet to find a way to download the source R Markdown document using the code_download option as in the above tweet. Maybe the source R Markdown document also needs to be sent via email along with the output?], but I've been happy with the workflow so far. 
+

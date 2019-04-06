@@ -1,0 +1,65 @@
+---
+title: R Markdown in Vim
+author: Jay
+date: '2019-04-05'
+categories:
+  - R
+  - Tools
+tags:
+  - coding
+  - Vim
+  - workflow
+slug: r-markdown-revisited
+output:
+  blogdown::html_page:
+    toc: yes
+draft: false
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#two-ways-to-render-r-markdown-documents">Two ways to render R Markdown documents</a><ul>
+<li><a href="#render-r-markdown-from-vim-without-opening-r">Render R Markdown from Vim (without opening R)</a></li>
+<li><a href="#render-r-markdown-and-send-email-from-r">Render R Markdown (and send email) from R</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="two-ways-to-render-r-markdown-documents" class="section level2">
+<h2>Two ways to render R Markdown documents</h2>
+<p>I saw this tweet a couple of days ago and decided to look for ways to use R Markdown more at work.</p>
+{{% tweet "1108925218850893832" %}}
+<p>It’s not like I haven’t tried to use R Markdown before<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, but at the time of this <a href="https://joongsup.rbind.io/post/2018/07/22/comments-on-data-analysis-workflow/">post</a>, I hadn’t been able to find a way to effectively incorporate R Markdown at work for various reasons. Since then, however, I added a couple of new tools to my data analysis toolbox<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, which I felt might help make it work this time using R Markdown more at work.</p>
+<div id="render-r-markdown-from-vim-without-opening-r" class="section level3">
+<h3>Render R Markdown from Vim (without opening R)</h3>
+<p>And there was a Vim plug-in for R Markdown indeed! In fact, a quick online search led me to three relevant/required Vim plug-ins: <a href="https://github.com/vim-pandoc/vim-rmarkdown">vim-rmarkdown</a>, <a href="https://github.com/vim-pandoc/vim-pandoc">vim-pandoc</a>, and <a href="https://github.com/vim-pandoc/vim-pandoc-syntax">vim-pandoc-syntax</a>.</p>
+<p>Following the plug-in instructions, as well as this helpful configuration <a href="https://stackoverflow.com/questions/34314214/vim-rmarkdown-plugin-configuration">tip</a>, I was up and running with vim-rmarkdown plug-in in no time.</p>
+<div class="figure" style="text-align: center"><span id="fig:all"></span>
+<img src="/img/vim_rmd_work.gif" alt="Rendering R Markdown Document from within Vim" width="100%" />
+<p class="caption">
+Figure 1: Rendering R Markdown Document from within Vim
+</p>
+</div>
+<p>In addition to the syntax highlighting (from vim-pandoc/vim-pandoc-syntax plug-ins), the vim-rmarkdown plug-in provides a function to render a source R Markdown document into output types of interest (e.g., html) from within the source R Markdown document in Vim. <strong>:RMarkdown</strong> command does the job, and it displays successful run message once the rendering is complete<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+</div>
+<div id="render-r-markdown-and-send-email-from-r" class="section level3">
+<h3>Render R Markdown (and send email) from R</h3>
+<p>R Markdown documents can also be rendered from R too, by the usual <strong>rmarkdown::render()</strong> function. Generally one can review the rendered output by clicking the output file, but what if such clicking/reviewing is not an option? That’s a challenge I’m facing at work. Ok, maybe there’s a way to click/review a remote file, and if that’s the case, then nobody hasn’t told me how to just yet :)</p>
+<p>I’m sure there’s a better way, but the workaround I came up with has two steps:</p>
+<ul>
+<li>Render R Markdown document (rmarkdown::render())</li>
+<li>Send an email to self with rendered output as attachment (sendmailR::sendmail()).</li>
+</ul>
+<p>I didn’t know about the sendmailR package before, but the package lets you send emails from within R. I ended up writing a couple of wrapper functions (saved in my personal package) so that rendering and sending email can be done all at once by a single function call. Yes there are some drawbacks<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>, but I’ve been happy with the workflow so far.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>After all, I use R Markdown for all the posts in this blog :)<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>E.g., incorporating <a href="https://joongsup.rbind.io/post/2018/10/06/Vim-and-slime/">Vim-slime</a> and GNU <a href="https://joongsup.rbind.io/post/2018/08/26/gnu-make-for-workflow-manager/">Make</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Maybe I’m missing something, but it would be even better if it shows the rendering stage, e.g., completion %<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>One main drawback I found, ironically, is that I have yet to find a way to download the source R Markdown document using the code_download option as in the above tweet. Maybe the source R Markdown document also needs to be sent via email along with the output?<a href="#fnref4" class="footnote-back">↩</a></p></li>
+</ol>
+</div>

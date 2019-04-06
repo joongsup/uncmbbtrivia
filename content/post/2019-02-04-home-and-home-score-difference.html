@@ -1,0 +1,46 @@
+---
+title: Home and home score difference
+author: Jay
+date: '2019-02-04'
+slug: home-and-home-score-difference
+categories:
+  - UNC
+tags:
+  - uncmbb
+draft: true
+---
+
+
+
+<pre><code>## Adding missing grouping variables: `season_opp`</code></pre>
+<pre class="r"><code># score diff between 1st and 2nd games
+# too many to show! move on to next 
+p &lt;- df_hnh %&gt;% ungroup() %&gt;%
+                ggplot(aes(x = game_order, y = score_diff)) +
+                geom_point(aes(group = season_opp, colour = season_opp)) #+
+                #geom_line(aes(group = season_opp, colour = season_opp)) +
+print(p)</code></pre>
+<p><img src="/post/2019-02-04-home-and-home-score-difference_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># score change distribution
+df_hnh_wide &lt;- df_hnh %&gt;% ungroup() %&gt;%
+                          select(Season, Opponent_School, game_order, score_diff) %&gt;%
+                          spread(key = game_order, value = score_diff) %&gt;%
+                          mutate(turnaround = game_2 - game_1)
+
+df_hnh_wide %&gt;% arrange(desc(turnaround)) %&gt;% head(10)</code></pre>
+<pre><code>## # A tibble: 10 x 5
+##    Season Opponent_School game_1 game_2 turnaround
+##    &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+##  1 2006   Virginia            -4     45         49
+##  2 1993   Wake Forest        -26     18         44
+##  3 1989   Virginia           -23     18         41
+##  4 1997   Florida State      -13     28         41
+##  5 1998   Florida State        8     48         40
+##  6 1970   Clemson              5     44         39
+##  7 2014   Wake Forest         -6     33         39
+##  8 1965   Wake Forest        -22     16         38
+##  9 1997   Wake Forest        -24     14         38
+## 10 1985   Clemson             -2     34         36</code></pre>
+<pre class="r"><code>p &lt;- df_hnh_wide %&gt;% mutate(RWera = ifelse(Season &gt;= 2004, TRUE, FALSE)) %&gt;%
+                      ggplot(aes(x = turnaround)) + 
+                      geom_density(aes(colour = factor(RWera)))</code></pre>

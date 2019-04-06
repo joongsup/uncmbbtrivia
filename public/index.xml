@@ -6,8 +6,68 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Apr 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>R Markdown in Vim</title>
+      <link>/post/2019/04/05/r-markdown-revisited/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/04/05/r-markdown-revisited/</guid>
+      <description>
+        &lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#two-ways-to-render-r-markdown-documents&#34;&gt;Two ways to render R Markdown documents&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#render-r-markdown-from-vim-without-opening-r&#34;&gt;Render R Markdown from Vim (without opening R)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#render-r-markdown-and-send-email-from-r&#34;&gt;Render R Markdown (and send email) from R&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;two-ways-to-render-r-markdown-documents&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Two ways to render R Markdown documents&lt;/h2&gt;
+&lt;p&gt;I saw this tweet a couple of days ago and decided to look for ways to use R Markdown more at work.&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;TIL you can embed a &amp;quot;code download&amp;quot; button in an HTML &lt;a href=&#34;https://twitter.com/hashtag/rmarkdown?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rmarkdown&lt;/a&gt; doc so that users can click to download your source .Rmd from the rendered HTML version...without GitHub 🤩 &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt;&lt;br&gt;&lt;br&gt;YAML:&lt;br&gt;&lt;br&gt;---&lt;br&gt;output:&lt;br&gt;  html_document:&lt;br&gt;    code_download: true&lt;br&gt;---&lt;br&gt;&lt;br&gt;Test: &lt;a href=&#34;https://t.co/bp7w7XKF8b&#34;&gt;https://t.co/bp7w7XKF8b&lt;/a&gt; &lt;a href=&#34;https://t.co/uMQK0mvYcF&#34;&gt;pic.twitter.com/uMQK0mvYcF&lt;/a&gt;&lt;/p&gt;&amp;mdash; Alison Hill (@apreshill) &lt;a href=&#34;https://twitter.com/apreshill/status/1108925218850893832?ref_src=twsrc%5Etfw&#34;&gt;March 22, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;It’s not like I haven’t tried to use R Markdown before&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;, but at the time of this &lt;a href=&#34;https://joongsup.rbind.io/post/2018/07/22/comments-on-data-analysis-workflow/&#34;&gt;post&lt;/a&gt;, I hadn’t been able to find a way to effectively incorporate R Markdown at work for various reasons. Since then, however, I added a couple of new tools to my data analysis toolbox&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;, which I felt might help make it work this time using R Markdown more at work.&lt;/p&gt;
+&lt;div id=&#34;render-r-markdown-from-vim-without-opening-r&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Render R Markdown from Vim (without opening R)&lt;/h3&gt;
+&lt;p&gt;And there was a Vim plug-in for R Markdown indeed! In fact, a quick online search led me to three relevant/required Vim plug-ins: &lt;a href=&#34;https://github.com/vim-pandoc/vim-rmarkdown&#34;&gt;vim-rmarkdown&lt;/a&gt;, &lt;a href=&#34;https://github.com/vim-pandoc/vim-pandoc&#34;&gt;vim-pandoc&lt;/a&gt;, and &lt;a href=&#34;https://github.com/vim-pandoc/vim-pandoc-syntax&#34;&gt;vim-pandoc-syntax&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Following the plug-in instructions, as well as this helpful configuration &lt;a href=&#34;https://stackoverflow.com/questions/34314214/vim-rmarkdown-plugin-configuration&#34;&gt;tip&lt;/a&gt;, I was up and running with vim-rmarkdown plug-in in no time.&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:all&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/vim_rmd_work.gif&#34; alt=&#34;Rendering R Markdown Document from within Vim&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Rendering R Markdown Document from within Vim
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In addition to the syntax highlighting (from vim-pandoc/vim-pandoc-syntax plug-ins), the vim-rmarkdown plug-in provides a function to render a source R Markdown document into output types of interest (e.g., html) from within the source R Markdown document in Vim. &lt;strong&gt;:RMarkdown&lt;/strong&gt; command does the job, and it displays successful run message once the rendering is complete&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;render-r-markdown-and-send-email-from-r&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Render R Markdown (and send email) from R&lt;/h3&gt;
+&lt;p&gt;R Markdown documents can also be rendered from R too, by the usual &lt;strong&gt;rmarkdown::render()&lt;/strong&gt; function. Generally one can review the rendered output by clicking the output file, but what if such clicking/reviewing is not an option? That’s a challenge I’m facing at work. Ok, maybe there’s a way to click/review a remote file, and if that’s the case, then nobody hasn’t told me how to just yet :)&lt;/p&gt;
+&lt;p&gt;I’m sure there’s a better way, but the workaround I came up with has two steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Render R Markdown document (rmarkdown::render())&lt;/li&gt;
+&lt;li&gt;Send an email to self with rendered output as attachment (sendmailR::sendmail()).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I didn’t know about the sendmailR package before, but the package lets you send emails from within R. I ended up writing a couple of wrapper functions (saved in my personal package) so that rendering and sending email can be done all at once by a single function call. Yes there are some drawbacks&lt;a href=&#34;#fn4&#34; class=&#34;footnote-ref&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;, but I’ve been happy with the workflow so far.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;After all, I use R Markdown for all the posts in this blog :)&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;E.g., incorporating &lt;a href=&#34;https://joongsup.rbind.io/post/2018/10/06/Vim-and-slime/&#34;&gt;Vim-slime&lt;/a&gt; and GNU &lt;a href=&#34;https://joongsup.rbind.io/post/2018/08/26/gnu-make-for-workflow-manager/&#34;&gt;Make&lt;/a&gt;&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;Maybe I’m missing something, but it would be even better if it shows the rendering stage, e.g., completion %&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;One main drawback I found, ironically, is that I have yet to find a way to download the source R Markdown document using the code_download option as in the above tweet. Maybe the source R Markdown document also needs to be sent via email along with the output?&lt;a href=&#34;#fnref4&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>Home and home score difference</title>
@@ -2258,200 +2318,6 @@ NA
 &lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Interestingly, it seems I didn’t have to “source” the files to use the functions. Matlab must have known where to look for the function names.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;E.g., see &lt;a href=&#34;http://www.mathworks.com/help/matlab/matlab_prog/create-functions-in-files.html&#34;&gt;here.&lt;/a&gt;&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Comments on data analysis workflow</title>
-      <link>/post/2018/07/22/comments-on-data-analysis-workflow/</link>
-      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/07/22/comments-on-data-analysis-workflow/</guid>
-      <description>
-        &lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;There are several benefits of establishing a good and routine data analysis workflow that you follow on a daily basis. At least two benefits come to mind immediately.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Having a good data analysis workflow is beneficial and needed to do reproducible research/work (RR). RR could mean one thing to one and quite another to others, but to me, doing reproducible work means specifically doing my work in a fashion that allows me to pick up from last touched point in that particular work after some break. For example, after spending 2-3 days on project A, I might go off to do something else for the next 2-3 days, and when I come back to project A, I want to know exactly what’s been done and what I need to do. There are many components of data analysis workflow that can be helpful for one to do RR, and I try to outline them below.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;A routine workflow helps us avoid mental fatigue. This may be from one of the books by Hadley, but to me, this means knowing what, where, why, and how to do things right off the bat when starting a new project. Slowly but surely, I’m settling down to a specific approach that I’ll touch upon later, but to get to this point, I tried several different alternatives, and many times ended up failing, for example, to keep track of how to do things (e.g., refresh data with new source data) all over again when needed. Typical challenges have been, but are not limited to, (1) keeping track of data generation, preparation, and movement steps, (2) having to switch between several environments to do specific tasks (e.g., visual inspection), and (3) saving analysis summary and results in a place that’s as close to the scripts as possible.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div id=&#34;history&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;History&lt;/h2&gt;
-&lt;p&gt;Next, I outline what I have tried so far with a quick rundown of pros and cons for each, beginning with the earliest approach I tried at my current work.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Local RStudio: suitable for most of my personal needs, I’ve been using RStudio on my local computer for a while before joining current work. And even at current work, RStudio was my first tool of choice.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pros
-&lt;ul&gt;
-&lt;li&gt;Quick and easy start: fire up an RStudio session (preferably at a Rproj level) and you’re ready for work.&lt;/li&gt;
-&lt;li&gt;One stop shop: everything you need, you can do it in RStudio pretty much, such as visuals, Rmarkdown reports, blogging, version control (git), etc.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Cons
-&lt;ul&gt;
-&lt;li&gt;Privacy and security: the biggest drawback of using RStudio at work is that many times we’re not allowed to download the data to local computer due to privacy and security reasons. This is one single biggest roadblock that ultimately kept me from using it as a tool of choice at work.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Remote RCloud: an in-house analytics and visualization platform, it allows visual inspections, collaboration among data folks, and many other things, such as shiny app. Once RStudio turned out to be no-go for most tasks at work, I turned to RCloud for everything from data loading and summary, back when it was relatively early (yet still stable) in the development stage.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pros
-&lt;ul&gt;
-&lt;li&gt;Work with company data (small and big): since it’s built in-house, it’s capable of consuming company data.&lt;/li&gt;
-&lt;li&gt;Visualization: unlike a remote R shell, visuals in RCloud is just like that in RStudio.&lt;/li&gt;
-&lt;li&gt;Cells with not just R, but shell, python, shiny, etc.: RCloud can be used to do work not just in R, but also in python and shell.&lt;/li&gt;
-&lt;li&gt;Notebooks: data generation, preparation, plots, and reports can be all saved in a sensible manner.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Cons
-&lt;ul&gt;
-&lt;li&gt;Connection sometimes lost (usually for long running jobs): mostly in its early days, I experienced RCloud hanging from time to time especially for long running jobs, typically big data ingestion, complex tasks (modeling), etc.&lt;/li&gt;
-&lt;li&gt;Need internet/browser: not a biggie, but sometimes need to log in too, and it’s not as quick and easy as starting up a local RStudio session, for example.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Remote R shell: log on to work server, and start up R session!&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pros
-&lt;ul&gt;
-&lt;li&gt;Quick and easy start: just like starting up a local RStudio, starting up a remote R shell is quick and easy, once sshed into remote servers.&lt;/li&gt;
-&lt;li&gt;Can work with company data (usually small, but sometimes big too): it’s safe to work with company data in the remote servers, and depending on the need, rather big data can be explored in a remote R session too.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Cons
-&lt;ul&gt;
-&lt;li&gt;Can’t do visual inspections: one biggest hurdle with this option is its lack of graphic support.&lt;/li&gt;
-&lt;li&gt;Many times data come from various sources and need to be prepared in a separate environment (e.g., hive)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Pyspark in remote python shell&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pros
-&lt;ul&gt;
-&lt;li&gt;Scalable solutions for production deliverables&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Cons
-&lt;ul&gt;
-&lt;li&gt;Spark environment in general fails with error messages that are not easy to back track (i.e., I don’t know what I’m doing wrong)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Sparklyr in remote R shell&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pros
-&lt;ul&gt;
-&lt;li&gt;Scalable solutions in familiar R environment&lt;/li&gt;
-&lt;li&gt;Familiar environment (basically R shell)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Cons
-&lt;ul&gt;
-&lt;li&gt;Unstable? Connection lost frequently (probably because I’m doing something wrong)&lt;/li&gt;
-&lt;li&gt;No visualization (same problem as in remote R shell)&lt;/li&gt;
-&lt;li&gt;Set up time is “long” compared to non spark R shell&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Sparklyr in RCloud&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pros
-&lt;ul&gt;
-&lt;li&gt;Scalable solutions in familiar R environment&lt;/li&gt;
-&lt;li&gt;Visualization&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Cons
-&lt;ul&gt;
-&lt;li&gt;Big data visualization is not too common (e.g., many times need aggregation/summarization for plotting anyway, which doesn’t need to happen in spark, but in hive)&lt;/li&gt;
-&lt;li&gt;Internet/browser&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div id=&#34;current&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Current&lt;/h2&gt;
-&lt;p&gt;Before starting to settle down on a particular workflow, I realized that first thing I needed to do was to identify my day-to-day needs. Not exhaustively, answers to below questions may provide better insights to what we do on a daily basis.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;What kind of data do I work with the most?&lt;/li&gt;
-&lt;li&gt;Where do the data come from?&lt;/li&gt;
-&lt;li&gt;What do I do with the data?&lt;/li&gt;
-&lt;li&gt;Do I need interactive environment or batch jobs?&lt;/li&gt;
-&lt;li&gt;How about ML? Is production ML an important part of my job?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;It turns out that more often than not, majority of my day-to-day needs are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Explore data stored in hive tables&lt;/li&gt;
-&lt;li&gt;Visualize data stored in hive tables&lt;/li&gt;
-&lt;li&gt;Summarize/document analysis results&lt;/li&gt;
-&lt;li&gt;Train ML models and deliver scores in production&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;So it became apparent that the integration of R and hive is rather important in my day-to-day work, and that I still rely much on an interactive environment especially during early stages of a project (aka exploration), which takes indeed the majority of the project time.&lt;/p&gt;
-&lt;p&gt;Hence, I needed to come up with a better way to use data stored in hive tables in an interactive R session. After several trials-and-errors, I came to the conclusion that the combination of bash shell scripts, remote R shell, and RCloud should do for majority of what I do during this stage. This workflow uses bash shell scripts and remote R shell for quick data exploration and additional data prep, typically followed by RCloud for visualization and summary/documentation.&lt;/p&gt;
-&lt;p&gt;Below, I describe how this workflow typically works.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Create a project directory and start up remote R shell from there&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;One screen session and one R shell per project (hence don’t be afraid to have multiple screen sessions running)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Quick/iterative exploration in remote R shell&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Data generation and preparation
-&lt;ul&gt;
-&lt;li&gt;Typically involves (intermediate) hive table generations and loading them in R (hive sql, bash, R shell)&lt;/li&gt;
-&lt;li&gt;Use custom bash scripts and internal R packages for common tasks&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Descriptive
-&lt;ul&gt;
-&lt;li&gt;Typical R operations without visuals&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Additional data prep needed for further actions
-&lt;ul&gt;
-&lt;li&gt;Typically for visual inspection in RCloud&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Intermediate data saving
-&lt;ul&gt;
-&lt;li&gt;Typically in RDS format for visual inspections in RCloud&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Iterate above steps as needed&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Visual inspection and summary in RCloud&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Create a new notebook in RCloud (under a proper higher level directory)&lt;/li&gt;
-&lt;li&gt;Start documenting findings from the exploration step&lt;/li&gt;
-&lt;li&gt;Visual inspection
-&lt;ul&gt;
-&lt;li&gt;Using RDS files saved from quick explore step&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Reports and summary
-&lt;ul&gt;
-&lt;li&gt;Quick notes on findings according to the visuals&lt;/li&gt;
-&lt;li&gt;Also quick notes on further actions, if needed&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Further actions typically involve ML&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Remote R shell for POC&lt;/li&gt;
-&lt;li&gt;Remote R/python programming&lt;/li&gt;
-&lt;li&gt;Scalable solution if needed (Spark)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;This workflow is not free of pitfalls of course. Some pros and cons are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Pros&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;It allows a quick project start-up and exploration.&lt;/li&gt;
-&lt;li&gt;Data generation, prep, movement, and analysis steps are all stored in once file (explore.R).&lt;/li&gt;
-&lt;li&gt;Visual inspection and progress/insights summary are all in one place (RCloud).&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Cons&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;It involves many data writes, which can be costly in terms of time and disk space.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;links&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Links&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.tidyverse.org/articles/2017/12/workflow-vs-script/&#34; class=&#34;uri&#34;&gt;https://www.tidyverse.org/articles/2017/12/workflow-vs-script/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://r4ds.had.co.nz/explore-intro.html&#34; class=&#34;uri&#34;&gt;http://r4ds.had.co.nz/explore-intro.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://edwinth.github.io/blog/workflow/&#34; class=&#34;uri&#34;&gt;https://edwinth.github.io/blog/workflow/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext&#34; class=&#34;uri&#34;&gt;https://cacm.acm.org/blogs/blog-cacm/169199-data-science-workflow-overview-and-challenges/fulltext&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 &lt;/div&gt;
 
         
