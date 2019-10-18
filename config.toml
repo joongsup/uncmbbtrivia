@@ -23,7 +23,7 @@ rssLimit = 10
     #font = "Raleway" # should match the name on Google Fonts!
     #highlight = true
     #highlightStyle = "solarized-dark"
-    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift", "R"]
+    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift", "R", "Python"]
     
 [[menu.main]]
     name = "Home"

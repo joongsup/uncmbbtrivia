@@ -6,8 +6,106 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Oct 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>R Markdown centered data analysis workflow</title>
+      <link>/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/</link>
+      <pubDate>Thu, 17 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/</guid>
+      <description>
+        &lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;TLDR&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#my-pursuit-of-a-data-analysis-workflow&#34;&gt;My pursuit of a data analysis workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#what-im-hoping-for-in-a-data-analysis-workflow&#34;&gt;What I’m hoping for in a data analysis workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#so-whats-it-look-like&#34;&gt;So, what’s it look like?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#relevantfuture-work&#34;&gt;Relevant/future work&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TLDR&lt;/h2&gt;
+&lt;p&gt;a working example is &lt;a href=&#34;https://github.com/joongsup/workflow/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I’m a workflow fanatic. Ok, fanatic maybe too strong a word, but that’s what I told one of my R stars when I met her in person recently, who’s also passionate about (in my views) project workflow and “generally doing basic stuff really, really well”. I can’t pinpoint how and why I became so interested in establishing a good project workflow, but it’s one of those things that I really wish I had mastered while I was still in school. Maybe the lack of such training during graduate school led me down this path of caring about research computing education as well as getting involved with Software/Data Carpentry, which I wish I had known about it back then&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;my-pursuit-of-a-data-analysis-workflow&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;My pursuit of a data analysis workflow&lt;/h2&gt;
+&lt;p&gt;(also something about notebooks)&lt;/p&gt;
+&lt;p&gt;In any case, coming up with a workflow that suits me for most of my needs either at home or at work has been a long journey of mine, and I’ve written a couple of posts on here for some “milestones”.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://joongsup.rbind.io/post/2019/04/05/r-markdown-revisited/&#34;&gt;R Markdown in Vim&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://joongsup.rbind.io/post/2018/10/06/vim-and-slime/&#34;&gt;Vim, vim-slime, and screen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://joongsup.rbind.io/post/2018/08/26/gnu-make-for-workflow-manager/&#34;&gt;GNU Make for Data Analysis Workflow Management&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://joongsup.rbind.io/post/2018/07/22/comments-on-data-analysis-workflow/&#34;&gt;Comment on data analysis workflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://joongsup.rbind.io/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/&#34;&gt;Run system commands or shell scripts from an interactive R session&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I haven’t written about it yet, but I also started using Python pretty heavily at work, and my interest in workflow since then has been about how to put together codes (R/Python/SQL) and by-products (findings/plots) more efficiently in R Markdown. The idea of combining codes and prose is not new at all, with ever growing popularity of using notebooks by data scientists for doing just that. I have used notebooks too (e.g., RCloud, Jupyter Notebook, etc.) in the past, but for various reasons it never stuck with me. It’s still hard to pinpoint exatly what, but if I have to guess, among many pros and cons of notebooks, what didn’t work for me was the lack of the final/intermediate by-product (e.g., a summary document with findings, tables, and plots) that I can refer back to anytime in the future. Most likely due to how I used it (inefficiently, that is), my notebooks were always in-progress, never-ending, ever-changing, without the merit of reusable codes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-im-hoping-for-in-a-data-analysis-workflow&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What I’m hoping for in a data analysis workflow&lt;/h2&gt;
+&lt;p&gt;R Markdown seemed a promising component of a workflow, especially in terms of being a central place where I can document what I tried, which scripts I used, and finally the findings from each code exeucution that can help me understand a project’s “whereabout” anytime I needed to. And here I’m hoping my workflow to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;include Vim, my text editor of choice&lt;/li&gt;
+&lt;li&gt;be language-agnostic (within R and Python)&lt;/li&gt;
+&lt;li&gt;allow quick interactive code checking&lt;/li&gt;
+&lt;li&gt;produce a summary document that includes codes/tables/plots/findings&lt;/li&gt;
+&lt;li&gt;promote code reusability&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After several trai-and-error, I feel like what I have at the moment is a good working version of an R Markdown centered workflow, specifically for data analysis using text editor of choice, Vim. I understand there are several components here that can make this workflow rather specific than general (e.g., Vim, not RStudio), but I believe the general idea can still be helpful for others as well.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;so-whats-it-look-like&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;So, what’s it look like?&lt;/h2&gt;
+&lt;p&gt;Initially, I was going to write about the workflow with an example in this blog post, but since it included a working example, it became a bit confusing structure-wise to include the working example (I’m sure there’s a way to do it), so I decided to use github &lt;a href=&#34;https://github.com/joongsup/workflow&#34;&gt;repo&lt;/a&gt; instead for code examples as well as the final summary document. So think of this blog post as an introduction/motivation for the actual work that is stored in github.&lt;/p&gt;
+&lt;p&gt;As the &lt;a href=&#34;http://htmlpreview.github.io/?https://github.com/joongsup/workflow/blob/master/workflow.html&#34;&gt;subtitle&lt;/a&gt; of the main document in the repo says, I also talk about how to use Python codes in R Markdown using &lt;a href=&#34;https://rstudio.github.io/reticulate/&#34;&gt;reticulate&lt;/a&gt; package. In fact, three types of coding examples are given:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;how to use R codes&lt;/li&gt;
+&lt;li&gt;how to use Python codes&lt;/li&gt;
+&lt;li&gt;how to use R objects in Python, and Python objects in R&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For each type of examples, three different scenarios are used in terms of how to incorporate corresponding codes into the R Markdown document.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;work with code snippets directly in R Markdown&lt;/li&gt;
+&lt;li&gt;import/source function definitions from separate script files and use them in R Markdown&lt;/li&gt;
+&lt;li&gt;display outputs from separate script files in R Markdown&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Although not perfect and still under development, I feel like I now have a portable and transferable workflow for data analysis that I can mix and match depending on the scope of any projects. As someone said, just trying to do “basic stuff really, really well”, so that it just “flows”!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;relevantfuture-work&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Relevant/future work&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Around the time I started reconsidering R Markdown as part of my workflow, I ran into Emily Riederer’s &lt;a href=&#34;https://emilyriederer.netlify.com/post/rmarkdown-driven-development/&#34;&gt;post&lt;/a&gt; on RMarkdown driven development (nicely worded!), and it’s a great read. I haven’t tried to link my workflow in terms of packaging, which I also care about a lot, but such conversion seems an interesting/challenging idea. E.g., as it stands, my home R Markdown document lives in the root project directory, which is not allowed in R package structure. I’m sure I can just move the R Markdown to /doc directory, but there could be something I’m missing here.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Just last night, I ran into Miles McBain’s tweet that was something about Rmd and reproducibility (so timely!):
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;This morning&amp;#39;s &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt; surprise: Rmd files are not rendered reproducibly when render() is called from console. Opposite behaviour to the &amp;#39;knit&amp;#39; button in &lt;a href=&#34;https://twitter.com/rstudio?ref_src=twsrc%5Etfw&#34;&gt;@rstudio&lt;/a&gt;. Beware!&lt;/p&gt;&amp;mdash; Miles McBain (@MilesMcBain) &lt;a href=&#34;https://twitter.com/MilesMcBain/status/1184993769814315008?ref_src=twsrc%5Etfw&#34;&gt;October 18, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Interactive use (of R and Python shells) in a data analysis project workflow and “search path” are two topics that I think about quite a lot these days, but in terms of loss of reproducibility when Rmd files are rendered in console, I must have been impacted by it, as in the workflow I described in this post, I render my home R Markdown document in console. Either I might have overlooked its impact or I haven’t run into any such loss of reproducibility.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;It seems they were getting seriuos just as I was wrapping up my time in school&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>R Package Development</title>
+      <link>/post/2019/08/11/r-package-development/</link>
+      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/08/11/r-package-development/</guid>
+      <description>
+        
+        
+      </description>
+    </item>
     
     <item>
       <title>R Markdown in Vim</title>
@@ -28,7 +126,7 @@
 &lt;div id=&#34;two-ways-to-render-r-markdown-documents&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Two ways to render R Markdown documents&lt;/h2&gt;
 &lt;p&gt;I saw this tweet a couple of days ago and decided to look for ways to use R Markdown more at work.&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;TIL you can embed a &amp;quot;code download&amp;quot; button in an HTML &lt;a href=&#34;https://twitter.com/hashtag/rmarkdown?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rmarkdown&lt;/a&gt; doc so that users can click to download your source .Rmd from the rendered HTML version...without GitHub 🤩 &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt;&lt;br&gt;&lt;br&gt;YAML:&lt;br&gt;&lt;br&gt;---&lt;br&gt;output:&lt;br&gt;  html_document:&lt;br&gt;    code_download: true&lt;br&gt;---&lt;br&gt;&lt;br&gt;Test: &lt;a href=&#34;https://t.co/bp7w7XKF8b&#34;&gt;https://t.co/bp7w7XKF8b&lt;/a&gt; &lt;a href=&#34;https://t.co/uMQK0mvYcF&#34;&gt;pic.twitter.com/uMQK0mvYcF&lt;/a&gt;&lt;/p&gt;&amp;mdash; Alison Hill (@apreshill) &lt;a href=&#34;https://twitter.com/apreshill/status/1108925218850893832?ref_src=twsrc%5Etfw&#34;&gt;March 22, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;TIL you can embed a &amp;quot;code download&amp;quot; button in an HTML &lt;a href=&#34;https://twitter.com/hashtag/rmarkdown?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rmarkdown&lt;/a&gt; doc so that users can click to download your source .Rmd from the rendered HTML version...without GitHub 🤩 &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt;&lt;br&gt;&lt;br&gt;YAML:&lt;br&gt;&lt;br&gt;---&lt;br&gt;output:&lt;br&gt;  html_document:&lt;br&gt;    code_download: true&lt;br&gt;---&lt;br&gt;&lt;br&gt;Test: &lt;a href=&#34;https://t.co/bp7w7XKF8b&#34;&gt;https://t.co/bp7w7XKF8b&lt;/a&gt; &lt;a href=&#34;https://t.co/uMQK0mvYcF&#34;&gt;pic.twitter.com/uMQK0mvYcF&lt;/a&gt;&lt;/p&gt;&amp;mdash; Alison Haunted Hill 🧟‍♀️🏚 (@apreshill) &lt;a href=&#34;https://twitter.com/apreshill/status/1108925218850893832?ref_src=twsrc%5Etfw&#34;&gt;March 22, 2019&lt;/a&gt;&lt;/blockquote&gt;
 &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 &lt;p&gt;It’s not like I haven’t tried to use R Markdown before&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;, but at the time of this &lt;a href=&#34;https://joongsup.rbind.io/post/2018/07/22/comments-on-data-analysis-workflow/&#34;&gt;post&lt;/a&gt;, I hadn’t been able to find a way to effectively incorporate R Markdown at work for various reasons. Since then, however, I added a couple of new tools to my data analysis toolbox&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;, which I felt might help make it work this time using R Markdown more at work.&lt;/p&gt;
@@ -2082,241 +2180,6 @@ Figure 2: Workflow Scenarios
 &lt;ol&gt;
 &lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Make reads this Makefile (in the current directory) and works on the rules within it.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;I should prob start gathering these topics and write about them sometime in the future.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Home sweet dome</title>
-      <link>/post/2018/08/05/home-sweet-dome/</link>
-      <pubDate>Sun, 05 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/08/05/home-sweet-dome/</guid>
-      <description>
-        &lt;p&gt;I ran into a &lt;a href=&#34;https://www.tarheelblog.com/2018/8/4/17644436/unc-basketball-tar-heels-dean-dome-advantage&#34;&gt;post&lt;/a&gt; on the Tar Heel Blog (THB) that talks about the Tar Heel’s home court advantage in recent years. Since it’s been a while since I wrote anything about UNCMBB, I thought it’d be a great topic to write on here too, looking at how great the teams have played on home court&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; in recent years. And maybe I’ll look at how Duke has played on their home court too during the same time period just because.&lt;/p&gt;
-&lt;p&gt;THB counted the wins and losses in the past 3 years in particular, and that gave me a starting point.&lt;/p&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Season
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Where
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-wins
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-losses
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-2016
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-15
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-2017
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-2018
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;So it seems my count and their count matches. Then I was curious if this last 3 years have been the best there is, in terms of fewest losses, and for that matter, most wins, and best winning percentage at home. In below charts, season is the starting season of the 3 years. E.g., for season = 2016, value = 4 means, rolling 3 years loss count for 2016, 2017, and 2018 seasons. Championship seasons are represented with larger dots, and the latest 3 year statistics (wins, losses, and winning percentages) with coloured horizontal lines.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Although this past 3 years loss count (4) is a great feat, it’s not the best there is, it turns out, and there’s been 18 instances with fewer than 4 loss count. Three early championship seasons (1957, 1982, and 1983) stand out with 3 or fewer losses each (again, as the starting season of the next 3 seasons), with the next two championship seasons (2005 and 2009) not so superb loss counts at 6 apiece&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;The fewest 3-yr rolling home loss counts came in two separate instances, with a single lose apiece: 1977/1978/1979 seasons and 1978/1979/1980 seasons. Let’s see what those losses were.&lt;/p&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Season
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Game_Date
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Game_Day
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Type
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Where
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Opponent_School
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Result
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Tm
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Opp
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-OT
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1977
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1977-01-26
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Wed
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-REG
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Wake Forest
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-L
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-66
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-67
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1980
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1980-01-20
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Sun
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-REG
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Maryland
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-L
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-86
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-92
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Nothing stands out at me right away about Carolina’s 1977 - 1980 teams&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;, let alone 1977 Wake Forest and 1980 Maryland, but it must have been fantastic home court winning streaks for the Tar Heels. Below shows the 3-yr rolling win counts.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Sure, 1977 to 1979 seasons show great home winning trends at the time (e.g., 35 home wins during 3 seasons starting from 1978 season was the most in UNC history&lt;a href=&#34;#fn4&#34; class=&#34;footnote-ref&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; at the time), but the number of games played are somewhat different year after year, so let’s look at the winning percentage instead.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Yet again, 3 years following 1977 and 1978 seasons showed the highest rolling 3-yr home winning percentages, so it must have been really fun watching Carolina playing and winning at home those days. I feel like I have some homework to do, getting to know them a little better.&lt;/p&gt;
-&lt;p&gt;Now that I’ve looked at a couple of statistics for rolling 3 years, I became curious which freshman class has the bragging rights in terms of fewest losses, most wins, and highest winning percentage over their college carrers at home court. This should be pretty straightforward since a typical college career lasts for 4 years, which means all I have to change is the number of rolling years from 3 to 4. Below charts show the rolling 4-yr losses, wins, and win percentages, respectively.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;For Carolina, it seems the bragging rights go to the freshman classes in the late 70s whereas for Duke, they could go to any of the teams in the late 80s, early and late 2000s. I had expected Psycho-T’s 2005 freshman class to stand out in any of the three numbers, but to my surprise the class wasn’t the top although they were close especially in terms of rolling 4-yr wins. That got me thinking, maybe they did much better in away games (after all, that class never lost to Duke on their home court during their college careers), and that’s what I’ll be looking at next time.&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Which, by the way, is deservingly going to be named after Coach Roy Williams.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Most recent championship season (2017) does not have 3-yr rolling counts yet.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;Just a casual fan here :)&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;Since 1949-1950 season to be exact.&lt;a href=&#34;#fnref4&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>My old coding products</title>
-      <link>/post/2018/07/27/my-old-coding-products/</link>
-      <pubDate>Fri, 27 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/07/27/my-old-coding-products/</guid>
-      <description>
-        &lt;p&gt;Lately I’ve been thinking about why I care much about everything R and sharing the joy of using R, which deserves its own post. Much of it has to do with how I did and did not get a proper training in coding suitable for data analysis in the past, but as I looked back on my personal coding history, I came across hundreds of code files that I wrote in the past&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. Suffice to say, they were pretty important files in my education history, but I have totally forgotten about them until now.&lt;/p&gt;
-&lt;p&gt;They are .m files, meant to be used in Matlab. As I started opening and reading a couple of those files, I had mixed feelings, ranging from agony (“omg, this code was from that stressful point in time”) and embarrassment (“omg, look at the logic and style I was using there”), to delight (“wow I’m defining several functions to be used in main script!”) and motivation (“Yup, I was this bad, and that’s exactly why I care about education in coding (especially R) for data analysis!”).&lt;/p&gt;
-&lt;p&gt;It was quite refreshing to see how I used to code in Matlab, which had some similarities with R, hence giving me some perspectives on how my data analysis coding skills might have changed. Here are some observations of the past, in conjunction with present whenever applicable:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Since the purpose of the code files (“program”) was to show my particular engineering method works as intended, the codes were relatively simple having simluated data as its input data. There was no cleaning/exploring step, whereas now, where almost always, there’s no clean data, thus always having to write cleaning/exploring scripts, which is usually done in interactive mode.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Since no cleaning/exploring was needed, my codes seem to be run in batch, not interactively. This is particularly refreshing to me, because I’ve been trying to do more in batch mode at work nowadays, and seems like I was already doing that even back then! But again, that’s because there was no need for heavy use of interactive exploration for simulated data. Also I’m sure I did quite extensive typing in interactive mode back then just to make sure my commands work.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;There was one main script that consists of many lines of codes, in which I used multiple for loops for various combinations of “parameters”. Now that I know a little bit about functional programming and bash programming, I can’t help but wonder how much the codes could have been rewritten (refactored).&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;I defined several functions, which are called in the main script&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;. What was interesting though was that each function was defined and stored in its own file! At first I wondered why I had saved a one liner function in its own file, but seems like that was how it needed to be done back then.&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;I had one README type file that explains what each file is in that particular “program” (directory). I’m actually quite impressed by this file, because even though the file contains less than 20 lines of texts, it showed I tried to document something for potential users of the codes (probably was for future me!).&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;For each function, on the otherhand, I didn’t do a good job of describing what each input is supposed to be and do, let alone output. This is somewhat different for me nowadays, especially when I’m working on an R package. Documenting is actually quite enjoyable there, but the problem still occurs when I’m coding for data analysis. There is this tension between keeping scripts vs. writing codes and how much comments to provide, etc.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;In some cases, there were hundreds of code files that seemingly differ only by certain part of their file names, indicating I could have benefited from version control and/or better parameterized/modular codes. Again, this seems to be an on-going struggle as to how to write better parameterized/modular codes.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;I didn’t really have a detailed directory structure. Pretty much everything was under one main “project” directory, and it was hard to distinguish which files were for which setting under the project. This is still relevant, because sometimes I find it hard to decide where to put each “project”: on its own, or under some existing projects?&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;It was quite a pleasant surprise running into my past code prouducts. I don’t think I’ll ever code in Matlab again, but it was still quite refreshing to learn how I used to do it, especially from the current point of view. I wonder how I’d feel about my current coding in say next 5-10 years!?&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Fortunately, I’ve kept those files in a portable device, which I’m not usually good at doing.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Interestingly, it seems I didn’t have to “source” the files to use the functions. Matlab must have known where to look for the function names.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;E.g., see &lt;a href=&#34;http://www.mathworks.com/help/matlab/matlab_prog/create-functions-in-files.html&#34;&gt;here.&lt;/a&gt;&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 

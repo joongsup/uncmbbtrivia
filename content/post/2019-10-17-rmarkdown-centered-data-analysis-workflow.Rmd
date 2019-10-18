@@ -1,0 +1,77 @@
+---
+title: R Markdown centered data analysis workflow
+subtitle: (how to use Python in R Markdown using reticulate package)
+author: Jay
+date: '2019-10-17'
+slug: rmarkdown-centered-data-analysis-workflow
+categories:
+  - R
+  - Python
+tags:
+  - workflow
+  - Vim
+output:
+  blogdown::html_page:
+    toc: yes
+draft: false
+---
+
+## TLDR
+a working example is [here](https://github.com/joongsup/workflow/).
+
+I'm a workflow fanatic. Ok, fanatic maybe too strong a word, but that's what I told one of my R stars when I met her in person recently, who's also passionate about (in my views) project workflow and "generally doing basic stuff really, really well". I can't pinpoint how and why I became so interested in establishing a good project workflow, but it's one of those things that I really wish I had mastered while I was still in school. Maybe the lack of such training during graduate school led me down this path of caring about research computing education as well as getting involved with Software/Data Carpentry, which I wish I had known about it back then^[It seems they were getting seriuos just as I was wrapping up my time in school].
+
+## My pursuit of a data analysis workflow
+(also something about notebooks)
+
+In any case, coming up with a workflow that suits me for most of my needs either at home or at work has been a long journey of mine, and I've written a couple of posts on here for some "milestones". 
+
+- [R Markdown in Vim](https://joongsup.rbind.io/post/2019/04/05/r-markdown-revisited/)
+- [Vim, vim-slime, and screen](https://joongsup.rbind.io/post/2018/10/06/vim-and-slime/)
+- [GNU Make for Data Analysis Workflow Management](https://joongsup.rbind.io/post/2018/08/26/gnu-make-for-workflow-manager/)
+- [Comment on data analysis workflow](https://joongsup.rbind.io/post/2018/07/22/comments-on-data-analysis-workflow/)
+- [Run system commands or shell scripts from an interactive R session](https://joongsup.rbind.io/post/2018/02/05/run-system-commands-or-shell-sripts-from-an-interactive-r-session/)
+
+I haven't written about it yet, but I also started using Python pretty heavily at work, and my interest in workflow since then has been about how to put together codes (R/Python/SQL) and by-products (findings/plots) more efficiently in R Markdown. The idea of combining codes and prose is not new at all, with ever growing popularity of using notebooks by data scientists for doing just that. I have used notebooks too (e.g., RCloud, Jupyter Notebook, etc.) in the past, but for various reasons it never stuck with me. It's still hard to pinpoint exatly what, but if I have to guess, among many pros and cons of notebooks, what didn't work for me was the lack of the final/intermediate by-product (e.g., a summary document with findings, tables, and plots) that I can refer back to anytime in the future. Most likely due to how I used it (inefficiently, that is), my notebooks were always in-progress, never-ending, ever-changing, without the merit of reusable codes. 
+
+## What I'm hoping for in a data analysis workflow
+
+R Markdown seemed a promising component of a workflow, especially in terms of being a central place where I can document what I tried, which scripts I used, and finally the findings from each code exeucution that can help me understand a project's "whereabout" anytime I needed to. And here I'm hoping my workflow to
+
+- include Vim, my text editor of choice
+- be language-agnostic (within R and Python)
+- allow quick interactive code checking
+- produce a summary document that includes codes/tables/plots/findings
+- promote code reusability
+
+After several trai-and-error, I feel like what I have at the moment is a good working version of an R Markdown centered workflow, specifically for data analysis using text editor of choice, Vim. I understand there are several components here that can make this workflow rather specific than general (e.g., Vim, not RStudio), but I believe the general idea can still be helpful for others as well. 
+
+## So, what's it look like?
+
+Initially, I was going to write about the workflow with an example in this blog post, but since it included a working example, it became a bit confusing structure-wise to include the working example (I'm sure there's a way to do it), so I decided to use github [repo](https://github.com/joongsup/workflow) instead for code examples as well as the final summary document. So think of this blog post as an introduction/motivation for the actual work that is stored in github. 
+
+As the [subtitle](http://htmlpreview.github.io/?https://github.com/joongsup/workflow/blob/master/workflow.html) of the main document in the repo says, I also talk about how to use Python codes in R Markdown using [reticulate](https://rstudio.github.io/reticulate/) package. In fact, three types of coding examples are given:
+
+- how to use R codes
+- how to use Python codes 
+- how to use R objects in Python, and Python objects in R
+
+For each type of examples, three different scenarios are used in terms of how to incorporate corresponding codes into the R Markdown document. 
+
+- work with code snippets directly in R Markdown
+- import/source function definitions from separate script files and use them in R Markdown
+- display outputs from separate script files in R Markdown
+
+Although not perfect and still under development, I feel like I now have a portable and transferable workflow for data analysis that I can mix and match depending on the scope of any projects. As someone said, just trying to do "basic stuff really, really well", so that it just "flows"!
+
+## Relevant/future work
+
+- Around the time I started reconsidering R Markdown as part of my workflow, I ran into Emily Riederer's [post](https://emilyriederer.netlify.com/post/rmarkdown-driven-development/) on RMarkdown driven development (nicely worded!), and it's a great read. I haven't tried to link my workflow in terms of packaging, which I also care about a lot, but such conversion seems an interesting/challenging idea. E.g., as it stands, my home R Markdown document lives in the root project directory, which is not allowed in R package structure. I'm sure I can just move the R Markdown to /doc directory, but there could be something I'm missing here. 
+
+- Just last night, I ran into Miles McBain's tweet that was something about Rmd and reproducibility (so timely!):
+```{r, echo = FALSE}
+blogdown::shortcode('tweet', '1184993769814315008')
+```
+
+Interactive use (of R and Python shells) in a data analysis project workflow and "search path" are two topics that I think about quite a lot these days, but in terms of loss of reproducibility when Rmd files are rendered in console, I must have been impacted by it, as in the workflow I described in this post, I render my home R Markdown document in console. Either I might have overlooked its impact or I haven't run into any such loss of reproducibility. 
+

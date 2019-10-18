@@ -6,10 +6,29 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R Markdown centered data analysis workflow</title>
+      <link>/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/</link>
+      <pubDate>Thu, 17 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/</guid>
+      <description>TLDR My pursuit of a data analysis workflow What I’m hoping for in a data analysis workflow So, what’s it look like? Relevant/future work   TLDR a working example is here.
+I’m a workflow fanatic. Ok, fanatic maybe too strong a word, but that’s what I told one of my R stars when I met her in person recently, who’s also passionate about (in my views) project workflow and “generally doing basic stuff really, really well”.</description>
+    </item>
+    
+    <item>
+      <title>R Package Development</title>
+      <link>/post/2019/08/11/r-package-development/</link>
+      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/08/11/r-package-development/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>R Markdown in Vim</title>
@@ -85,24 +104,6 @@ SQL, because, one needs to be able to get desired data from somewhere, and for t
       <description>I’ve finally started using GNU make as a data analysis workflow management tool. I knew it existed as a software “build” tool, and although I always thought Makefile1 sound pretty cool, I never actually had to use it, not just as a build tool, but also as a data analysis workflow management tool.
 It started with @thosjleepr’s tweet that showed up in my feed:
  Inspired by @carlislerainey, I’ve added some code to my intro #make tutorial that visualizes the makefile’s dependency graph natively in R using #ggraph.</description>
-    </item>
-    
-    <item>
-      <title>Home sweet dome</title>
-      <link>/post/2018/08/05/home-sweet-dome/</link>
-      <pubDate>Sun, 05 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/08/05/home-sweet-dome/</guid>
-      <description>I ran into a post on the Tar Heel Blog (THB) that talks about the Tar Heel’s home court advantage in recent years. Since it’s been a while since I wrote anything about UNCMBB, I thought it’d be a great topic to write on here too, looking at how great the teams have played on home court1 in recent years. And maybe I’ll look at how Duke has played on their home court too during the same time period just because.</description>
-    </item>
-    
-    <item>
-      <title>My old coding products</title>
-      <link>/post/2018/07/27/my-old-coding-products/</link>
-      <pubDate>Fri, 27 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/07/27/my-old-coding-products/</guid>
-      <description>Lately I’ve been thinking about why I care much about everything R and sharing the joy of using R, which deserves its own post. Much of it has to do with how I did and did not get a proper training in coding suitable for data analysis in the past, but as I looked back on my personal coding history, I came across hundreds of code files that I wrote in the past1.</description>
     </item>
     
   </channel>
