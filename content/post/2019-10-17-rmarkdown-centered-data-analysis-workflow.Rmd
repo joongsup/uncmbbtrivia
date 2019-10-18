@@ -17,7 +17,7 @@ draft: false
 ---
 
 ## TLDR
-A summary is [here](http://htmlpreview.github.com/?https://github.com/joongsup/workflow/blob/master/workflow.html)), and the codes are [here](https://github.com/joongsup/workflow/).
+A summary is [here](http://htmlpreview.github.com/?https://github.com/joongsup/workflow/blob/master/workflow.html), and the codes are [here](https://github.com/joongsup/workflow/).
 
 I'm a workflow fanatic. Ok, fanatic maybe too strong a word, but that's what I told one of my R stars when I met her in person recently, who's also passionate about (in my views) project workflow and "generally doing basic stuff really, really well". I can't pinpoint how and why I became so interested in establishing a good project workflow, but it's one of those things that I really wish I had mastered while I was still in school. Maybe the lack of such training during graduate school led me down this path of caring about research computing education as well as getting involved with Software/Data Carpentry, which I wish I had known about it back then^[It seems they were getting seriuos just as I was wrapping up my time in school].
 
