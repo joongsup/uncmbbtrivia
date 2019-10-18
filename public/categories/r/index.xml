@@ -17,17 +17,8 @@
       <pubDate>Thu, 17 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/</guid>
-      <description>TLDR My pursuit of a data analysis workflow What I’m hoping for in a data analysis workflow So, what’s it look like? Relevant/future work   TLDR a working example is here.
+      <description>TLDR My pursuit of a data analysis workflow What I’m hoping for in a data analysis workflow So, what’s it look like? Relevant/future work   TLDR A summary is here), and the codes are here.
 I’m a workflow fanatic. Ok, fanatic maybe too strong a word, but that’s what I told one of my R stars when I met her in person recently, who’s also passionate about (in my views) project workflow and “generally doing basic stuff really, really well”.</description>
-    </item>
-    
-    <item>
-      <title>R Package Development</title>
-      <link>/post/2019/08/11/r-package-development/</link>
-      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2019/08/11/r-package-development/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -106,6 +97,16 @@ So the option is in Tools/Global Options/Code/Key Bindings, and boom, I started 
       
       <guid>/post/2018/05/03/rjava-and-mac-os/</guid>
       <description>For the past couple of days, I needed to install rJava package on my Mac, and boy did I know how complicated the process would turn out to be! I vaguely knew about the mess that is java and Mac OS, but I didn’t care that much until now, because (1) most of my development work has been done in my company environment (Linux) which I ssh into and is pretty well managed by folks more qualified to do so than me and (2) for my personal work (i.</description>
+    </item>
+    
+    <item>
+      <title>Package uncmbb updated!</title>
+      <link>/post/2018/04/17/package-update/</link>
+      <pubDate>Tue, 17 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018/04/17/package-update/</guid>
+      <description>Ever since UNCMBB team’s season ended about a month ago, I’ve been meaning to update the data in uncmbb package, and I finally got to it. Obviously the new version includes 2017-2018 season match results for both UNC and Duke MBB teams, but it also includes new features in wrapper functions that are useful when working with uncmbb package.
+I forgot to take notes of the steps taken when I was submitting uncmbb to CRAN for the first time last year, and this time I remembered to do so and take some screenshots too.</description>
     </item>
     
   </channel>
