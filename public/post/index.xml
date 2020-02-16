@@ -6,10 +6,39 @@
     <description>Recent content in Posts on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Screen like RStudio Project</title>
+      <link>/post/2020/02/16/screen-like-rstudio-project/</link>
+      <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/02/16/screen-like-rstudio-project/</guid>
+      <description>It’s just that kind of season for UNCMBB. When the UVA’s 3 pointer was fired at the end of the game, I’m sure I wasn’t the only one among the Carolina fans who knew it’d go in, because it’s just that kind of season.
+I’ve been coping with the season by instead working harder (?), but after today’s home loss to VA, I decided to write this post (and actually publish it), because, something’s got to be done.</description>
+    </item>
+    
+    <item>
+      <title>R Markdown template in Vim</title>
+      <link>/post/2019/12/16/r-markdown-template-in-vim/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/12/16/r-markdown-template-in-vim/</guid>
+      <description>In my last post, I wrote about an R Markdown centered data analysis workflow that I found to be helpful for many of my work. Helpful, in terms of improving code reusability and remembering what has been done for a particular project. Idea is that I’d start any (ad-hoc) data analysis project with a home Rmd document to store both codes and narratives.
+It followed naturally that I soon started hoping to start a new Rmd document with some predefined default setting in Vim, e.</description>
+    </item>
+    
+    <item>
+      <title>Adding last season data to uncmbb</title>
+      <link>/post/2019/10/25/adding-last-season-data-to-uncmbb/</link>
+      <pubDate>Fri, 25 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/10/25/adding-last-season-data-to-uncmbb/</guid>
+      <description>code changes needed due to change in source data structure - devtools::use_data –&amp;gt; usethis::use_data - devtools::build_win –&amp;gt; devtools::check_win_dev|release|oldrelease - devtools::check_rhub seems a new checking item CRAN-RELEASE file is created upon submission Uploading package &amp;amp; comments Confirming submission Package submission successful. Check your email for confirmation link. ✔ Setting active project to ‘/Users/jl939a/projects/uncmbb’ Don’t forget to tag this release once accepted by CRAN ✔ Adding ‘^CRAN-RELEASE$’ to ‘.Rbuildignore’ ✔ Setting active project to ‘’ CRAN-RELEASE content: This package was submitted to CRAN on 2019-10-25.</description>
+    </item>
     
     <item>
       <title>R Markdown centered data analysis workflow</title>
@@ -75,35 +104,6 @@ SQL, because, one needs to be able to get desired data from somewhere, and for t
       
       <guid>/post/2018/10/06/home-game-streak/</guid>
       <description>The schedule for the 2018-2019 UNC MBB season has been out, and I ran into a blog post that said something about some teams getting preferable schedules than others, in that those lucky teams get to play three consecutive games at home and in some case, not having to face the same number of consecutive games on the road. I remembered UNC team had a touch streak last season, having to play 3 in a row on the road, and with the current 15 member system (since 2010), such imbalance in schedule is bound to happen eventually.</description>
-    </item>
-    
-    <item>
-      <title>Vim, vim-slime, and screen</title>
-      <link>/post/2018/10/06/vim-and-slime/</link>
-      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/10/06/vim-and-slime/</guid>
-      <description>As much as I love using RStudio for everything1, there are times when I can’t really use it, i.e., for some projects at work in which I need to log in to some servers and do work there (i.e., on the server side). Using RStudio server would do it, I think, but it’s not an option at the moment. For a long time, I’ve been trying to establish a good working data analysis workflow that I can follow in those situations.</description>
-    </item>
-    
-    <item>
-      <title>GNU Make for Data Analysis Workflow Management</title>
-      <link>/post/2018/08/26/gnu-make-for-workflow-manager/</link>
-      <pubDate>Sun, 26 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/08/26/gnu-make-for-workflow-manager/</guid>
-      <description>I’ve finally started using GNU make as a data analysis workflow management tool. I knew it existed as a software “build” tool, and although I always thought Makefile1 sound pretty cool, I never actually had to use it, not just as a build tool, but also as a data analysis workflow management tool.
-It started with @thosjleepr’s tweet that showed up in my feed:
- Inspired by @carlislerainey, I’ve added some code to my intro #make tutorial that visualizes the makefile’s dependency graph natively in R using #ggraph.</description>
-    </item>
-    
-    <item>
-      <title>Home sweet dome</title>
-      <link>/post/2018/08/05/home-sweet-dome/</link>
-      <pubDate>Sun, 05 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/08/05/home-sweet-dome/</guid>
-      <description>I ran into a post on the Tar Heel Blog (THB) that talks about the Tar Heel’s home court advantage in recent years. Since it’s been a while since I wrote anything about UNCMBB, I thought it’d be a great topic to write on here too, looking at how great the teams have played on home court1 in recent years. And maybe I’ll look at how Duke has played on their home court too during the same time period just because.</description>
     </item>
     
   </channel>

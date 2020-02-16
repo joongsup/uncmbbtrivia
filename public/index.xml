@@ -6,8 +6,184 @@
     <description>Recent content on Jay&#39;s Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Feb 2020 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Screen like RStudio Project</title>
+      <link>/post/2020/02/16/screen-like-rstudio-project/</link>
+      <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020/02/16/screen-like-rstudio-project/</guid>
+      <description>
+        &lt;p&gt;It’s just that kind of season for UNCMBB. When the UVA’s 3 pointer was fired at the end of the game, I’m sure I wasn’t the only one among the Carolina fans who knew it’d go in, because it’s just that kind of season.&lt;/p&gt;
+&lt;p&gt;I’ve been coping with the season by instead working harder (?), but after today’s home loss to VA, I decided to write this post (and actually publish it), because, something’s got to be done. We go where we go and do what we do, but at this point, I’m just hoping the first blog post for the season helps the team break the streak of bad karma.&lt;/p&gt;
+&lt;p&gt;I have just the perfect topic too, as for the past couple of weeks, I’ve been playing with GNU Screen and found several good (I think) ingredients for day-to-day workflow. Like so, I just hope my Tar Heels also find some working solutions for the season.&lt;/p&gt;
+&lt;p&gt;I started using Screen mainly for its attach/detach capability. Run a long runing job in a Screen session, detach, go home, reattach and check the long running job’s status. Good news is that the long running job is not lost. More recently, I also started using Screen as script/console pair. So, for example, I’d start a Screen session, called “R” (by screen -S R), and interactively work with scripts via Vim-slime plugin. I wrote about such workflow &lt;a href=&#34;https://joongsup.rbind.io/post/2018/10/06/vim-and-slime/&#34;&gt;here&lt;/a&gt;. What’s important in this way of using Screen is that one Screen session is specific to one and only one utility. If I needed an R REPL, I’d start a Screen session for it. If I needed a Python REPL, I’d start another Screen session for it.&lt;/p&gt;
+&lt;p&gt;Then not long ago, I learned a single Screen session can have multiple windows (or “tabs”) in it. What that means is that instead of starting multiple Screen sessions (usually through multiple ssh logins), I’d start a single Screen session, then have multiple windows, each window responsible for specific utility, such as R, Python, and/or git. So for example,&lt;/p&gt;
+&lt;pre class=&#34;bash&#34;&gt;&lt;code&gt;screen -S projectA
+screen -t R
+screen -t Python
+screen -t git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;would start a Screen session called “projectA”, and from within it, 3 additional windows called R, Python, and git are created.&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:example&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/screen_session_windows.gif&#34; alt=&#34;Screen session and windows&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Screen session and windows
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;You’ll notice that once the Screen session called “projectA” is created, default window called “bash” is started within the session, followed by subsequent windows called R, Python, and git, respectively via screen -t calls. The session name, as well as the window names are displayed at the bottom, and that can be configured in .screenrc file like so:&lt;/p&gt;
+&lt;pre class=&#34;bash&#34;&gt;&lt;code&gt;
+# generates equivalent of $STY followed by &amp;quot;on $HOST&amp;quot; if $STY is non-standard
+backtick 10 60 60 sh -c &amp;#39;sty=$(screen -ls | grep --color=no -o &amp;quot;$PPID[^[:space:]]*&amp;quot;) ; if [ ${sty##*.} = $HOST ] ; then echo $sty ; else echo &amp;quot;$sty&amp;quot; ; fi&amp;#39;
+
+# display session and windows name
+hardstatus alwayslastline
+hardstatus string &amp;#39;%{= kG}%u %10`%{-b kw}%u %-Lw%{= rW}%50&amp;gt; %n%f %t %{-}%+Lw%&amp;lt;&amp;#39;
+
+# shift/arrow (move to prev/next window)
+bindkey &amp;quot;^[[1;2C&amp;quot; next
+bindkey &amp;quot;^[[1;2D&amp;quot; prev
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Don’t ask me how I ended up with such commands, which required mix-and-match of several google searches. The key binding is also a result of googling, and it allows me to move to prev/next windows within a Screen session with shift-arrow keys. I use iTerm2 for terminal app, and cmd/shift-arrow and cmd-arrow are already configured for other types of moves, and so far, shift-arrow binding works quite nicely to move between prev/next windows within a Screen session.&lt;/p&gt;
+&lt;p&gt;Once I arrived here, it was only natural to go ahead and write some bash scripts that would start a screen session with frequently used utilities of interest.&lt;/p&gt;
+&lt;pre class=&#34;bash&#34;&gt;&lt;code&gt;#!/bin/bash
+
+if [ -z &amp;quot;$1&amp;quot; ]; then
+    echo &amp;quot;Provide screen&amp;#39;s session title and optional services. Typically session title = project&amp;#39;s (main) name and services one of R/python/julia&amp;quot;
+    echo &amp;quot;Usage: devsetup.sh projectA &amp;#39;R julia&amp;#39;&amp;quot;
+else
+    session=$1
+
+    # default windows
+    screen -dmS $session
+    screen -S $session -X screen -t home
+
+    if [ ! -z &amp;quot;$2&amp;quot; ]; then
+        servs=$2
+        # optional services to start
+        for serv in ${servs[@]}
+            do
+                if [ $(echo &amp;quot;${serv}&amp;quot; | tr &amp;#39;[:upper:]&amp;#39; &amp;#39;[:lower:]&amp;#39;) = &amp;quot;r&amp;quot; ]; then
+                    screen -S $session -X screen -t R -X /usr/local/bin/R --vanilla
+                elif [ $(echo &amp;quot;${serv}&amp;quot; | tr &amp;#39;[:upper:]&amp;#39; &amp;#39;[:lower:]&amp;#39;) = &amp;quot;julia&amp;quot; ]; then
+                    screen -S $session -X screen -t julia -X /usr/local/bin/julia
+               fi
+            done
+    fi
+    screen -r $session -p home
+fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This script allows me to start a Screen session for each project with frequently used utilities, and with the project’s home document (as defined &lt;a href=&#34;https://joongsup.rbind.io/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/&#34;&gt;here&lt;/a&gt;) open in the “home” window, I can go about working on the project using other Screen functionalities, i.e., attach/detach, and script/console.&lt;/p&gt;
+&lt;p&gt;For RStudio users, if you squint a bit, this Screen session/windows workflow seems to match well the idea behind the &lt;a href=&#34;https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects&#34;&gt;RStudio Project&lt;/a&gt;. For each project, I’d start its own Screen session with corresponding utilities needed for the project, and each project enjoys its own R session without interfering with other R sessions opened in other projects. Note in the last screenshot, I’m using two tabs in iTerm2, one tab for each project.&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:projA&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/screen_projA.gif&#34; alt=&#34;Screen session for Project A&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Screen session for Project A
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:projB&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/screen_projB.gif&#34; alt=&#34;Screen session for Project B&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3: Screen session for Project B
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:projAll&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;/img/screen_projAll.gif&#34; alt=&#34;Screen like RStudio Project&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 4: Screen like RStudio Project
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Hope this post helps anyone interested in data science workflow (esp using Vim), but most importantly, hope I can claim somehow in next couple of days that I have contributed to breaking the team’s bad karma. Go Heels!&lt;/p&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>R Markdown template in Vim</title>
+      <link>/post/2019/12/16/r-markdown-template-in-vim/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/12/16/r-markdown-template-in-vim/</guid>
+      <description>
+        &lt;p&gt;In my last post, I wrote about an R Markdown centered data analysis workflow that I found to be helpful for many of my work. Helpful, in terms of improving code reusability and remembering what has been done for a particular project. Idea is that I’d start any (ad-hoc) data analysis project with a home Rmd document to store both codes and narratives.&lt;/p&gt;
+&lt;p&gt;It followed naturally that I soon started hoping to start a new Rmd document with some predefined default setting in Vim, e.g., metadata such as title, date, and output options, etc., as well as R packages that I’d use all the time. I knew RStudio IDE provides template functionality, but I wanted to be able to do it in the tool/environment that I spend most time in daily. So I started looking around, and quickly ran into several blog posts on how to use Vim templates&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It comes down to the following two components:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;a skeleton file for a specific target file extension, e.g., an Rmd skeleton file (for .Rmd files), and&lt;/li&gt;
+&lt;li&gt;Vim commands to insert the contents of the skeleton file to the newly created file with the target extension&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For example, an Rmd skeleton file (e.g., skeleton.Rmd) can contain yaml headers and an R setup chunk like below.&lt;/p&gt;
+&lt;pre class=&#34;yaml&#34;&gt;&lt;code&gt;---
+title: &amp;quot;&amp;quot;
+date: &amp;quot;yyyy-mm-dd (updated &amp;#39;r Sys.Date()&amp;#39;)&amp;quot;
+output:
+    html_document:
+        toc: true
+        number_sections: true
+        theme: flatly
+        highlight: kate
+---&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;markdown&#34;&gt;&lt;code&gt;```{r setup_r, eval = FALSE}
+library(ggplot2)
+library(dplyr)
+library(kableExtra)
+library(reticulate)
+knitr::opts_chunk$set(fig.width = 12, fig.height = 8)
+
+use_python(PYTHON_PATH) # PYTHON_PATH defined in .Rprofile
+
+# Introduction
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;While not the main topic, I had to look up how to display my yaml headers and R code chunk verbatim in a post like above, and found out some tricks from the code &lt;a href=&#34;https://github.com/rstudio/rmarkdown-book/blob/master/02-basics.Rmd&#34;&gt;repo&lt;/a&gt; for the R Markdown: The Definitive Guide book.&lt;/p&gt;
+&lt;p&gt;Once skeleton.Rmd is ready (e.g., ~/.vim/templates/skeleton.Rmd), Vim can insert the contents of the skeleton file to the newly created .Rmd file with autocmd like so:&lt;/p&gt;
+&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;if has(&amp;quot;autocmd&amp;quot;)
+  augroup templates
+    autocmd BufNewFile *.Rmd 0r ~/.vim/templates/skeleton.Rmd
+  augroup END
+endif
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Above Vim codes resides in .vimrc file and reads in the skeleton.Rmd file whenever a new .Rmd file is created.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;I followed this blog &lt;a href=&#34;https://shapeshed.com/vim-templates/&#34;&gt;post&lt;/a&gt; on how to use Vim templates&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Adding last season data to uncmbb</title>
+      <link>/post/2019/10/25/adding-last-season-data-to-uncmbb/</link>
+      <pubDate>Fri, 25 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/10/25/adding-last-season-data-to-uncmbb/</guid>
+      <description>
+        &lt;p&gt;code changes needed due to change in source data structure
+- devtools::use_data –&amp;gt; usethis::use_data
+- devtools::build_win –&amp;gt; devtools::check_win_dev|release|oldrelease
+- devtools::check_rhub seems a new checking item
+CRAN-RELEASE file is created upon submission
+Uploading package &amp;amp; comments
+Confirming submission
+Package submission successful.
+Check your email for confirmation link.
+✔ Setting active project to ‘/Users/jl939a/projects/uncmbb’
+Don’t forget to tag this release once accepted by CRAN
+✔ Adding ‘^CRAN-RELEASE$’ to ‘.Rbuildignore’
+✔ Setting active project to ‘&lt;no active project&gt;’
+CRAN-RELEASE content:
+This package was submitted to CRAN on 2019-10-25.
+Once it is accepted, delete this file and tag the release (commit 6ca69127ce).&lt;/p&gt;
+
+        
+      </description>
+    </item>
     
     <item>
       <title>R Markdown centered data analysis workflow</title>
@@ -114,7 +290,7 @@
 &lt;div id=&#34;two-ways-to-render-r-markdown-documents&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Two ways to render R Markdown documents&lt;/h2&gt;
 &lt;p&gt;I saw this tweet a couple of days ago and decided to look for ways to use R Markdown more at work.&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;TIL you can embed a &amp;quot;code download&amp;quot; button in an HTML &lt;a href=&#34;https://twitter.com/hashtag/rmarkdown?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rmarkdown&lt;/a&gt; doc so that users can click to download your source .Rmd from the rendered HTML version...without GitHub 🤩 &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt;&lt;br&gt;&lt;br&gt;YAML:&lt;br&gt;&lt;br&gt;---&lt;br&gt;output:&lt;br&gt;  html_document:&lt;br&gt;    code_download: true&lt;br&gt;---&lt;br&gt;&lt;br&gt;Test: &lt;a href=&#34;https://t.co/bp7w7XKF8b&#34;&gt;https://t.co/bp7w7XKF8b&lt;/a&gt; &lt;a href=&#34;https://t.co/uMQK0mvYcF&#34;&gt;pic.twitter.com/uMQK0mvYcF&lt;/a&gt;&lt;/p&gt;&amp;mdash; Alison Haunted Hill 🧟‍♀️🏚 (@apreshill) &lt;a href=&#34;https://twitter.com/apreshill/status/1108925218850893832?ref_src=twsrc%5Etfw&#34;&gt;March 22, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;TIL you can embed a &amp;quot;code download&amp;quot; button in an HTML &lt;a href=&#34;https://twitter.com/hashtag/rmarkdown?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rmarkdown&lt;/a&gt; doc so that users can click to download your source .Rmd from the rendered HTML version...without GitHub 🤩 &lt;a href=&#34;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&#34;&gt;#rstats&lt;/a&gt;&lt;br&gt;&lt;br&gt;YAML:&lt;br&gt;&lt;br&gt;---&lt;br&gt;output:&lt;br&gt;  html_document:&lt;br&gt;    code_download: true&lt;br&gt;---&lt;br&gt;&lt;br&gt;Test: &lt;a href=&#34;https://t.co/bp7w7XKF8b&#34;&gt;https://t.co/bp7w7XKF8b&lt;/a&gt; &lt;a href=&#34;https://t.co/uMQK0mvYcF&#34;&gt;pic.twitter.com/uMQK0mvYcF&lt;/a&gt;&lt;/p&gt;&amp;mdash; Alison Hill (@apreshill) &lt;a href=&#34;https://twitter.com/apreshill/status/1108925218850893832?ref_src=twsrc%5Etfw&#34;&gt;March 22, 2019&lt;/a&gt;&lt;/blockquote&gt;
 &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
 
 &lt;p&gt;It’s not like I haven’t tried to use R Markdown before&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;, but at the time of this &lt;a href=&#34;https://joongsup.rbind.io/post/2018/07/22/comments-on-data-analysis-workflow/&#34;&gt;post&lt;/a&gt;, I hadn’t been able to find a way to effectively incorporate R Markdown at work for various reasons. Since then, however, I added a couple of new tools to my data analysis toolbox&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;, which I felt might help make it work this time using R Markdown more at work.&lt;/p&gt;
@@ -2025,352 +2201,6 @@ plt.show()&lt;/code&gt;&lt;/pre&gt;
       <description>
         &lt;p&gt;The schedule for the 2018-2019 UNC MBB season has been out, and I ran into a blog post that said something about some teams getting preferable schedules than others, in that those lucky teams get to play three consecutive games at home and in some case, not having to face the same number of consecutive games on the road. I remembered UNC team had a touch streak last season, having to play 3 in a row on the road, and with the current 15 member system (since 2010), such imbalance in schedule is bound to happen eventually.&lt;/p&gt;
 &lt;p&gt;So I was curious in terms of playing consecutive home games and road games, who’s been lucky all these years. Let’s see.&lt;/p&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Vim, vim-slime, and screen</title>
-      <link>/post/2018/10/06/vim-and-slime/</link>
-      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/10/06/vim-and-slime/</guid>
-      <description>
-        &lt;p&gt;As much as I love using RStudio for everything&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;, there are times when I can’t really use it, i.e., for some projects at work in which I need to log in to some servers and do work there (i.e., on the server side). Using RStudio server would do it, I think, but it’s not an option at the moment. For a long time, I’ve been trying to establish a good working data analysis workflow that I can follow in those situations.&lt;/p&gt;
-&lt;p&gt;Vim is my server side editor of choice. I’m not a Vim expert by no means, but ever since I started using it (it’s been almost 4 years), it fit me, and it’s been my editor of choice, especially when working on some remote servers&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;. I would open up several terminal window tabs, i.e. one for command line, one for R session, one for file editing (using Vim), one for hive shell, etc..Establishing an effective data analysis workflow came down to being able to use Vim more seamlessly with those other tools that I use everyday.&lt;/p&gt;
-&lt;p&gt;After several days of browsing, reading, and trying out, I finally settled down with this particular set-up and so far I’m pretty happy with it. This post is a quick overview of the set-up as a reference for myself and potentially others who’s facing a similar situation. This is one of those things that I wish I had perfected while I was still at school, just like many other things that I’ve written about before here.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Vim and .vimrc&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;I searched web for information regarding Vim set up for data analysis, especially using R. Very quickly, I ran into &lt;a href=&#34;https://github.com/jalvesaq/Nvim-R&#34;&gt;Nvim-R&lt;/a&gt;, a Vim plugin to edit R code. I tried it for a couple of days, but ended up dropping it, because as much as I love R, I had to use some other tools with Vim, and I needed more general solution, not an R-specific solution.&lt;/p&gt;
-&lt;p&gt;But that turned out to be my introduction to the world of Vim plugins! I spent a couple of nights searching for cool Vim plugins, sometimes for the ones that are not necessarily related to doing data analysis. But it was so fun trying out a variety of Vim plugins. This is also when I started using Vim plugin manager as well, which makes installing/uninstalling Vim plugins simple and easy. I tried only one such manager, &lt;a href=&#34;https://github.com/VundleVim/Vundle.vim&#34;&gt;Vundle&lt;/a&gt;, and have been using it ever since.&lt;/p&gt;
-&lt;p&gt;Now to use a Vim plugin manager and several plugins, I started adding more stuffs in my .vimrc file, which is like a .Rprofile file (or .bashrc). It contains many settings for Vim, i.e., plugins related specific setting as well as more general settings. And boy are there tons of cool stuffs you can do with these settings! Of the many general settings, one of my favorite is insert mode mapping of “jj” (two strokes of the key j) to esc key, so that I don’t have to reach for the esc key while typing, and instead just type jj to get back to normal mode&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;. Like I said, I spent several couple of nights trying out different settings and plugins, and I had to resist the urge to play with new settings and plugins. It’s like trying to perfect how your blog looks like, and I had to try hard not to spend too much time perfecting my .vimrc file, i.e., my Vim setup.&lt;/p&gt;
-&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Vim-slime&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Then I ran into &lt;a href=&#34;https://github.com/jpalardy/vim-slime&#34;&gt;Vim-slime&lt;/a&gt;, another Vim plugin that allows you to send lines of code from one window to another, thus eliminating the need for constant copying from a text file (e.g., data analysis script file) and pasting on R session, for example. It’s the equivalence of selection and cmd-enter in RStudio to run select lines of code.&lt;/p&gt;
-&lt;p&gt;With Vim-slime, I can send select lines of codes from one terminal window tab to another, be it an R console, Python console, Hive shell, etc. So it provided me with a more general solution than Nvim-R, which is still a great R specific plugin.&lt;/p&gt;
-&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Screen&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Last but not least, I had to come up with a way to keep my running terminal sessions even after server connection is lost. I have several meetings a day, and sometimes I lose my server connection while walking to/from a meeting. I already knew and have been using &lt;a href=&#34;https://www.gnu.org/software/screen/&#34;&gt;screen&lt;/a&gt; for that purpose, and it so happens that Vim-slime works great with screen. By default, a chunk of code I want to run is sent to a screen session, and I learned how to name a screen session too.&lt;/p&gt;
-&lt;p&gt;I also ran into &lt;a href=&#34;https://github.com/tmux/tmux&#34;&gt;tmux&lt;/a&gt;, which is a screen multiplexer, similar to GNU screen. Essentially just like screen, it lets you work on multiple tabs within one terminal window without losing them even after your server connection is lost. It looked very interesting and useful, but unfortunately, it needed to be installed on the server side, and to make things worse, the server was missing one of the required dependencies, so I decided to drop tmux from my target list.&lt;/p&gt;
-&lt;p&gt;So putting these together, here’s what I typically do first thing in the morning at work. There’s probably a better way to do this still, but until I figure out how to, I’m happy with the current set up.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Open terminal and ssh into a server. Open the script file, e.g., an R script, that I need to work on. Let’s call this a “source” tab.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:source&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/img/slime_src.png&#34; alt=&#34;Source screenshot&#34; width=&#34;75%&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 1: Source screenshot
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Open another tab in the same terminal window (cmd-T) and ssh into the same server. Start a named screen session by &lt;code&gt;screen -S R&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;bash&#34;&gt;&lt;code&gt;$screen -S R&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This will open a screen sesion whose name is “R”. Once in it, start an R shell, (or python, hive, etc.), and let’s call it a “console” tab. I find it helpful to name each of these console tabs with corresponding tool name, e.g., “hive” when using hive shell there, “python” when using python shell there, and “R” when using R shell there, etc..&lt;/p&gt;
-&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;When working on some code chunks, test them by sending the code chunk from the “source” tab (from #1) to the “console” tab (from #2). Selecting code chunks in visual mode in Vim and sending them to the console screen by &lt;ctrl-c&gt;&lt;ctrl-c&gt; using Vim-slime takes some getting used to, but it’s been worth it :)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:workflow&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/img/out.gif&#34; alt=&#34;Vim-slime workflow screenshots&#34; width=&#34;75%&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 2: Vim-slime workflow screenshots
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;When code chunks are sent for the first time in a session, Vim-slime asks for the destination screen session name, and I entered R, which was my screen session name from step 2 above. It then asks for screen window name, and I just leave it as is (default 0).&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Especially for blogging, yeah!&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;In fact, I’m using Vim mode in RStudio too.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;I wonder if there’s a way to map jj to esc in RStudio vim mode too.&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>GNU Make for Data Analysis Workflow Management</title>
-      <link>/post/2018/08/26/gnu-make-for-workflow-manager/</link>
-      <pubDate>Sun, 26 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/08/26/gnu-make-for-workflow-manager/</guid>
-      <description>
-        &lt;p&gt;I’ve finally started using GNU &lt;a href=&#34;https://www.gnu.org/software/make/&#34;&gt;make&lt;/a&gt; as a data analysis workflow management tool. I knew it existed as a software “build” tool, and although I always thought Makefile&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; sound pretty cool, I never actually had to use it, not just as a build tool, but also as a data analysis workflow management tool.&lt;/p&gt;
-&lt;p&gt;It started with &lt;span class=&#34;citation&#34;&gt;@thosjleepr&lt;/span&gt;’s &lt;a href=&#34;https://twitter.com/thosjleeper/status/1030105885085970432?s=03&#34;&gt;tweet&lt;/a&gt; that showed up in my feed:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Inspired by &lt;span class=&#34;citation&#34;&gt;@carlislerainey&lt;/span&gt;, I’ve added some code to my intro #make tutorial that visualizes the makefile’s dependency graph natively in R using #ggraph.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;I never actually looked closely at what the author did in this nice tutorial, but rather ended up taking a detour and actually started looking more closely into using make as a workflow management tool. It so happened that at the time, I needed to keep running some set of scripts over and over depending on “refresh” status of each step, and so when I ran into this tweet, I decided to jump on using make finally, and now make is one of those topics that I wish I had learned and started using while at school&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;It’s been less than 2 weeks since I started using make, and I’m not a make expert by no means. Nonetheless, &lt;a href=&#34;https://joongsup.rbind.io/about/&#34;&gt;I like talking about data anlaysis workflow&lt;/a&gt;, so here’s my thoughts on using make as a data analysis workflow management tool as a reference. Since it’s my thoughts as of today, I’m sure some of my takes will change over time.&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;It’s relevant to many data analysis projects.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;From the Wikipedia on &lt;a href=&#34;https://en.wikipedia.org/wiki/Make_(software)&#34;&gt;make (software)&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Besides building programs, Make can be used to manage any project where some files must be updated automatically from others whenever the others change.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;It makes sense many tutorials on make (especially in the context of using it together with R) that I encountered used generating some documents as a use case. E.g., use make to streamline updating plots and inserting newly refreshed plots in the final document output. My immediate need didn’t involve updating a report over and over, but rather looked something like Figure &lt;a href=&#34;#fig:workflow&#34;&gt;1&lt;/a&gt;:&lt;/p&gt;
-&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:workflow&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/img/makefile_workflow.png&#34; alt=&#34;Base Workflow&#34; width=&#34;40%&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 1: Base Workflow
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;Basically this example workflow involves generating/refreshing several hive tables, training ML models, and joining hive tables. Sometimes all 5 steps need to be run in a proper sequence, other times only a subset of steps need to be run, like Figure &lt;a href=&#34;#fig:scenarios&#34;&gt;2&lt;/a&gt;:&lt;/p&gt;
-&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:scenarios&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/img/makefile_ex_1.png&#34; alt=&#34;Workflow Scenarios&#34; width=&#34;40%&#34; /&gt;&lt;img src=&#34;/img/makefile_ex_3.png&#34; alt=&#34;Workflow Scenarios&#34; width=&#34;40%&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 2: Workflow Scenarios
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;So if there’s anyone out there who’s on the edge and haven’t started using a tool like make for workflow management, thinking such tool is not relevant in data analysis, I hope above figures (and this post) provide some convincing argument for using it.&lt;/p&gt;
-&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;It helped me put more efforts in modularizing codes.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;A Makefile is a collection of one or more rules, with a single rule consisting of a target, dependencies, and commands. In order to use commands in a Makefile, it’s imperative that the codes can be run in command line, and not just in interactive environment (REPL).&lt;/p&gt;
-&lt;p&gt;I don’t know what’s the best way to write a “program” for a data analysis project, and many of my codes are still mostly used in interactive mode. With the use of make, however, I’m putting more efforts to make sure my codes are run in command line, and REPL is used only for checking snippet of codes, not the entirety. So instead of working exclusively in a REPL shell (say R and/or hive shell), I now try to make sure the script files work by starting them in command line.&lt;/p&gt;
-&lt;p&gt;This is an important shift, I think, that has more implications, and I’m sure I’ll have more to say about this shift in the future.&lt;/p&gt;
-&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;It helps keep track of workflow dependency and documentation in one place.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;This is a nice little benefit of using make that I liked nonetheless. When I work on a project for 2-3 days, take a break from it, and come back in 2-3 weeks, I want to be able to recall what I have done and start picking up on things with minimal effort. With a combination of comments and a sed command in a Makefile, helpful documentation/notes can be extracted from command line like below.&lt;/p&gt;
-&lt;pre class=&#34;bash&#34;&gt;&lt;code&gt;~$ make help
- 1_gen_tbl_A: generate/refresh table A
- 2_train_model: train ml model using table A and generate table B
- 3_gen_tbl_C: generate/refresh table C (not dependent on steps 1 and 2!)
- 4_join_B_and_C: join tables B and C as a prep for step 5
- 5_compare_B_and_C: compare B and C by creating a performance table
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Software carpentry’s &lt;a href=&#34;https://swcarpentry.github.io/make-novice/08-self-doc/index.html&#34;&gt;lesson&lt;/a&gt; on automation and make provides a how-to.&lt;/p&gt;
-&lt;ol start=&#34;4&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;There are many alternatives to GNU make.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The tool has been around for nearly 40 years now. Obviously, I like it for several reasons as a workflow management tool, but at the same time, there are some limitations that can make it less attractive nowadays. I have not done a thorough research on this, but there seem to be many alternatives, each one of which has its own strength and weakness.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;R &lt;a href=&#34;https://github.com/ropensci/drake&#34;&gt;drake&lt;/a&gt; package is more R-focused than other pipeline tools, but more importantly, it has a very thorough and informative documentation on such tools in general.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Apache &lt;a href=&#34;https://airflow.apache.org/&#34;&gt;airflow&lt;/a&gt; is “a platform to programmatically author, schedule and monitor workflows.” I really like its ability to visualize dependencies.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Bash script: many data engineers that I know seem to be using bash scripts to do everything, including workflow mangement. It’s certainly a viable option, even when dependencies are considered, especially when you know what you’re doing.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;There are some great tutorials and documentations on GNU make, and here are a couple more links as a reference.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;GNU Make &lt;a href=&#34;https://www.gnu.org/software/make/manual/make.html&#34;&gt;Manual&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Make Intro by &lt;a href=&#34;http://kbroman.org/minimal_make/&#34;&gt;Karl Broman&lt;/a&gt;, &lt;a href=&#34;https://bost.ocks.org/mike/make/&#34;&gt;Mike Bostock&lt;/a&gt;, &lt;a href=&#34;http://zmjones.com/make/&#34;&gt;Zachary Jones&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Software Carpentry’s &lt;a href=&#34;https://swcarpentry.github.io/make-novice/&#34;&gt;Lesson&lt;/a&gt; on Automation and Make&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Make reads this Makefile (in the current directory) and works on the rules within it.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;I should prob start gathering these topics and write about them sometime in the future.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Home sweet dome</title>
-      <link>/post/2018/08/05/home-sweet-dome/</link>
-      <pubDate>Sun, 05 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018/08/05/home-sweet-dome/</guid>
-      <description>
-        &lt;p&gt;I ran into a &lt;a href=&#34;https://www.tarheelblog.com/2018/8/4/17644436/unc-basketball-tar-heels-dean-dome-advantage&#34;&gt;post&lt;/a&gt; on the Tar Heel Blog (THB) that talks about the Tar Heel’s home court advantage in recent years. Since it’s been a while since I wrote anything about UNCMBB, I thought it’d be a great topic to write on here too, looking at how great the teams have played on home court&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; in recent years. And maybe I’ll look at how Duke has played on their home court too during the same time period just because.&lt;/p&gt;
-&lt;p&gt;THB counted the wins and losses in the past 3 years in particular, and that gave me a starting point.&lt;/p&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Season
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Where
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-wins
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-losses
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-2016
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-15
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-2017
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-16
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-2018
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;So it seems my count and their count matches. Then I was curious if this last 3 years have been the best there is, in terms of fewest losses, and for that matter, most wins, and best winning percentage at home. In below charts, season is the starting season of the 3 years. E.g., for season = 2016, value = 4 means, rolling 3 years loss count for 2016, 2017, and 2018 seasons. Championship seasons are represented with larger dots, and the latest 3 year statistics (wins, losses, and winning percentages) with coloured horizontal lines.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Although this past 3 years loss count (4) is a great feat, it’s not the best there is, it turns out, and there’s been 18 instances with fewer than 4 loss count. Three early championship seasons (1957, 1982, and 1983) stand out with 3 or fewer losses each (again, as the starting season of the next 3 seasons), with the next two championship seasons (2005 and 2009) not so superb loss counts at 6 apiece&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;The fewest 3-yr rolling home loss counts came in two separate instances, with a single lose apiece: 1977/1978/1979 seasons and 1978/1979/1980 seasons. Let’s see what those losses were.&lt;/p&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Season
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Game_Date
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Game_Day
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Type
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Where
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Opponent_School
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Result
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Tm
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Opp
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-OT
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1977
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1977-01-26
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Wed
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-REG
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Wake Forest
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-L
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-66
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-67
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1980
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-1980-01-20
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Sun
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-REG
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-H
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-Maryland
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-L
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-86
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-92
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-NA
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Nothing stands out at me right away about Carolina’s 1977 - 1980 teams&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;, let alone 1977 Wake Forest and 1980 Maryland, but it must have been fantastic home court winning streaks for the Tar Heels. Below shows the 3-yr rolling win counts.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Sure, 1977 to 1979 seasons show great home winning trends at the time (e.g., 35 home wins during 3 seasons starting from 1978 season was the most in UNC history&lt;a href=&#34;#fn4&#34; class=&#34;footnote-ref&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; at the time), but the number of games played are somewhat different year after year, so let’s look at the winning percentage instead.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Yet again, 3 years following 1977 and 1978 seasons showed the highest rolling 3-yr home winning percentages, so it must have been really fun watching Carolina playing and winning at home those days. I feel like I have some homework to do, getting to know them a little better.&lt;/p&gt;
-&lt;p&gt;Now that I’ve looked at a couple of statistics for rolling 3 years, I became curious which freshman class has the bragging rights in terms of fewest losses, most wins, and highest winning percentage over their college carrers at home court. This should be pretty straightforward since a typical college career lasts for 4 years, which means all I have to change is the number of rolling years from 3 to 4. Below charts show the rolling 4-yr losses, wins, and win percentages, respectively.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-08-05-home-sweet-dome_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;For Carolina, it seems the bragging rights go to the freshman classes in the late 70s whereas for Duke, they could go to any of the teams in the late 80s, early and late 2000s. I had expected Psycho-T’s 2005 freshman class to stand out in any of the three numbers, but to my surprise the class wasn’t the top although they were close especially in terms of rolling 4-yr wins. That got me thinking, maybe they did much better in away games (after all, that class never lost to Duke on their home court during their college careers), and that’s what I’ll be looking at next time.&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Which, by the way, is deservingly going to be named after Coach Roy Williams.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Most recent championship season (2017) does not have 3-yr rolling counts yet.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;Just a casual fan here :)&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;Since 1949-1950 season to be exact.&lt;a href=&#34;#fnref4&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
 
         
       </description>

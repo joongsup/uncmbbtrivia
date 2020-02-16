@@ -1,0 +1,107 @@
+---
+title: Screen like RStudio Project
+author: Jay
+date: '2020-02-16'
+slug: screen-like-rstudio-project
+categories:
+  - Tools
+tags:
+  - Vim
+  - workflow
+  - screen
+draft: false
+---
+
+It's just that kind of season for UNCMBB. When the UVA's 3 pointer was fired at the end of the game, I'm sure I wasn't the only one among the Carolina fans who knew it'd go in, because it's just that kind of season. 
+
+I've been coping with the season by instead working harder (?), but after today's home loss to VA, I decided to write this post (and actually publish it), because, something's got to be done. We go where we go and do what we do, but at this point, I'm just hoping the first blog post for the season helps the team break the streak of bad karma. 
+
+I have just the perfect topic too, as for the past couple of weeks, I've been playing with GNU Screen and found several good (I think) ingredients for day-to-day workflow. Like so, I just hope my Tar Heels also find some working solutions for the season.  
+
+I started using Screen mainly for its attach/detach capability. Run a long runing job in a Screen session, detach, go home, reattach and check the long running job's status. Good news is that the long running job is not lost. More recently, I also started using Screen as script/console pair. So, for example, I'd start a Screen session, called "R" (by screen -S R), and interactively work with scripts via Vim-slime plugin. I wrote about such workflow [here](https://joongsup.rbind.io/post/2018/10/06/vim-and-slime/). What's important in this way of using Screen is that one Screen session is specific to one and only one utility. If I needed an R REPL, I'd start a Screen session for it. If I needed a Python REPL, I'd start another Screen session for it. 
+
+Then not long ago, I learned a single Screen session can have multiple windows (or "tabs") in it. What that means is that instead of starting multiple Screen sessions (usually through multiple ssh logins), I'd start a single Screen session, then have multiple windows, each window responsible for specific utility, such as R, Python, and/or git. So for example,
+
+```{bash, eval = FALSE}
+screen -S projectA
+screen -t R
+screen -t Python
+screen -t git
+
+```
+
+would start a Screen session called "projectA", and from within it, 3 additional windows called R, Python, and git are created. 
+
+```{r example, echo = FALSE, fig.cap = "Screen session and windows", out.width = "100%", fig.pos = 'h', fig.align = 'center'}
+knitr::include_graphics("/img/screen_session_windows.gif")
+```
+
+You'll notice that once the Screen session called "projectA" is created, default window called "bash" is started within the session, followed by subsequent windows called R, Python, and git, respectively via screen -t calls. The session name, as well as the window names are displayed at the bottom, and that can be configured in .screenrc file like so:
+
+```{bash, eval = FALSE}
+
+# generates equivalent of $STY followed by "on $HOST" if $STY is non-standard
+backtick 10 60 60 sh -c 'sty=$(screen -ls | grep --color=no -o "$PPID[^[:space:]]*") ; if [ ${sty##*.} = $HOST ] ; then echo $sty ; else echo "$sty" ; fi'
+
+# display session and windows name
+hardstatus alwayslastline
+hardstatus string '%{= kG}%u %10`%{-b kw}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<'
+
+# shift/arrow (move to prev/next window)
+bindkey "^[[1;2C" next
+bindkey "^[[1;2D" prev
+
+```
+
+Don't ask me how I ended up with such commands, which required mix-and-match of several google searches. The key binding is also a result of googling, and it allows me to move to prev/next windows within a Screen session with shift-arrow keys. I use iTerm2 for terminal app, and cmd/shift-arrow and cmd-arrow are already configured for other types of moves, and so far, shift-arrow binding works quite nicely to move between prev/next windows within a Screen session. 
+
+Once I arrived here, it was only natural to go ahead and write some bash scripts that would start a screen session with frequently used utilities of interest. 
+
+```{bash, eval = FALSE}
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Provide screen's session title and optional services. Typically session title = project's (main) name and services one of R/python/julia"
+    echo "Usage: devsetup.sh projectA 'R julia'"
+else
+    session=$1
+
+    # default windows
+    screen -dmS $session
+    screen -S $session -X screen -t home
+
+    if [ ! -z "$2" ]; then
+        servs=$2
+        # optional services to start
+        for serv in ${servs[@]}
+            do
+                if [ $(echo "${serv}" | tr '[:upper:]' '[:lower:]') = "r" ]; then
+                    screen -S $session -X screen -t R -X /usr/local/bin/R --vanilla
+                elif [ $(echo "${serv}" | tr '[:upper:]' '[:lower:]') = "julia" ]; then
+                    screen -S $session -X screen -t julia -X /usr/local/bin/julia
+               fi
+            done
+    fi
+    screen -r $session -p home
+fi
+
+```
+
+This script allows me to start a Screen session for each project with frequently used utilities, and with the project's home document (as defined [here](https://joongsup.rbind.io/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/)) open in the "home" window, I can go about working on the project using other Screen functionalities, i.e., attach/detach, and script/console. 
+
+For RStudio users, if you squint a bit, this Screen session/windows workflow seems to match well the idea behind the [RStudio Project](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects). For each project, I'd start its own Screen session with corresponding utilities needed for the project, and each project enjoys its own R session without interfering with other R sessions opened in other projects. Note in the last screenshot, I'm using two tabs in iTerm2, one tab for each project.
+
+
+```{r projA, echo = FALSE, fig.cap = "Screen session for Project A", out.width = "100%", fig.pos = 'h', fig.align = 'center'}
+knitr::include_graphics("/img/screen_projA.gif")
+```
+
+```{r projB, echo = FALSE, fig.cap = "Screen session for Project B", out.width = "100%", fig.pos = 'h', fig.align = 'center'}
+knitr::include_graphics("/img/screen_projB.gif")
+```
+
+```{r projAll, echo = FALSE, fig.cap = "Screen like RStudio Project", out.width = "100%", fig.pos = 'h', fig.align = 'center'}
+knitr::include_graphics("/img/screen_projAll.gif")
+```
+
+Hope this post helps anyone interested in data science workflow (esp using Vim), but most importantly, hope I can claim somehow in next couple of days that I have contributed to breaking the team's bad karma. Go Heels!

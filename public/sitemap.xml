@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/2020/02/16/screen-like-rstudio-project/</loc>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2019/12/16/r-markdown-template-in-vim/</loc>
+    <lastmod>2019-12-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2019/10/25/adding-last-season-data-to-uncmbb/</loc>
+    <lastmod>2019-10-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/2019/10/17/rmarkdown-centered-data-analysis-workflow/</loc>
     <lastmod>2019-10-17T00:00:00+00:00</lastmod>
   </url>
@@ -260,7 +275,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-10-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -284,7 +299,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-10-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -350,7 +365,7 @@
   
   <url>
     <loc>/tags/screen/</loc>
-    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -380,7 +395,7 @@
   
   <url>
     <loc>/categories/tools/</loc>
-    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -410,13 +425,13 @@
   
   <url>
     <loc>/tags/vim/</loc>
-    <lastmod>2019-10-17T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/vim/</loc>
-    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -428,7 +443,7 @@
   
   <url>
     <loc>/tags/workflow/</loc>
-    <lastmod>2019-10-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-02-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
