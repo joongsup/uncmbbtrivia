@@ -1,0 +1,13 @@
+/* custom.css */
+.left-code {
+  color: #777;
+  width: 50%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 49%;
+  float: right;
+  padding-left: 1%;
+  padding-top: 1%;
+}
