@@ -54,8 +54,8 @@ nc_records %>% ggplot(aes(x = game_no, y = accum_scores, group = 1)) +
                geom_hline(yintercept = 0, colour = "red", linetype = "dotted") + 
                scale_y_continuous(breaks = seq(-200, 200, 10)) +
                scale_x_continuous(breaks = seq(0, 100, 5)) +
-               theme(legend.position="none") +
                theme_bw() +
+               theme(legend.position="none") +
                labs(title = paste0("Score differentials since ", K_start-1, "-", K_start, " season"))
   
 ```
