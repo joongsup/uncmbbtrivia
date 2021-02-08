@@ -1,0 +1,64 @@
+---
+title: A glimpse of change, or just another day with a win over Duke
+author: Jay
+date: '2021-02-07'
+slug: a-glimpse-of-change-or-another-day-with-a-win-over-duke
+categories:
+  - unc
+---
+
+Here it is, it's been almost a year since the last post. All 3 other blue blood programs lost on the same night^[What are the odds that this happens? Maybe add UK and KU's data in uncmbb in the future?], compelling me to crawl back here after a year-long break. 
+
+When I first thought of working on this post, writing about all the changes since the last post seemed to be a reasonable thing to do, e.g., all the changes in the world, in this country, at work and home. Then it didn't take long to realize it'd be too much for the first post in a year (where do I even begin), and more importantly and frankly, things are still the same more or less, although I will say things seem to be heading in the right direction. Instead, a small, manageable starting point would be going back to where the blog was born out of, namely the uncmbb package and the team behind the package.
+
+First, [uncmbb](https://cran.r-project.org/web/packages/uncmbb/index.html) package is finally updated with last season's results. For the last couple of years, I updated the package during summer, but since the abrupt end to the last season, and more importantly with everything that's been going on, the package wasn't anywhere near my priority throughout the year. Then, literally at the last second of the year, I felt like updating the package was one easy and small task that I could and should do before saying goodbye to the (un)forgettable year and jumped at it^[Also found out that the package submission reviewers do take (extremely deserving) break at the end of the year.]. While at it, several changes needed to be made, including dumping travis and updating R/RStudio versions, and surely it was another great CRAN release experience. 
+
+Then this weekend, all 3 other blue blood schools lost, and I'm especially giddy with joy at how Duke and Kentucky are doing so far. We're not doing that well either, but after the (un)forgettable last season (it was Coach Williams' first losing season ever), I needed something, really anything that could help me get over it, and the other teams' current form would definitely do it. Yes, maybe this season (and last season too) deserves an asterisk, but even so. 
+
+For the UNC-Duke game, heard it was first time niether team was ranked, but still the stake and the importance were still high for both teams, and I'm just glad we came out with a W. I've seen some crazy numbers between the two programs in terms of how close the teams have parred (e.g., almost 50:50 win/loss and scored/allowed), and thought I'd check that using uncmbb package, starting from when Coach K joined Duke. 
+
+
+```{r, unc-vs-duke}
+
+library(uncmbb)
+library(dplyr)
+library(ggplot2)
+library(jutilr)
+
+K_start <- 1981
+
+nc <- unc %>% filter(Opponent_School == "Duke") %>%
+        filter(Season >= K_start)
+nc <- nc %>% mutate(game_no = as.numeric(rownames(nc)))
+
+nc %>% group_by(Result) %>%
+       summarize(games = n()) %>%
+       add_percent(var = "games")
+
+nc %>% summarize(scored = sum(Tm), allowed = sum(Opp))
+```
+
+So it seems like we're 3 games and 36 scores behind from the 95 games played between the two programs since Coach K joined Duke through last season.
+
+```{r, score-diff}
+
+nc_records <- nc %>% mutate(match_result = case_when(Result == "W" ~ 1,
+                                                     Result == "L" ~ -1)) %>%
+                     mutate(accum_result = cumsum(match_result)) %>%
+                     mutate(accum_scores = cumsum(Tm - Opp))
+
+nc_records %>% ggplot(aes(x = game_no, y = accum_scores, group = 1)) +
+               geom_line() + 
+               geom_point(aes(colour = Result == "W")) +
+               geom_text(aes(label = accum_result), hjust = -0.2) +
+               geom_hline(yintercept = 0, colour = "red", linetype = "dotted") + 
+               scale_y_continuous(breaks = seq(-200, 200, 10)) +
+               scale_x_continuous(breaks = seq(0, 100, 5)) +
+               theme(legend.position="none") +
+               labs(title = paste0("Score differentials since ", K_start-1, "-", K_start, " season"))
+  
+```
+
+Mid-late 1990s, we were pretty dominant raking in 13 more wins head to head. Then early 2000s happened, and after the glorious Psycho-T and Joel Berry eras, we've been on 3 game losing streak. With this weekend's W, we should be heading back up and I hope we cross the zero differential line soon.  
+
+~~Yeah, Kentucky is out, but~~ who knows, Duke might make the NCAA tournament after all (assuming there'll be one), and we might end up playing unspectacularly in the remaining conference schedule. But at least for this weekend, we came out with a good W, and hopefully it is one of the rare glimpses of change for the new year. 
