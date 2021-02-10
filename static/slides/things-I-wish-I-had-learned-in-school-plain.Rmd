@@ -63,7 +63,7 @@ class: inverse, center, middle
 
 .right-plot[
 ```{r, cran-screenshot, echo = FALSE, out.width = '100%'}
-knitr::include_graphics("figs/cran-home.png")
+knitr::include_graphics("../img/cran-home.png")
 ```
 ]
 
@@ -258,7 +258,7 @@ dat %>% ggplot(aes(x = Season, y = win_pct, group = 1)) +
 
 .right-plot[
 ```{r, workflow-example, include = TRUE, echo = FALSE, out.width = "100%"}
-include_graphics("figs/rp-overview.jpg")
+include_graphics("../img/rp-overview.jpg")
 ```
 ]
 
@@ -330,7 +330,7 @@ class: inverse, center, middle
 ---
 
 class: right, clear
-background-image: url(figs/cat.jpg)
+background-image: url(../img/cat.jpg)
 background-size: contain
 background-position: left
 
