@@ -63,33 +63,25 @@ class: inverse, center, middle
 
 .right-plot[
 ```{r, cran-screenshot, echo = FALSE, out.width = '100%'}
-knitr::include_graphics("../img/cran-home.png")
+knitr::include_graphics("figs/cran-home.png")
 ```
 ]
 
 - [CRAN](https://cran.r-project.org/)
 
-- install.packages(["ggplot2"](https://cran.r-project.org/web/packages/ggplot2/index.html))
+- install.packages(["ggplot2"](https://ggplot2.tidyverse.org/))
 
 - R package development workshop in 2017
 
-- [uncmbb](https://cran.r-project.org/web/packages/uncmbb/index.html) package on CRAN
+- [uncmbb](https://github.com/joongsup/uncmbb) package on CRAN
 
 - [The Carpentries](https://software-carpentry.org/lessons/)
 
-- Analytical mindset
-
-- Know and sharpen your tools
-
 - Things I wish I had learned in school
 
+- Some didn't exist, but mostly I just didn't know better
+
 - Introductory by design, not comprehensive
-
----
-
-class: inverse, center, middle
-
-# Add Survey Result
 
 ---
 
@@ -97,9 +89,9 @@ class: inverse, center, middle
 
 - Mainly for Windows users
 
-- Local Machine (e.g., your computer) vs. Remote Server (e.g., school computing server)
-
 - Know there are other [operating systems](https://en.wikipedia.org/wiki/Operating_system)
+
+- Local Machine (e.g., your computer) vs. Remote Server (e.g., school computing server)
 
 - Play with other operating systems (mainly [Linux](https://en.wikipedia.org/wiki/Linux)) 
 
@@ -128,8 +120,6 @@ class: inverse, center, middle
 
 - Terminal `-->` Shell `-->` Operating System
 
-- Search path
-
 - Files, files, and more files
 
 - Project directory structure
@@ -141,6 +131,8 @@ class: inverse, center, middle
 # Text Files
 
 - Most work in shell is text-based
+
+- Get used to working with plain text files
 
 
 - A variety of text editors
@@ -266,7 +258,7 @@ dat %>% ggplot(aes(x = Season, y = win_pct, group = 1)) +
 
 .right-plot[
 ```{r, workflow-example, include = TRUE, echo = FALSE, out.width = "100%"}
-include_graphics("../img/rp-overview.jpg")
+include_graphics("figs/rp-overview.jpg")
 ```
 ]
 
@@ -280,7 +272,8 @@ include_graphics("../img/rp-overview.jpg")
 
 - More emphasis on other steps in industry
 
-- Team sport aspects
+
+- Team sport 
     - Team lead
     - Project managers
     - Data engineers
@@ -312,25 +305,21 @@ include_graphics("../img/rp-overview.jpg")
 
 # Links
 
-
-- OS and Shell
-    - [Terminal and Shell](http://www.it.uu.se/education/course/homepage/os/vt18/module-0/shell-and-terminal/)
-    - [Carpentries Lesson on Shell](http://swcarpentry.github.io/shell-novice/)
-    - [Happy Git and GitHub for the useR](https://happygitwithr.com/)
-    - [Data Science at Command Line](https://www.datascienceatthecommandline.com/2e/)
-    - [Editor War](https://en.wikipedia.org/wiki/Editor_war)
-
-
-- Coding
-    - [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
-    - [The Carpentries](https://software-carpentry.org/lessons/)
-    - [R Packaging using RStudio](https://joongsup.rbind.io/slides/r_pkg_devel?force_isolation=true)
-    - [R for Data Science](https://r4ds.had.co.nz/)
-    - [What They Forgot To Teach You About R](https://rstats.wtf/index.html)
-    - [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
-    - [Anaconda Data Science Toolkit](https://www.anaconda.com/products/individual)
-    - [Project-Oriented Workflow](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)
-
+- [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510)
+- [Carpentries Lesson on Shell](http://swcarpentry.github.io/shell-novice/)
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/)
+- [Data Science at Command Line](https://www.datascienceatthecommandline.com/2e/)
+- [Editor War](https://en.wikipedia.org/wiki/Editor_war)
+- [Data Organization in Spreadsheets](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989)
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [What They Forgot To Teach You About R](https://rstats.wtf/index.html)
+- [R Graphics Cookbook](https://r-graphics.org/)
+- [Project-Oriented Workflow](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)
+- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/)
+- [Anaconda Data Science Toolkit](https://www.anaconda.com/products/individual)
+- [Why Jupyter Is Data Scientists’ Computational Notebook of Choice](https://www.nature.com/articles/d41586-018-07196-1)
+- [The First Notebook War](https://yihui.org/en/2018/09/notebook-war/#what-do-notebooks-and-spreadsheets-have-in-common)
+- [I Don't Like Notebooks](https://www.youtube.com/watch?v=7jiPeIFXb6U)
 
 ---
 
@@ -341,7 +330,7 @@ class: inverse, center, middle
 ---
 
 class: right, clear
-background-image: url(../img/cat.jpg)
+background-image: url(figs/cat.jpg)
 background-size: contain
 background-position: left
 
@@ -359,7 +348,6 @@ please reach out and let me know!
 [`r icon::octicons$mail`](mailto:uncmbbtrivia@gmail.com)
 [`r icon::fontawesome$solid$link`](https://joongsup.rbind.io)
 [`r icon::fontawesome$brands$linkedin`](https://www.linkedin.com/in/joongsupjaylee/)
-[`r icon::fontawesome$brands$twitter`](https://twitter.com/uncmbbtrivia)
 
 For now,
 
