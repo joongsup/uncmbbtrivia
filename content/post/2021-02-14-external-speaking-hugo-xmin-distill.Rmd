@@ -9,7 +9,7 @@ tags:
   - presentation
   - xmin
   - distill
-draft: true
+draft: false
 ---
 
 Each year I try to do at least one [external presentation](https://joongsup.rbind.io/post/2018/07/22/external-presentation-goal/). It's probably not an exaggeration that if it wasn't for an external speaking engagement that I got myself into this year, there would not have been the last post, which was the first in almost a year. Sure last weekend was special because Tar Heels beat Duke and was the only blue blood that came out with a W^[And of course they are the only blue blood with a L today :(] that day, so in a sense it was a good day to get back to writing and yes, I'm planning to keep writing here, but I still find it hard to write as often as before, not that I was a prolific writer by any measure. Guess it says something about my priorities these days. 
